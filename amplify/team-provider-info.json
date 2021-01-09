@@ -10,6 +10,11 @@
       "StackName": "amplify-mixmatchweb-dev-233531",
       "StackId": "arn:aws:cloudformation:us-east-1:158391967973:stack/amplify-mixmatchweb-dev-233531/1c888c60-5234-11eb-b116-12f057d255e7",
       "AmplifyAppId": "d1v5bw7mrgqsfk"
+    },
+    "categories": {
+      "auth": {
+        "mixmatchwebf96da65d": {}
+      }
     }
   }
 }
