@@ -1,8 +1,8 @@
 {
-    "identityPoolName": "mixmatchwebf96da65d_identitypool_f96da65d",
+    "identityPoolName": "mixmatchweb124ecd5e_identitypool_124ecd5e",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "mixmatf96da65d",
-    "userPoolName": "mixmatchwebf96da65d_userpool_f96da65d",
+    "resourceNameTruncated": "mixmat124ecd5e",
+    "userPoolName": "mixmatchweb124ecd5e_userpool_124ecd5e",
     "autoVerifiedAttributes": [
         "email"
     ],
@@ -18,7 +18,8 @@
     "passwordPolicyMinLength": 8,
     "passwordPolicyCharacters": [],
     "requiredAttributes": [
-        "email"
+        "email",
+        "name"
     ],
     "userpoolClientGenerateSecret": true,
     "userpoolClientRefreshTokenValidity": 30,
@@ -28,10 +29,10 @@
     "userpoolClientReadAttributes": [
         "email"
     ],
-    "userpoolClientLambdaRole": "mixmatf96da65d_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "mixmat124ecd5e_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "f96da65d",
-    "resourceName": "mixmatchwebf96da65d",
+    "sharedId": "124ecd5e",
+    "resourceName": "mixmatchweb124ecd5e",
     "authSelections": "identityPoolAndUserPool",
     "authRoleArn": {
         "Fn::GetAtt": [

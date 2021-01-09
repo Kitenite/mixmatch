@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -9,8 +9,9 @@ import {
 
 import SwipePage from './SwipePage'
 import MessagesPage from './MessagesPage'
+import ProfilePage from './ProfilePage'
 
-function MainRouter() {
+function MainRouter(props) {
   return (
     <Router>
       <div>
@@ -21,6 +22,9 @@ function MainRouter() {
             </li>
             <li>
               <Link to="/messages">Messages</Link>
+            </li>
+            <li>
+              <Link to="/profile">Profile</Link>
             </li>
           </ul>
         </nav>
@@ -36,9 +40,17 @@ function MainRouter() {
             <Route path="/messages">
                 <MessagesPage/>
             </Route>
+            <Route path="/profile">
+                <ProfilePage user={props.user}>
+                  {props.children}
+                </ProfilePage>
+                
+            </Route>
         </Switch>
       </div>
+      
     </Router>
+    
   );
 }
 

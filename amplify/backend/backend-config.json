@@ -1,10 +1,11 @@
 {
   "auth": {
-    "mixmatchwebf96da65d": {
+    "mixmatchweb124ecd5e": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
       "customAuth": false
     }
-  }
+  },
+  "function": {}
 }
