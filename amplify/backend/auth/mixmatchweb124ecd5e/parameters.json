@@ -1,6 +1,6 @@
 {
     "identityPoolName": "mixmatchweb124ecd5e_identitypool_124ecd5e",
-    "allowUnauthenticatedIdentities": false,
+    "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "mixmat124ecd5e",
     "userPoolName": "mixmatchweb124ecd5e_userpool_124ecd5e",
     "autoVerifiedAttributes": [

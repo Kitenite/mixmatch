@@ -1,4 +1,5 @@
 import ImageUpload from './ImageUpload'
+
 function ProfilePage(props){
     console.log(props)
     const user = props.user

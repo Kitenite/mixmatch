@@ -13,3 +13,6 @@ projects:
         region: us-east-1
         apiId: tpmapqw3hbe73ihj4svpdmdi7u
         maxDepth: 2
+extensions:
+  amplify:
+    version: 3
