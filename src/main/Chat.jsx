@@ -6,6 +6,17 @@ const users = {
   Mark: 'Mark'
 };
 
+const styles = {
+    container:{
+        paddingLeft: 50,
+        paddingRight: 50
+    },
+    input:{
+        width:'100%',
+        height:30,
+        borderRadius: 50
+    }
+}
 class Chat extends React.Component {
   constructor() {
     super();
@@ -46,18 +57,21 @@ class Chat extends React.Component {
   render() {
     return (
       <div className="container" >
-        <div className="chatfeed-wrapper">
+        <div className="chatfeed-wrapper" style={styles.container}>
           <ChatFeed
             maxHeight={250}
             messages={this.state.messages} // Boolean: list of message objects
             showSenderName
           />
 
-          <form onSubmit={e => this.onMessageSubmit(e)}>
+          <form 
+            onSubmit={e => this.onMessageSubmit(e)} 
+          >
             <input
               ref={m => {
                 this.message = m;
               }}
+              style={styles.input}
               placeholder="Type a message..."
               className="message-input"
             />
