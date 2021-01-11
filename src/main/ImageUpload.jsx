@@ -34,7 +34,7 @@ class ImageUpload extends React.Component {
   render() {
     return (
       <div>
-        <input type="file" accept="image/png" onChange={this.handleChange}/>
+        <input type="file" accept="image/png" onChange={this.handleChange} capture/>
         {this.state.file ? <button onClick={this.uploadRawImage}>Upload Image</button> : ''}
         <img src={this.state.file}/>
       </div>
