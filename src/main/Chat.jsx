@@ -2,8 +2,8 @@ import React from 'react';
 import { ChatFeed, Message } from 'react-chat-ui';
 
 const users = {
-  You: 'You',
-  Mark: 'Mark'
+  You: 0,
+  Other: 'Your match'
 };
 
 const styles = {
@@ -12,9 +12,15 @@ const styles = {
         paddingRight: 50
     },
     input:{
-        width:'100%',
+        width:'98%',
         height:30,
-        borderRadius: 50
+        border: '2px solid #ddd',
+        borderRadius: 50,
+        paddingLeft: '1%',
+        paddingRight: '1%'
+    },
+    inputFocus:{
+        border: '1px solid #f19e38'
     }
 }
 class Chat extends React.Component {
@@ -22,14 +28,10 @@ class Chat extends React.Component {
     super();
     this.state = {
       messages: [
-        new Message({ id: 'Mark', message: 'Hello Kiet!', senderName: 'Mark' })
+        new Message({ id: users.Other, message: 'Hello Kiet!', senderName: users.Other })
       ],
-      curr_user: 0,
+      curr_user: users.You,
     };
-  }
-
-  onPress(user) {
-    this.setState({ curr_user: user });
   }
 
   onMessageSubmit(e) {
@@ -64,9 +66,7 @@ class Chat extends React.Component {
             showSenderName
           />
 
-          <form 
-            onSubmit={e => this.onMessageSubmit(e)} 
-          >
+          <form onSubmit={e => this.onMessageSubmit(e)} >
             <input
               ref={m => {
                 this.message = m;
