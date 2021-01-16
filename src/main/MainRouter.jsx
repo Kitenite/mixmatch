@@ -8,8 +8,8 @@ import {
 } from "react-router-dom";
 
 import SwipePage from './SwipePage'
-import MessagesPage from './MessagesPage'
-import ProfilePage from './ProfilePage'
+import MessagesPage from '../messages/MessagesPage'
+import ProfilePage from '../user/ProfilePage'
 
 function MainRouter(props) {
   return (
@@ -35,7 +35,7 @@ function MainRouter(props) {
                 <Redirect to="/swipe" />
             </Route>
             <Route path="/swipe">
-                <SwipePage/>
+                <SwipePage user={props.user}/>
             </Route>
             <Route path="/messages">
                 <MessagesPage/>

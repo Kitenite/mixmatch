@@ -4,23 +4,21 @@
 
 export type CreateUserInput = {
   email: string,
-  firstName: string,
-  lastName: string,
+  name: string,
   rawImage?: string | null,
   alignedImage?: string | null,
   encoding?: string | null,
-  matches?: Array< string | null > | null,
+  createdAt?: string | null,
 };
 
 export type UpdateUserInput = {
   id: string,
   email?: string | null,
-  firstName?: string | null,
-  lastName?: string | null,
+  name?: string | null,
   rawImage?: string | null,
   alignedImage?: string | null,
   encoding?: string | null,
-  matches?: Array< string | null > | null,
+  createdAt?: string | null,
 };
 
 export type DeleteUserInput = {
@@ -28,7 +26,6 @@ export type DeleteUserInput = {
 };
 
 export type CreateMatchInput = {
-  users: Array< string | null >,
   encoding?: string | null,
   mixedImage?: string | null,
   matched?: boolean | null,
@@ -36,7 +33,6 @@ export type CreateMatchInput = {
 
 export type UpdateMatchInput = {
   id: string,
-  users?: Array< string | null > | null,
   encoding?: string | null,
   mixedImage?: string | null,
   matched?: boolean | null,
@@ -46,15 +42,29 @@ export type DeleteMatchInput = {
   id: string,
 };
 
+export type CreateMessageInput = {
+  content: string,
+  createdAt: string,
+};
+
+export type UpdateMessageInput = {
+  id: string,
+  content?: string | null,
+  createdAt?: string | null,
+};
+
+export type DeleteMessageInput = {
+  id: string,
+};
+
 export type TableUserFilterInput = {
   id?: TableIDFilterInput | null,
   email?: TableStringFilterInput | null,
-  firstName?: TableStringFilterInput | null,
-  lastName?: TableStringFilterInput | null,
+  name?: TableStringFilterInput | null,
   rawImage?: TableStringFilterInput | null,
   alignedImage?: TableStringFilterInput | null,
   encoding?: TableStringFilterInput | null,
-  matches?: TableIDFilterInput | null,
+  createdAt?: TableStringFilterInput | null,
 };
 
 export type TableIDFilterInput = {
@@ -85,7 +95,6 @@ export type TableStringFilterInput = {
 
 export type TableMatchFilterInput = {
   id?: TableIDFilterInput | null,
-  users?: TableIDFilterInput | null,
   encoding?: TableStringFilterInput | null,
   mixedImage?: TableStringFilterInput | null,
   matched?: TableBooleanFilterInput | null,
@@ -94,6 +103,38 @@ export type TableMatchFilterInput = {
 export type TableBooleanFilterInput = {
   ne?: boolean | null,
   eq?: boolean | null,
+};
+
+export type TableMessageFilterInput = {
+  id?: TableIDFilterInput | null,
+  content?: TableStringFilterInput | null,
+  createdAt?: TableStringFilterInput | null,
+};
+
+export type AddUserMutationVariables = {
+  id: string,
+  email: string,
+  name: string,
+};
+
+export type AddUserMutation = {
+  addUser:  {
+    __typename: "User",
+    id: string,
+    email: string,
+    name: string,
+    rawImage: string | null,
+    alignedImage: string | null,
+    encoding: string | null,
+    matches:  Array< {
+      __typename: "Match",
+      id: string,
+      encoding: string | null,
+      mixedImage: string | null,
+      matched: boolean | null,
+    } | null > | null,
+    createdAt: string | null,
+  } | null,
 };
 
 export type CreateUserMutationVariables = {
@@ -105,12 +146,18 @@ export type CreateUserMutation = {
     __typename: "User",
     id: string,
     email: string,
-    firstName: string,
-    lastName: string,
+    name: string,
     rawImage: string | null,
     alignedImage: string | null,
     encoding: string | null,
-    matches: Array< string | null > | null,
+    matches:  Array< {
+      __typename: "Match",
+      id: string,
+      encoding: string | null,
+      mixedImage: string | null,
+      matched: boolean | null,
+    } | null > | null,
+    createdAt: string | null,
   } | null,
 };
 
@@ -123,12 +170,18 @@ export type UpdateUserMutation = {
     __typename: "User",
     id: string,
     email: string,
-    firstName: string,
-    lastName: string,
+    name: string,
     rawImage: string | null,
     alignedImage: string | null,
     encoding: string | null,
-    matches: Array< string | null > | null,
+    matches:  Array< {
+      __typename: "Match",
+      id: string,
+      encoding: string | null,
+      mixedImage: string | null,
+      matched: boolean | null,
+    } | null > | null,
+    createdAt: string | null,
   } | null,
 };
 
@@ -141,12 +194,18 @@ export type DeleteUserMutation = {
     __typename: "User",
     id: string,
     email: string,
-    firstName: string,
-    lastName: string,
+    name: string,
     rawImage: string | null,
     alignedImage: string | null,
     encoding: string | null,
-    matches: Array< string | null > | null,
+    matches:  Array< {
+      __typename: "Match",
+      id: string,
+      encoding: string | null,
+      mixedImage: string | null,
+      matched: boolean | null,
+    } | null > | null,
+    createdAt: string | null,
   } | null,
 };
 
@@ -158,7 +217,16 @@ export type CreateMatchMutation = {
   createMatch:  {
     __typename: "Match",
     id: string,
-    users: Array< string | null >,
+    users:  Array< {
+      __typename: "User",
+      id: string,
+      email: string,
+      name: string,
+      rawImage: string | null,
+      alignedImage: string | null,
+      encoding: string | null,
+      createdAt: string | null,
+    } | null >,
     encoding: string | null,
     mixedImage: string | null,
     matched: boolean | null,
@@ -173,7 +241,16 @@ export type UpdateMatchMutation = {
   updateMatch:  {
     __typename: "Match",
     id: string,
-    users: Array< string | null >,
+    users:  Array< {
+      __typename: "User",
+      id: string,
+      email: string,
+      name: string,
+      rawImage: string | null,
+      alignedImage: string | null,
+      encoding: string | null,
+      createdAt: string | null,
+    } | null >,
     encoding: string | null,
     mixedImage: string | null,
     matched: boolean | null,
@@ -188,11 +265,160 @@ export type DeleteMatchMutation = {
   deleteMatch:  {
     __typename: "Match",
     id: string,
-    users: Array< string | null >,
+    users:  Array< {
+      __typename: "User",
+      id: string,
+      email: string,
+      name: string,
+      rawImage: string | null,
+      alignedImage: string | null,
+      encoding: string | null,
+      createdAt: string | null,
+    } | null >,
     encoding: string | null,
     mixedImage: string | null,
     matched: boolean | null,
   } | null,
+};
+
+export type CreateMessageMutationVariables = {
+  input: CreateMessageInput,
+};
+
+export type CreateMessageMutation = {
+  createMessage:  {
+    __typename: "Message",
+    id: string,
+    match:  {
+      __typename: "Match",
+      id: string,
+      encoding: string | null,
+      mixedImage: string | null,
+      matched: boolean | null,
+    },
+    content: string,
+    author:  {
+      __typename: "User",
+      id: string,
+      email: string,
+      name: string,
+      rawImage: string | null,
+      alignedImage: string | null,
+      encoding: string | null,
+      createdAt: string | null,
+    },
+    recepient:  {
+      __typename: "User",
+      id: string,
+      email: string,
+      name: string,
+      rawImage: string | null,
+      alignedImage: string | null,
+      encoding: string | null,
+      createdAt: string | null,
+    },
+    createdAt: string,
+  } | null,
+};
+
+export type UpdateMessageMutationVariables = {
+  input: UpdateMessageInput,
+};
+
+export type UpdateMessageMutation = {
+  updateMessage:  {
+    __typename: "Message",
+    id: string,
+    match:  {
+      __typename: "Match",
+      id: string,
+      encoding: string | null,
+      mixedImage: string | null,
+      matched: boolean | null,
+    },
+    content: string,
+    author:  {
+      __typename: "User",
+      id: string,
+      email: string,
+      name: string,
+      rawImage: string | null,
+      alignedImage: string | null,
+      encoding: string | null,
+      createdAt: string | null,
+    },
+    recepient:  {
+      __typename: "User",
+      id: string,
+      email: string,
+      name: string,
+      rawImage: string | null,
+      alignedImage: string | null,
+      encoding: string | null,
+      createdAt: string | null,
+    },
+    createdAt: string,
+  } | null,
+};
+
+export type DeleteMessageMutationVariables = {
+  input: DeleteMessageInput,
+};
+
+export type DeleteMessageMutation = {
+  deleteMessage:  {
+    __typename: "Message",
+    id: string,
+    match:  {
+      __typename: "Match",
+      id: string,
+      encoding: string | null,
+      mixedImage: string | null,
+      matched: boolean | null,
+    },
+    content: string,
+    author:  {
+      __typename: "User",
+      id: string,
+      email: string,
+      name: string,
+      rawImage: string | null,
+      alignedImage: string | null,
+      encoding: string | null,
+      createdAt: string | null,
+    },
+    recepient:  {
+      __typename: "User",
+      id: string,
+      email: string,
+      name: string,
+      rawImage: string | null,
+      alignedImage: string | null,
+      encoding: string | null,
+      createdAt: string | null,
+    },
+    createdAt: string,
+  } | null,
+};
+
+export type GetUsersQuery = {
+  getUsers:  Array< {
+    __typename: "User",
+    id: string,
+    email: string,
+    name: string,
+    rawImage: string | null,
+    alignedImage: string | null,
+    encoding: string | null,
+    matches:  Array< {
+      __typename: "Match",
+      id: string,
+      encoding: string | null,
+      mixedImage: string | null,
+      matched: boolean | null,
+    } | null > | null,
+    createdAt: string | null,
+  } | null > | null,
 };
 
 export type GetUserQueryVariables = {
@@ -204,12 +430,18 @@ export type GetUserQuery = {
     __typename: "User",
     id: string,
     email: string,
-    firstName: string,
-    lastName: string,
+    name: string,
     rawImage: string | null,
     alignedImage: string | null,
     encoding: string | null,
-    matches: Array< string | null > | null,
+    matches:  Array< {
+      __typename: "Match",
+      id: string,
+      encoding: string | null,
+      mixedImage: string | null,
+      matched: boolean | null,
+    } | null > | null,
+    createdAt: string | null,
   } | null,
 };
 
@@ -226,12 +458,11 @@ export type ListUsersQuery = {
       __typename: "User",
       id: string,
       email: string,
-      firstName: string,
-      lastName: string,
+      name: string,
       rawImage: string | null,
       alignedImage: string | null,
       encoding: string | null,
-      matches: Array< string | null > | null,
+      createdAt: string | null,
     } | null > | null,
     nextToken: string | null,
   } | null,
@@ -245,7 +476,16 @@ export type GetMatchQuery = {
   getMatch:  {
     __typename: "Match",
     id: string,
-    users: Array< string | null >,
+    users:  Array< {
+      __typename: "User",
+      id: string,
+      email: string,
+      name: string,
+      rawImage: string | null,
+      alignedImage: string | null,
+      encoding: string | null,
+      createdAt: string | null,
+    } | null >,
     encoding: string | null,
     mixedImage: string | null,
     matched: boolean | null,
@@ -264,7 +504,6 @@ export type ListMatchesQuery = {
     items:  Array< {
       __typename: "Match",
       id: string,
-      users: Array< string | null >,
       encoding: string | null,
       mixedImage: string | null,
       matched: boolean | null,
@@ -273,12 +512,91 @@ export type ListMatchesQuery = {
   } | null,
 };
 
+export type GetMessageQueryVariables = {
+  id: string,
+};
+
+export type GetMessageQuery = {
+  getMessage:  {
+    __typename: "Message",
+    id: string,
+    match:  {
+      __typename: "Match",
+      id: string,
+      encoding: string | null,
+      mixedImage: string | null,
+      matched: boolean | null,
+    },
+    content: string,
+    author:  {
+      __typename: "User",
+      id: string,
+      email: string,
+      name: string,
+      rawImage: string | null,
+      alignedImage: string | null,
+      encoding: string | null,
+      createdAt: string | null,
+    },
+    recepient:  {
+      __typename: "User",
+      id: string,
+      email: string,
+      name: string,
+      rawImage: string | null,
+      alignedImage: string | null,
+      encoding: string | null,
+      createdAt: string | null,
+    },
+    createdAt: string,
+  } | null,
+};
+
+export type ListMessagesQueryVariables = {
+  filter?: TableMessageFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListMessagesQuery = {
+  listMessages:  {
+    __typename: "MessageConnection",
+    items:  Array< {
+      __typename: "Message",
+      id: string,
+      content: string,
+      createdAt: string,
+    } | null > | null,
+    nextToken: string | null,
+  } | null,
+};
+
+export type SubscribeToNewUsersSubscription = {
+  subscribeToNewUsers:  {
+    __typename: "User",
+    id: string,
+    email: string,
+    name: string,
+    rawImage: string | null,
+    alignedImage: string | null,
+    encoding: string | null,
+    matches:  Array< {
+      __typename: "Match",
+      id: string,
+      encoding: string | null,
+      mixedImage: string | null,
+      matched: boolean | null,
+    } | null > | null,
+    createdAt: string | null,
+  } | null,
+};
+
 export type OnCreateUserSubscriptionVariables = {
   id?: string | null,
   email?: string | null,
-  firstName?: string | null,
-  lastName?: string | null,
+  name?: string | null,
   rawImage?: string | null,
+  alignedImage?: string | null,
 };
 
 export type OnCreateUserSubscription = {
@@ -286,21 +604,27 @@ export type OnCreateUserSubscription = {
     __typename: "User",
     id: string,
     email: string,
-    firstName: string,
-    lastName: string,
+    name: string,
     rawImage: string | null,
     alignedImage: string | null,
     encoding: string | null,
-    matches: Array< string | null > | null,
+    matches:  Array< {
+      __typename: "Match",
+      id: string,
+      encoding: string | null,
+      mixedImage: string | null,
+      matched: boolean | null,
+    } | null > | null,
+    createdAt: string | null,
   } | null,
 };
 
 export type OnUpdateUserSubscriptionVariables = {
   id?: string | null,
   email?: string | null,
-  firstName?: string | null,
-  lastName?: string | null,
+  name?: string | null,
   rawImage?: string | null,
+  alignedImage?: string | null,
 };
 
 export type OnUpdateUserSubscription = {
@@ -308,21 +632,27 @@ export type OnUpdateUserSubscription = {
     __typename: "User",
     id: string,
     email: string,
-    firstName: string,
-    lastName: string,
+    name: string,
     rawImage: string | null,
     alignedImage: string | null,
     encoding: string | null,
-    matches: Array< string | null > | null,
+    matches:  Array< {
+      __typename: "Match",
+      id: string,
+      encoding: string | null,
+      mixedImage: string | null,
+      matched: boolean | null,
+    } | null > | null,
+    createdAt: string | null,
   } | null,
 };
 
 export type OnDeleteUserSubscriptionVariables = {
   id?: string | null,
   email?: string | null,
-  firstName?: string | null,
-  lastName?: string | null,
+  name?: string | null,
   rawImage?: string | null,
+  alignedImage?: string | null,
 };
 
 export type OnDeleteUserSubscription = {
@@ -330,18 +660,23 @@ export type OnDeleteUserSubscription = {
     __typename: "User",
     id: string,
     email: string,
-    firstName: string,
-    lastName: string,
+    name: string,
     rawImage: string | null,
     alignedImage: string | null,
     encoding: string | null,
-    matches: Array< string | null > | null,
+    matches:  Array< {
+      __typename: "Match",
+      id: string,
+      encoding: string | null,
+      mixedImage: string | null,
+      matched: boolean | null,
+    } | null > | null,
+    createdAt: string | null,
   } | null,
 };
 
 export type OnCreateMatchSubscriptionVariables = {
   id?: string | null,
-  users?: Array< string | null > | null,
   encoding?: string | null,
   mixedImage?: string | null,
   matched?: boolean | null,
@@ -351,7 +686,16 @@ export type OnCreateMatchSubscription = {
   onCreateMatch:  {
     __typename: "Match",
     id: string,
-    users: Array< string | null >,
+    users:  Array< {
+      __typename: "User",
+      id: string,
+      email: string,
+      name: string,
+      rawImage: string | null,
+      alignedImage: string | null,
+      encoding: string | null,
+      createdAt: string | null,
+    } | null >,
     encoding: string | null,
     mixedImage: string | null,
     matched: boolean | null,
@@ -360,7 +704,6 @@ export type OnCreateMatchSubscription = {
 
 export type OnUpdateMatchSubscriptionVariables = {
   id?: string | null,
-  users?: Array< string | null > | null,
   encoding?: string | null,
   mixedImage?: string | null,
   matched?: boolean | null,
@@ -370,7 +713,16 @@ export type OnUpdateMatchSubscription = {
   onUpdateMatch:  {
     __typename: "Match",
     id: string,
-    users: Array< string | null >,
+    users:  Array< {
+      __typename: "User",
+      id: string,
+      email: string,
+      name: string,
+      rawImage: string | null,
+      alignedImage: string | null,
+      encoding: string | null,
+      createdAt: string | null,
+    } | null >,
     encoding: string | null,
     mixedImage: string | null,
     matched: boolean | null,
@@ -379,7 +731,6 @@ export type OnUpdateMatchSubscription = {
 
 export type OnDeleteMatchSubscriptionVariables = {
   id?: string | null,
-  users?: Array< string | null > | null,
   encoding?: string | null,
   mixedImage?: string | null,
   matched?: boolean | null,
@@ -389,9 +740,144 @@ export type OnDeleteMatchSubscription = {
   onDeleteMatch:  {
     __typename: "Match",
     id: string,
-    users: Array< string | null >,
+    users:  Array< {
+      __typename: "User",
+      id: string,
+      email: string,
+      name: string,
+      rawImage: string | null,
+      alignedImage: string | null,
+      encoding: string | null,
+      createdAt: string | null,
+    } | null >,
     encoding: string | null,
     mixedImage: string | null,
     matched: boolean | null,
+  } | null,
+};
+
+export type OnCreateMessageSubscriptionVariables = {
+  id?: string | null,
+  content?: string | null,
+  createdAt?: string | null,
+};
+
+export type OnCreateMessageSubscription = {
+  onCreateMessage:  {
+    __typename: "Message",
+    id: string,
+    match:  {
+      __typename: "Match",
+      id: string,
+      encoding: string | null,
+      mixedImage: string | null,
+      matched: boolean | null,
+    },
+    content: string,
+    author:  {
+      __typename: "User",
+      id: string,
+      email: string,
+      name: string,
+      rawImage: string | null,
+      alignedImage: string | null,
+      encoding: string | null,
+      createdAt: string | null,
+    },
+    recepient:  {
+      __typename: "User",
+      id: string,
+      email: string,
+      name: string,
+      rawImage: string | null,
+      alignedImage: string | null,
+      encoding: string | null,
+      createdAt: string | null,
+    },
+    createdAt: string,
+  } | null,
+};
+
+export type OnUpdateMessageSubscriptionVariables = {
+  id?: string | null,
+  content?: string | null,
+  createdAt?: string | null,
+};
+
+export type OnUpdateMessageSubscription = {
+  onUpdateMessage:  {
+    __typename: "Message",
+    id: string,
+    match:  {
+      __typename: "Match",
+      id: string,
+      encoding: string | null,
+      mixedImage: string | null,
+      matched: boolean | null,
+    },
+    content: string,
+    author:  {
+      __typename: "User",
+      id: string,
+      email: string,
+      name: string,
+      rawImage: string | null,
+      alignedImage: string | null,
+      encoding: string | null,
+      createdAt: string | null,
+    },
+    recepient:  {
+      __typename: "User",
+      id: string,
+      email: string,
+      name: string,
+      rawImage: string | null,
+      alignedImage: string | null,
+      encoding: string | null,
+      createdAt: string | null,
+    },
+    createdAt: string,
+  } | null,
+};
+
+export type OnDeleteMessageSubscriptionVariables = {
+  id?: string | null,
+  content?: string | null,
+  createdAt?: string | null,
+};
+
+export type OnDeleteMessageSubscription = {
+  onDeleteMessage:  {
+    __typename: "Message",
+    id: string,
+    match:  {
+      __typename: "Match",
+      id: string,
+      encoding: string | null,
+      mixedImage: string | null,
+      matched: boolean | null,
+    },
+    content: string,
+    author:  {
+      __typename: "User",
+      id: string,
+      email: string,
+      name: string,
+      rawImage: string | null,
+      alignedImage: string | null,
+      encoding: string | null,
+      createdAt: string | null,
+    },
+    recepient:  {
+      __typename: "User",
+      id: string,
+      email: string,
+      name: string,
+      rawImage: string | null,
+      alignedImage: string | null,
+      encoding: string | null,
+      createdAt: string | null,
+    },
+    createdAt: string,
   } | null,
 };

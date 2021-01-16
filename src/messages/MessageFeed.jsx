@@ -23,7 +23,7 @@ const styles = {
         border: '1px solid #f19e38'
     }
 }
-class Chat extends React.Component {
+class MessageFeed extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -65,7 +65,6 @@ class Chat extends React.Component {
             messages={this.state.messages} // Boolean: list of message objects
             showSenderName
           />
-
           <form onSubmit={e => this.onMessageSubmit(e)} >
             <input
               ref={m => {
@@ -82,4 +81,4 @@ class Chat extends React.Component {
   }
 }
 
-export default Chat
+export default MessageFeed

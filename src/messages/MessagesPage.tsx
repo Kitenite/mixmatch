@@ -1,9 +1,9 @@
-import Chat from './Chat'
+import MessageFeed from './MessageFeed'
 function MessagesPage(){
     return (
         <div>
             <h1>Messages</h1>
-            <Chat/>
+            <MessageFeed/>
         </div>
     )
 }

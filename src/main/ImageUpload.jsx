@@ -4,8 +4,11 @@ class ImageUpload extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      file: null
+      fileURL: null,
+      file:null,
+      user:props.user
     }
+    console.log(this.state.user)
     this.handleChange = this.handleChange.bind(this)
     this.uploadRawImage = this.uploadRawImage.bind(this)
   }
@@ -14,7 +17,8 @@ class ImageUpload extends React.Component {
     const fileType = uploadedFile.type
     if (fileType == 'image/png'){
         this.setState({
-            file: URL.createObjectURL(uploadedFile)
+          fileURL: URL.createObjectURL(uploadedFile),
+          file: uploadedFile
         })
     } else {
         alert("Only PNG files supported")
@@ -24,9 +28,9 @@ class ImageUpload extends React.Component {
   uploadRawImage(){
     console.log(`Uploading image to S3`)
     console.log(this.state.file)
-    Storage.put('rawImage.png', this.state.file, {
-        level: 'protected',
-        contentType: 'text/plain'
+    Storage.put(`${this.state.user.id}/rawImage/rawImage.png`, this.state.file, {
+        level: 'public',
+        contentType: 'image/png'
     })
     .then (result => console.log(result))
     .catch(err => console.log(err));
@@ -36,7 +40,7 @@ class ImageUpload extends React.Component {
       <div>
         <input type="file" accept="image/png" onChange={this.handleChange} capture/>
         {this.state.file ? <button onClick={this.uploadRawImage}>Upload Image</button> : ''}
-        <img src={this.state.file}/>
+        <img src={this.state.fileURL}/>
       </div>
     );
   }
