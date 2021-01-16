@@ -1,6 +1,7 @@
 import React from 'react';
 import { Storage } from 'aws-amplify';
 class ImageUpload extends React.Component {
+  
   constructor(props){
     super(props)
     this.state = {
@@ -36,11 +37,16 @@ class ImageUpload extends React.Component {
     .catch(err => console.log(err));
   }
   render() {
+    const styles = {
+      width:500, 
+      height:500,
+      objectFit:"scale-down"
+    }
     return (
       <div>
         <input type="file" accept="image/png" onChange={this.handleChange} capture/>
         {this.state.file ? <button onClick={this.uploadRawImage}>Upload Image</button> : ''}
-        <img src={this.state.fileURL}/>
+        <img src={this.state.fileURL} style={styles} />
       </div>
     );
   }

@@ -5,9 +5,17 @@ function S3ImageViewer(props){
     const imageKey = props.imageKey
     const [imageFile, setImageFile] = useState()
 
+    const styles = {
+        width:500, 
+        height:500,
+        objectFit:"scale-down"
+    }
+
     useEffect(() => {
         // Update the document title using the browser API
-        getImage()
+        if (imageKey){
+            getImage()
+        } 
     });
 
     const getImage = async () => {
@@ -28,7 +36,7 @@ function S3ImageViewer(props){
 
     return (
         <div>
-            <img src={imageFile}/>        
+            <img src={imageFile} style={ styles }/>        
         </div>
     )
 }
