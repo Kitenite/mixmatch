@@ -15,15 +15,10 @@ class ImageUpload extends React.Component {
   }
   handleChange(event) {
     const uploadedFile =  event.target.files[0]
-    const fileType = uploadedFile.type
-    if (fileType == 'image/png'){
-        this.setState({
-          fileURL: URL.createObjectURL(uploadedFile),
-          file: uploadedFile
-        })
-    } else {
-        alert("Only PNG files supported")
-    }
+    this.setState({
+      fileURL: URL.createObjectURL(uploadedFile),
+      file: uploadedFile
+    })
   }
 
   uploadRawImage(){
