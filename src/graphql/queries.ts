@@ -31,6 +31,9 @@ export const getUser = /* GraphQL */ `
       alignedImage
       encoding
       createdAt
+      matches {
+        id
+      }
     }
   }
 `;

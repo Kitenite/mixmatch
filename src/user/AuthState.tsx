@@ -36,7 +36,7 @@ const AuthStateApp: React.FunctionComponent = () => {
                 name:user.name,
                 email:user.email,
                 image:user.alignedImage,
-                matches:['']
+                matches:user.matches
             }
             setUser(newUser)
         })
