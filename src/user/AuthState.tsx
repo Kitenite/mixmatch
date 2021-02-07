@@ -18,7 +18,7 @@ const AuthStateApp: React.FunctionComponent = () => {
     React.useEffect(() => {
         onAuthUIStateChange((nextAuthState, authData) => {
             setAuthState(nextAuthState);
-            if (authData){
+            if (authData && 'attributes' in authData){
               createUser(authData)
             } else {
               console.log("No auth data found")
