@@ -30,12 +30,6 @@ export const getUser = /* GraphQL */ `
       rawImage
       alignedImage
       encoding
-      matches {
-        id
-        encoding
-        mixedImage
-        matched
-      }
       createdAt
     }
   }

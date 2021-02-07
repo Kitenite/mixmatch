@@ -1,0 +1,11 @@
+{
+    "matches":[
+        {
+            "id":"123",
+            "users":["123","456"],
+            "encoding":"key",
+            "mixedImage":"key",
+            "matched":false
+        }
+    ]
+}

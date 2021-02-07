@@ -18,7 +18,11 @@ const AuthStateApp: React.FunctionComponent = () => {
     React.useEffect(() => {
         onAuthUIStateChange((nextAuthState, authData) => {
             setAuthState(nextAuthState);
-            createUser(authData)
+            if (authData){
+              createUser(authData)
+            } else {
+              console.log("No auth data found")
+            }
         });
     }, []);
 
@@ -31,7 +35,7 @@ const AuthStateApp: React.FunctionComponent = () => {
                 id:user.id,
                 name:user.name,
                 email:user.email,
-                image:user.rawImage,
+                image:user.alignedImage,
                 matches:['']
             }
             setUser(newUser)
