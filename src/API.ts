@@ -9,7 +9,6 @@ export type CreateUserInput = {
   rawImage?: string | null,
   alignedImage?: string | null,
   encoding?: string | null,
-  createdAt?: string | null,
 };
 
 export type ModelUserConditionInput = {
@@ -18,7 +17,6 @@ export type ModelUserConditionInput = {
   rawImage?: ModelStringInput | null,
   alignedImage?: ModelStringInput | null,
   encoding?: ModelStringInput | null,
-  createdAt?: ModelStringInput | null,
   and?: Array< ModelUserConditionInput | null > | null,
   or?: Array< ModelUserConditionInput | null > | null,
   not?: ModelUserConditionInput | null,
@@ -79,10 +77,51 @@ export type UpdateUserInput = {
   rawImage?: string | null,
   alignedImage?: string | null,
   encoding?: string | null,
-  createdAt?: string | null,
 };
 
 export type DeleteUserInput = {
+  id?: string | null,
+};
+
+export type CreateMatchUserInput = {
+  id?: string | null,
+  createdAt?: string | null,
+  liked?: UserMatchStatus | null,
+  matchUserMatcherId: string,
+  matchUserMatcheeId: string,
+  matchUsersId?: string | null,
+};
+
+export enum UserMatchStatus {
+  NotSeen = "NotSeen",
+  Liked = "Liked",
+  Disliked = "Disliked",
+}
+
+
+export type ModelMatchUserConditionInput = {
+  createdAt?: ModelStringInput | null,
+  liked?: ModelUserMatchStatusInput | null,
+  and?: Array< ModelMatchUserConditionInput | null > | null,
+  or?: Array< ModelMatchUserConditionInput | null > | null,
+  not?: ModelMatchUserConditionInput | null,
+};
+
+export type ModelUserMatchStatusInput = {
+  eq?: UserMatchStatus | null,
+  ne?: UserMatchStatus | null,
+};
+
+export type UpdateMatchUserInput = {
+  id: string,
+  createdAt?: string | null,
+  liked?: UserMatchStatus | null,
+  matchUserMatcherId?: string | null,
+  matchUserMatcheeId?: string | null,
+  matchUsersId?: string | null,
+};
+
+export type DeleteMatchUserInput = {
   id?: string | null,
 };
 
@@ -108,13 +147,6 @@ export type ModelMatchStatusInput = {
   ne?: MatchStatus | null,
 };
 
-export enum UserMatchStatus {
-  NotSeen = "NotSeen",
-  Liked = "Liked",
-  Disliked = "Disliked",
-}
-
-
 export type UpdateMatchInput = {
   id: string,
   encoding?: string | null,
@@ -124,41 +156,6 @@ export type UpdateMatchInput = {
 };
 
 export type DeleteMatchInput = {
-  id?: string | null,
-};
-
-export type CreateMatchUserInput = {
-  id?: string | null,
-  createdAt?: string | null,
-  liked?: UserMatchStatus | null,
-  matchUsersId?: string | null,
-  matchUserMatcherId: string,
-  matchUserMatcheeId: string,
-};
-
-export type ModelMatchUserConditionInput = {
-  createdAt?: ModelStringInput | null,
-  liked?: ModelUserMatchStatusInput | null,
-  and?: Array< ModelMatchUserConditionInput | null > | null,
-  or?: Array< ModelMatchUserConditionInput | null > | null,
-  not?: ModelMatchUserConditionInput | null,
-};
-
-export type ModelUserMatchStatusInput = {
-  eq?: UserMatchStatus | null,
-  ne?: UserMatchStatus | null,
-};
-
-export type UpdateMatchUserInput = {
-  id: string,
-  createdAt?: string | null,
-  liked?: UserMatchStatus | null,
-  matchUsersId?: string | null,
-  matchUserMatcherId?: string | null,
-  matchUserMatcheeId?: string | null,
-};
-
-export type DeleteMatchUserInput = {
   id?: string | null,
 };
 
@@ -201,7 +198,6 @@ export type ModelUserFilterInput = {
   rawImage?: ModelStringInput | null,
   alignedImage?: ModelStringInput | null,
   encoding?: ModelStringInput | null,
-  createdAt?: ModelStringInput | null,
   and?: Array< ModelUserFilterInput | null > | null,
   or?: Array< ModelUserFilterInput | null > | null,
   not?: ModelUserFilterInput | null,
@@ -231,15 +227,6 @@ export type ModelMatchFilterInput = {
   and?: Array< ModelMatchFilterInput | null > | null,
   or?: Array< ModelMatchFilterInput | null > | null,
   not?: ModelMatchFilterInput | null,
-};
-
-export type ModelMatchUserFilterInput = {
-  id?: ModelIDInput | null,
-  createdAt?: ModelStringInput | null,
-  liked?: ModelUserMatchStatusInput | null,
-  and?: Array< ModelMatchUserFilterInput | null > | null,
-  or?: Array< ModelMatchUserFilterInput | null > | null,
-  not?: ModelMatchUserFilterInput | null,
 };
 
 export type ModelMessageFilterInput = {
@@ -278,7 +265,7 @@ export type CreateUserMutation = {
       } | null > | null,
       nextToken: string | null,
     } | null,
-    createdAt: string | null,
+    createdAt: string,
     updatedAt: string,
   } | null,
 };
@@ -310,7 +297,7 @@ export type UpdateUserMutation = {
       } | null > | null,
       nextToken: string | null,
     } | null,
-    createdAt: string | null,
+    createdAt: string,
     updatedAt: string,
   } | null,
 };
@@ -342,7 +329,145 @@ export type DeleteUserMutation = {
       } | null > | null,
       nextToken: string | null,
     } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type CreateMatchUserMutationVariables = {
+  input: CreateMatchUserInput,
+  condition?: ModelMatchUserConditionInput | null,
+};
+
+export type CreateMatchUserMutation = {
+  createMatchUser:  {
+    __typename: "MatchUser",
+    // Unmatched/Reported tbd.
+    id: string,
+    matcher:  {
+      __typename: "User",
+      id: string,
+      email: string,
+      name: string,
+      rawImage: string | null,
+      alignedImage: string | null,
+      encoding: string | null,
+      matches:  {
+        __typename: "ModelMatchConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    matchee:  {
+      __typename: "User",
+      id: string,
+      email: string,
+      name: string,
+      rawImage: string | null,
+      alignedImage: string | null,
+      encoding: string | null,
+      matches:  {
+        __typename: "ModelMatchConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
     createdAt: string | null,
+    liked: UserMatchStatus | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateMatchUserMutationVariables = {
+  input: UpdateMatchUserInput,
+  condition?: ModelMatchUserConditionInput | null,
+};
+
+export type UpdateMatchUserMutation = {
+  updateMatchUser:  {
+    __typename: "MatchUser",
+    // Unmatched/Reported tbd.
+    id: string,
+    matcher:  {
+      __typename: "User",
+      id: string,
+      email: string,
+      name: string,
+      rawImage: string | null,
+      alignedImage: string | null,
+      encoding: string | null,
+      matches:  {
+        __typename: "ModelMatchConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    matchee:  {
+      __typename: "User",
+      id: string,
+      email: string,
+      name: string,
+      rawImage: string | null,
+      alignedImage: string | null,
+      encoding: string | null,
+      matches:  {
+        __typename: "ModelMatchConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    createdAt: string | null,
+    liked: UserMatchStatus | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteMatchUserMutationVariables = {
+  input: DeleteMatchUserInput,
+  condition?: ModelMatchUserConditionInput | null,
+};
+
+export type DeleteMatchUserMutation = {
+  deleteMatchUser:  {
+    __typename: "MatchUser",
+    // Unmatched/Reported tbd.
+    id: string,
+    matcher:  {
+      __typename: "User",
+      id: string,
+      email: string,
+      name: string,
+      rawImage: string | null,
+      alignedImage: string | null,
+      encoding: string | null,
+      matches:  {
+        __typename: "ModelMatchConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    matchee:  {
+      __typename: "User",
+      id: string,
+      email: string,
+      name: string,
+      rawImage: string | null,
+      alignedImage: string | null,
+      encoding: string | null,
+      matches:  {
+        __typename: "ModelMatchConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    createdAt: string | null,
+    liked: UserMatchStatus | null,
     updatedAt: string,
   } | null,
 };
@@ -360,6 +485,7 @@ export type CreateMatchMutation = {
       __typename: "ModelMatchUserConnection",
       items:  Array< {
         __typename: "MatchUser",
+        // Unmatched/Reported tbd.
         id: string,
         createdAt: string | null,
         liked: UserMatchStatus | null,
@@ -399,6 +525,7 @@ export type UpdateMatchMutation = {
       __typename: "ModelMatchUserConnection",
       items:  Array< {
         __typename: "MatchUser",
+        // Unmatched/Reported tbd.
         id: string,
         createdAt: string | null,
         liked: UserMatchStatus | null,
@@ -438,6 +565,7 @@ export type DeleteMatchMutation = {
       __typename: "ModelMatchUserConnection",
       items:  Array< {
         __typename: "MatchUser",
+        // Unmatched/Reported tbd.
         id: string,
         createdAt: string | null,
         liked: UserMatchStatus | null,
@@ -460,141 +588,6 @@ export type DeleteMatchMutation = {
       nextToken: string | null,
     } | null,
     createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type CreateMatchUserMutationVariables = {
-  input: CreateMatchUserInput,
-  condition?: ModelMatchUserConditionInput | null,
-};
-
-export type CreateMatchUserMutation = {
-  createMatchUser:  {
-    __typename: "MatchUser",
-    id: string,
-    matcher:  {
-      __typename: "User",
-      id: string,
-      email: string,
-      name: string,
-      rawImage: string | null,
-      alignedImage: string | null,
-      encoding: string | null,
-      matches:  {
-        __typename: "ModelMatchConnection",
-        nextToken: string | null,
-      } | null,
-      createdAt: string | null,
-      updatedAt: string,
-    },
-    matchee:  {
-      __typename: "User",
-      id: string,
-      email: string,
-      name: string,
-      rawImage: string | null,
-      alignedImage: string | null,
-      encoding: string | null,
-      matches:  {
-        __typename: "ModelMatchConnection",
-        nextToken: string | null,
-      } | null,
-      createdAt: string | null,
-      updatedAt: string,
-    },
-    createdAt: string | null,
-    liked: UserMatchStatus | null,
-    updatedAt: string,
-  } | null,
-};
-
-export type UpdateMatchUserMutationVariables = {
-  input: UpdateMatchUserInput,
-  condition?: ModelMatchUserConditionInput | null,
-};
-
-export type UpdateMatchUserMutation = {
-  updateMatchUser:  {
-    __typename: "MatchUser",
-    id: string,
-    matcher:  {
-      __typename: "User",
-      id: string,
-      email: string,
-      name: string,
-      rawImage: string | null,
-      alignedImage: string | null,
-      encoding: string | null,
-      matches:  {
-        __typename: "ModelMatchConnection",
-        nextToken: string | null,
-      } | null,
-      createdAt: string | null,
-      updatedAt: string,
-    },
-    matchee:  {
-      __typename: "User",
-      id: string,
-      email: string,
-      name: string,
-      rawImage: string | null,
-      alignedImage: string | null,
-      encoding: string | null,
-      matches:  {
-        __typename: "ModelMatchConnection",
-        nextToken: string | null,
-      } | null,
-      createdAt: string | null,
-      updatedAt: string,
-    },
-    createdAt: string | null,
-    liked: UserMatchStatus | null,
-    updatedAt: string,
-  } | null,
-};
-
-export type DeleteMatchUserMutationVariables = {
-  input: DeleteMatchUserInput,
-  condition?: ModelMatchUserConditionInput | null,
-};
-
-export type DeleteMatchUserMutation = {
-  deleteMatchUser:  {
-    __typename: "MatchUser",
-    id: string,
-    matcher:  {
-      __typename: "User",
-      id: string,
-      email: string,
-      name: string,
-      rawImage: string | null,
-      alignedImage: string | null,
-      encoding: string | null,
-      matches:  {
-        __typename: "ModelMatchConnection",
-        nextToken: string | null,
-      } | null,
-      createdAt: string | null,
-      updatedAt: string,
-    },
-    matchee:  {
-      __typename: "User",
-      id: string,
-      email: string,
-      name: string,
-      rawImage: string | null,
-      alignedImage: string | null,
-      encoding: string | null,
-      matches:  {
-        __typename: "ModelMatchConnection",
-        nextToken: string | null,
-      } | null,
-      createdAt: string | null,
-      updatedAt: string,
-    },
-    createdAt: string | null,
-    liked: UserMatchStatus | null,
     updatedAt: string,
   } | null,
 };
@@ -638,7 +631,7 @@ export type CreateMessageMutation = {
         __typename: "ModelMatchConnection",
         nextToken: string | null,
       } | null,
-      createdAt: string | null,
+      createdAt: string,
       updatedAt: string,
     },
     recepient:  {
@@ -653,7 +646,7 @@ export type CreateMessageMutation = {
         __typename: "ModelMatchConnection",
         nextToken: string | null,
       } | null,
-      createdAt: string | null,
+      createdAt: string,
       updatedAt: string,
     },
     createdAt: string,
@@ -700,7 +693,7 @@ export type UpdateMessageMutation = {
         __typename: "ModelMatchConnection",
         nextToken: string | null,
       } | null,
-      createdAt: string | null,
+      createdAt: string,
       updatedAt: string,
     },
     recepient:  {
@@ -715,7 +708,7 @@ export type UpdateMessageMutation = {
         __typename: "ModelMatchConnection",
         nextToken: string | null,
       } | null,
-      createdAt: string | null,
+      createdAt: string,
       updatedAt: string,
     },
     createdAt: string,
@@ -762,7 +755,7 @@ export type DeleteMessageMutation = {
         __typename: "ModelMatchConnection",
         nextToken: string | null,
       } | null,
-      createdAt: string | null,
+      createdAt: string,
       updatedAt: string,
     },
     recepient:  {
@@ -777,7 +770,7 @@ export type DeleteMessageMutation = {
         __typename: "ModelMatchConnection",
         nextToken: string | null,
       } | null,
-      createdAt: string | null,
+      createdAt: string,
       updatedAt: string,
     },
     createdAt: string,
@@ -811,7 +804,7 @@ export type GetUserQuery = {
       } | null > | null,
       nextToken: string | null,
     } | null,
-    createdAt: string | null,
+    createdAt: string,
     updatedAt: string,
   } | null,
 };
@@ -837,7 +830,7 @@ export type ListUsersQuery = {
         __typename: "ModelMatchConnection",
         nextToken: string | null,
       } | null,
-      createdAt: string | null,
+      createdAt: string,
       updatedAt: string,
     } | null > | null,
     nextToken: string | null,
@@ -856,6 +849,7 @@ export type GetMatchQuery = {
       __typename: "ModelMatchUserConnection",
       items:  Array< {
         __typename: "MatchUser",
+        // Unmatched/Reported tbd.
         id: string,
         createdAt: string | null,
         liked: UserMatchStatus | null,
@@ -912,92 +906,6 @@ export type ListMatchsQuery = {
   } | null,
 };
 
-export type GetMatchUserQueryVariables = {
-  id: string,
-};
-
-export type GetMatchUserQuery = {
-  getMatchUser:  {
-    __typename: "MatchUser",
-    id: string,
-    matcher:  {
-      __typename: "User",
-      id: string,
-      email: string,
-      name: string,
-      rawImage: string | null,
-      alignedImage: string | null,
-      encoding: string | null,
-      matches:  {
-        __typename: "ModelMatchConnection",
-        nextToken: string | null,
-      } | null,
-      createdAt: string | null,
-      updatedAt: string,
-    },
-    matchee:  {
-      __typename: "User",
-      id: string,
-      email: string,
-      name: string,
-      rawImage: string | null,
-      alignedImage: string | null,
-      encoding: string | null,
-      matches:  {
-        __typename: "ModelMatchConnection",
-        nextToken: string | null,
-      } | null,
-      createdAt: string | null,
-      updatedAt: string,
-    },
-    createdAt: string | null,
-    liked: UserMatchStatus | null,
-    updatedAt: string,
-  } | null,
-};
-
-export type ListMatchUsersQueryVariables = {
-  filter?: ModelMatchUserFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type ListMatchUsersQuery = {
-  listMatchUsers:  {
-    __typename: "ModelMatchUserConnection",
-    items:  Array< {
-      __typename: "MatchUser",
-      id: string,
-      matcher:  {
-        __typename: "User",
-        id: string,
-        email: string,
-        name: string,
-        rawImage: string | null,
-        alignedImage: string | null,
-        encoding: string | null,
-        createdAt: string | null,
-        updatedAt: string,
-      },
-      matchee:  {
-        __typename: "User",
-        id: string,
-        email: string,
-        name: string,
-        rawImage: string | null,
-        alignedImage: string | null,
-        encoding: string | null,
-        createdAt: string | null,
-        updatedAt: string,
-      },
-      createdAt: string | null,
-      liked: UserMatchStatus | null,
-      updatedAt: string,
-    } | null > | null,
-    nextToken: string | null,
-  } | null,
-};
-
 export type GetMessageQueryVariables = {
   id: string,
 };
@@ -1036,7 +944,7 @@ export type GetMessageQuery = {
         __typename: "ModelMatchConnection",
         nextToken: string | null,
       } | null,
-      createdAt: string | null,
+      createdAt: string,
       updatedAt: string,
     },
     recepient:  {
@@ -1051,7 +959,7 @@ export type GetMessageQuery = {
         __typename: "ModelMatchConnection",
         nextToken: string | null,
       } | null,
-      createdAt: string | null,
+      createdAt: string,
       updatedAt: string,
     },
     createdAt: string,
@@ -1089,7 +997,7 @@ export type ListMessagesQuery = {
         rawImage: string | null,
         alignedImage: string | null,
         encoding: string | null,
-        createdAt: string | null,
+        createdAt: string,
         updatedAt: string,
       },
       recepient:  {
@@ -1100,7 +1008,7 @@ export type ListMessagesQuery = {
         rawImage: string | null,
         alignedImage: string | null,
         encoding: string | null,
-        createdAt: string | null,
+        createdAt: string,
         updatedAt: string,
       },
       createdAt: string,
@@ -1132,7 +1040,7 @@ export type OnCreateUserSubscription = {
       } | null > | null,
       nextToken: string | null,
     } | null,
-    createdAt: string | null,
+    createdAt: string,
     updatedAt: string,
   } | null,
 };
@@ -1159,7 +1067,7 @@ export type OnUpdateUserSubscription = {
       } | null > | null,
       nextToken: string | null,
     } | null,
-    createdAt: string | null,
+    createdAt: string,
     updatedAt: string,
   } | null,
 };
@@ -1186,7 +1094,130 @@ export type OnDeleteUserSubscription = {
       } | null > | null,
       nextToken: string | null,
     } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreateMatchUserSubscription = {
+  onCreateMatchUser:  {
+    __typename: "MatchUser",
+    // Unmatched/Reported tbd.
+    id: string,
+    matcher:  {
+      __typename: "User",
+      id: string,
+      email: string,
+      name: string,
+      rawImage: string | null,
+      alignedImage: string | null,
+      encoding: string | null,
+      matches:  {
+        __typename: "ModelMatchConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    matchee:  {
+      __typename: "User",
+      id: string,
+      email: string,
+      name: string,
+      rawImage: string | null,
+      alignedImage: string | null,
+      encoding: string | null,
+      matches:  {
+        __typename: "ModelMatchConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
     createdAt: string | null,
+    liked: UserMatchStatus | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateMatchUserSubscription = {
+  onUpdateMatchUser:  {
+    __typename: "MatchUser",
+    // Unmatched/Reported tbd.
+    id: string,
+    matcher:  {
+      __typename: "User",
+      id: string,
+      email: string,
+      name: string,
+      rawImage: string | null,
+      alignedImage: string | null,
+      encoding: string | null,
+      matches:  {
+        __typename: "ModelMatchConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    matchee:  {
+      __typename: "User",
+      id: string,
+      email: string,
+      name: string,
+      rawImage: string | null,
+      alignedImage: string | null,
+      encoding: string | null,
+      matches:  {
+        __typename: "ModelMatchConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    createdAt: string | null,
+    liked: UserMatchStatus | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteMatchUserSubscription = {
+  onDeleteMatchUser:  {
+    __typename: "MatchUser",
+    // Unmatched/Reported tbd.
+    id: string,
+    matcher:  {
+      __typename: "User",
+      id: string,
+      email: string,
+      name: string,
+      rawImage: string | null,
+      alignedImage: string | null,
+      encoding: string | null,
+      matches:  {
+        __typename: "ModelMatchConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    matchee:  {
+      __typename: "User",
+      id: string,
+      email: string,
+      name: string,
+      rawImage: string | null,
+      alignedImage: string | null,
+      encoding: string | null,
+      matches:  {
+        __typename: "ModelMatchConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    createdAt: string | null,
+    liked: UserMatchStatus | null,
     updatedAt: string,
   } | null,
 };
@@ -1199,6 +1230,7 @@ export type OnCreateMatchSubscription = {
       __typename: "ModelMatchUserConnection",
       items:  Array< {
         __typename: "MatchUser",
+        // Unmatched/Reported tbd.
         id: string,
         createdAt: string | null,
         liked: UserMatchStatus | null,
@@ -1233,6 +1265,7 @@ export type OnUpdateMatchSubscription = {
       __typename: "ModelMatchUserConnection",
       items:  Array< {
         __typename: "MatchUser",
+        // Unmatched/Reported tbd.
         id: string,
         createdAt: string | null,
         liked: UserMatchStatus | null,
@@ -1267,6 +1300,7 @@ export type OnDeleteMatchSubscription = {
       __typename: "ModelMatchUserConnection",
       items:  Array< {
         __typename: "MatchUser",
+        // Unmatched/Reported tbd.
         id: string,
         createdAt: string | null,
         liked: UserMatchStatus | null,
@@ -1289,126 +1323,6 @@ export type OnDeleteMatchSubscription = {
       nextToken: string | null,
     } | null,
     createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnCreateMatchUserSubscription = {
-  onCreateMatchUser:  {
-    __typename: "MatchUser",
-    id: string,
-    matcher:  {
-      __typename: "User",
-      id: string,
-      email: string,
-      name: string,
-      rawImage: string | null,
-      alignedImage: string | null,
-      encoding: string | null,
-      matches:  {
-        __typename: "ModelMatchConnection",
-        nextToken: string | null,
-      } | null,
-      createdAt: string | null,
-      updatedAt: string,
-    },
-    matchee:  {
-      __typename: "User",
-      id: string,
-      email: string,
-      name: string,
-      rawImage: string | null,
-      alignedImage: string | null,
-      encoding: string | null,
-      matches:  {
-        __typename: "ModelMatchConnection",
-        nextToken: string | null,
-      } | null,
-      createdAt: string | null,
-      updatedAt: string,
-    },
-    createdAt: string | null,
-    liked: UserMatchStatus | null,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnUpdateMatchUserSubscription = {
-  onUpdateMatchUser:  {
-    __typename: "MatchUser",
-    id: string,
-    matcher:  {
-      __typename: "User",
-      id: string,
-      email: string,
-      name: string,
-      rawImage: string | null,
-      alignedImage: string | null,
-      encoding: string | null,
-      matches:  {
-        __typename: "ModelMatchConnection",
-        nextToken: string | null,
-      } | null,
-      createdAt: string | null,
-      updatedAt: string,
-    },
-    matchee:  {
-      __typename: "User",
-      id: string,
-      email: string,
-      name: string,
-      rawImage: string | null,
-      alignedImage: string | null,
-      encoding: string | null,
-      matches:  {
-        __typename: "ModelMatchConnection",
-        nextToken: string | null,
-      } | null,
-      createdAt: string | null,
-      updatedAt: string,
-    },
-    createdAt: string | null,
-    liked: UserMatchStatus | null,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnDeleteMatchUserSubscription = {
-  onDeleteMatchUser:  {
-    __typename: "MatchUser",
-    id: string,
-    matcher:  {
-      __typename: "User",
-      id: string,
-      email: string,
-      name: string,
-      rawImage: string | null,
-      alignedImage: string | null,
-      encoding: string | null,
-      matches:  {
-        __typename: "ModelMatchConnection",
-        nextToken: string | null,
-      } | null,
-      createdAt: string | null,
-      updatedAt: string,
-    },
-    matchee:  {
-      __typename: "User",
-      id: string,
-      email: string,
-      name: string,
-      rawImage: string | null,
-      alignedImage: string | null,
-      encoding: string | null,
-      matches:  {
-        __typename: "ModelMatchConnection",
-        nextToken: string | null,
-      } | null,
-      createdAt: string | null,
-      updatedAt: string,
-    },
-    createdAt: string | null,
-    liked: UserMatchStatus | null,
     updatedAt: string,
   } | null,
 };
@@ -1447,7 +1361,7 @@ export type OnCreateMessageSubscription = {
         __typename: "ModelMatchConnection",
         nextToken: string | null,
       } | null,
-      createdAt: string | null,
+      createdAt: string,
       updatedAt: string,
     },
     recepient:  {
@@ -1462,7 +1376,7 @@ export type OnCreateMessageSubscription = {
         __typename: "ModelMatchConnection",
         nextToken: string | null,
       } | null,
-      createdAt: string | null,
+      createdAt: string,
       updatedAt: string,
     },
     createdAt: string,
@@ -1504,7 +1418,7 @@ export type OnUpdateMessageSubscription = {
         __typename: "ModelMatchConnection",
         nextToken: string | null,
       } | null,
-      createdAt: string | null,
+      createdAt: string,
       updatedAt: string,
     },
     recepient:  {
@@ -1519,7 +1433,7 @@ export type OnUpdateMessageSubscription = {
         __typename: "ModelMatchConnection",
         nextToken: string | null,
       } | null,
-      createdAt: string | null,
+      createdAt: string,
       updatedAt: string,
     },
     createdAt: string,
@@ -1561,7 +1475,7 @@ export type OnDeleteMessageSubscription = {
         __typename: "ModelMatchConnection",
         nextToken: string | null,
       } | null,
-      createdAt: string | null,
+      createdAt: string,
       updatedAt: string,
     },
     recepient:  {
@@ -1576,7 +1490,7 @@ export type OnDeleteMessageSubscription = {
         __typename: "ModelMatchConnection",
         nextToken: string | null,
       } | null,
-      createdAt: string | null,
+      createdAt: string,
       updatedAt: string,
     },
     createdAt: string,

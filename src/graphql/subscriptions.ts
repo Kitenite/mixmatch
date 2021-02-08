@@ -77,96 +77,6 @@ export const onDeleteUser = /* GraphQL */ `
     }
   }
 `;
-export const onCreateMatch = /* GraphQL */ `
-  subscription OnCreateMatch {
-    onCreateMatch {
-      id
-      users {
-        items {
-          id
-          createdAt
-          liked
-          updatedAt
-        }
-        nextToken
-      }
-      encoding
-      mixedImage
-      matched
-      messages {
-        items {
-          id
-          content
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdateMatch = /* GraphQL */ `
-  subscription OnUpdateMatch {
-    onUpdateMatch {
-      id
-      users {
-        items {
-          id
-          createdAt
-          liked
-          updatedAt
-        }
-        nextToken
-      }
-      encoding
-      mixedImage
-      matched
-      messages {
-        items {
-          id
-          content
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeleteMatch = /* GraphQL */ `
-  subscription OnDeleteMatch {
-    onDeleteMatch {
-      id
-      users {
-        items {
-          id
-          createdAt
-          liked
-          updatedAt
-        }
-        nextToken
-      }
-      encoding
-      mixedImage
-      matched
-      messages {
-        items {
-          id
-          content
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
 export const onCreateMatchUser = /* GraphQL */ `
   subscription OnCreateMatchUser {
     onCreateMatchUser {
@@ -271,6 +181,96 @@ export const onDeleteMatchUser = /* GraphQL */ `
       }
       createdAt
       liked
+      updatedAt
+    }
+  }
+`;
+export const onCreateMatch = /* GraphQL */ `
+  subscription OnCreateMatch {
+    onCreateMatch {
+      id
+      users {
+        items {
+          id
+          createdAt
+          liked
+          updatedAt
+        }
+        nextToken
+      }
+      encoding
+      mixedImage
+      matched
+      messages {
+        items {
+          id
+          content
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateMatch = /* GraphQL */ `
+  subscription OnUpdateMatch {
+    onUpdateMatch {
+      id
+      users {
+        items {
+          id
+          createdAt
+          liked
+          updatedAt
+        }
+        nextToken
+      }
+      encoding
+      mixedImage
+      matched
+      messages {
+        items {
+          id
+          content
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteMatch = /* GraphQL */ `
+  subscription OnDeleteMatch {
+    onDeleteMatch {
+      id
+      users {
+        items {
+          id
+          createdAt
+          liked
+          updatedAt
+        }
+        nextToken
+      }
+      encoding
+      mixedImage
+      matched
+      messages {
+        items {
+          id
+          content
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
       updatedAt
     }
   }

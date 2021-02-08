@@ -86,105 +86,6 @@ export const deleteUser = /* GraphQL */ `
     }
   }
 `;
-export const createMatch = /* GraphQL */ `
-  mutation CreateMatch(
-    $input: CreateMatchInput!
-    $condition: ModelMatchConditionInput
-  ) {
-    createMatch(input: $input, condition: $condition) {
-      id
-      users {
-        items {
-          id
-          createdAt
-          liked
-          updatedAt
-        }
-        nextToken
-      }
-      encoding
-      mixedImage
-      matched
-      messages {
-        items {
-          id
-          content
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const updateMatch = /* GraphQL */ `
-  mutation UpdateMatch(
-    $input: UpdateMatchInput!
-    $condition: ModelMatchConditionInput
-  ) {
-    updateMatch(input: $input, condition: $condition) {
-      id
-      users {
-        items {
-          id
-          createdAt
-          liked
-          updatedAt
-        }
-        nextToken
-      }
-      encoding
-      mixedImage
-      matched
-      messages {
-        items {
-          id
-          content
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const deleteMatch = /* GraphQL */ `
-  mutation DeleteMatch(
-    $input: DeleteMatchInput!
-    $condition: ModelMatchConditionInput
-  ) {
-    deleteMatch(input: $input, condition: $condition) {
-      id
-      users {
-        items {
-          id
-          createdAt
-          liked
-          updatedAt
-        }
-        nextToken
-      }
-      encoding
-      mixedImage
-      matched
-      messages {
-        items {
-          id
-          content
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
 export const createMatchUser = /* GraphQL */ `
   mutation CreateMatchUser(
     $input: CreateMatchUserInput!
@@ -298,6 +199,105 @@ export const deleteMatchUser = /* GraphQL */ `
       }
       createdAt
       liked
+      updatedAt
+    }
+  }
+`;
+export const createMatch = /* GraphQL */ `
+  mutation CreateMatch(
+    $input: CreateMatchInput!
+    $condition: ModelMatchConditionInput
+  ) {
+    createMatch(input: $input, condition: $condition) {
+      id
+      users {
+        items {
+          id
+          createdAt
+          liked
+          updatedAt
+        }
+        nextToken
+      }
+      encoding
+      mixedImage
+      matched
+      messages {
+        items {
+          id
+          content
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateMatch = /* GraphQL */ `
+  mutation UpdateMatch(
+    $input: UpdateMatchInput!
+    $condition: ModelMatchConditionInput
+  ) {
+    updateMatch(input: $input, condition: $condition) {
+      id
+      users {
+        items {
+          id
+          createdAt
+          liked
+          updatedAt
+        }
+        nextToken
+      }
+      encoding
+      mixedImage
+      matched
+      messages {
+        items {
+          id
+          content
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteMatch = /* GraphQL */ `
+  mutation DeleteMatch(
+    $input: DeleteMatchInput!
+    $condition: ModelMatchConditionInput
+  ) {
+    deleteMatch(input: $input, condition: $condition) {
+      id
+      users {
+        items {
+          id
+          createdAt
+          liked
+          updatedAt
+        }
+        nextToken
+      }
+      encoding
+      mixedImage
+      matched
+      messages {
+        items {
+          id
+          content
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
       updatedAt
     }
   }

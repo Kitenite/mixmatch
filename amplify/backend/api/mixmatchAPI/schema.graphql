@@ -1,42 +1,66 @@
 type User @model {
 	id: ID!
-	email: AWSEmail!
 	name: String!
+	email: AWSEmail!
 	rawImage: AWSURL
 	alignedImage: AWSURL
 	encoding: AWSURL
-	matches: [Match] @connection
-    createdAt: AWSDateTime
+
+	matches: [MatchUser] @connection(keyName: "byUser", fields: ["id"])
+	messages: [Message] @connection(keyName: "bySender", fields: ["id"])
+}
+
+"""
+Join table to link User and Match
+"""
+
+type MatchUser @model(queries: null)
+@key(name: "byUser", fields: ["sourceUserID", "targetUserID"])
+@key(name: "byMatch", fields: ["matchID"]) { 
+
+	"""
+	Unmatched/Reported tbd.
+	"""
+
+	id: ID!
+	matchStatus: UserMatchStatus
+
+	matchID: ID!
+	match: Match! @connection(fields: ["matchID"])
+
+	sourceUserID: ID!
+	sourceID: User! @connection(fields: ["sourceUserID"])
+
+	targetUserID: ID!
+	targetUser: User! @connection(fields: ["targetUserID"])
+
+	
 }
 
 type Match @model {
 	id: ID!
-	users: [MatchUser]! @connection
+	users: [MatchUser]! @connection(keyName: "byMatch", fields: ["id"])
+
+	matched: MatchStatus!
+	messages: [Message] @connection(keyName: "byMatch", fields: ["id])
+
 	encoding: AWSURL
 	mixedImage: AWSURL
-	matched: MatchStatus!
-	messages: [Message] @connection
 }
 
 
-type MatchUser @model { 
-	"""
-	Unmatched/Reported tbd.
-	"""
+type Message @model
+@key(name: "byMatch", fields: ["matchID"])
+@key(name: "bySender", fields: ["senderID"]) 
+{
 	id: ID!
-	matcher: User! @connection
-	matchee: User! @connection
-	createdAt: AWSDateTime
-	liked: UserMatchStatus
-}
-
-type Message @model {
-	id: ID!
-	match: Match! @connection
 	content: String!
-	author: User! @connection
-	recepient: User! @connection
-	createdAt: AWSDateTime!
+	
+	senderID: ID!
+	sender: User! @connection(fields: ["userID"])
+
+	matchID: ID!
+	match: Match! @connection(fields: ["matchID"])
 }
 
 enum MatchStatus {
