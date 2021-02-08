@@ -1,0 +1,53 @@
+type User @model {
+	id: ID!
+	email: AWSEmail!
+	name: String!
+	rawImage: AWSURL
+	alignedImage: AWSURL
+	encoding: AWSURL
+	matches: [Match] @connection
+    createdAt: AWSDateTime
+}
+
+type Match @model {
+	id: ID!
+	users: [MatchUser]! @connection
+	encoding: AWSURL
+	mixedImage: AWSURL
+	matched: MatchStatus!
+	messages: [Message] @connection
+}
+
+
+type MatchUser @model { 
+	"""
+	Unmatched/Reported tbd.
+	"""
+	id: ID!
+	matcher: User! @connection
+	matchee: User! @connection
+	createdAt: AWSDateTime
+	liked: UserMatchStatus
+}
+
+type Message @model {
+	id: ID!
+	match: Match! @connection
+	content: String!
+	author: User! @connection
+	recepient: User! @connection
+	createdAt: AWSDateTime!
+}
+
+enum MatchStatus {
+	Unresolved
+	Matched 
+	Rejected
+	Unmatched
+}
+
+enum UserMatchStatus {
+	NotSeen
+	Liked 
+	Disliked
+}

@@ -2,25 +2,6 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const getUsers = /* GraphQL */ `
-  query GetUsers {
-    getUsers {
-      id
-      email
-      name
-      rawImage
-      alignedImage
-      encoding
-      matches {
-        id
-        encoding
-        mixedImage
-        matched
-      }
-      createdAt
-    }
-  }
-`;
 export const getUser = /* GraphQL */ `
   query GetUser($id: ID!) {
     getUser(id: $id) {
@@ -30,16 +11,25 @@ export const getUser = /* GraphQL */ `
       rawImage
       alignedImage
       encoding
-      createdAt
       matches {
-        id
+        items {
+          id
+          encoding
+          mixedImage
+          matched
+          createdAt
+          updatedAt
+        }
+        nextToken
       }
+      createdAt
+      updatedAt
     }
   }
 `;
 export const listUsers = /* GraphQL */ `
   query ListUsers(
-    $filter: TableUserFilterInput
+    $filter: ModelUserFilterInput
     $limit: Int
     $nextToken: String
   ) {
@@ -51,7 +41,11 @@ export const listUsers = /* GraphQL */ `
         rawImage
         alignedImage
         encoding
+        matches {
+          nextToken
+        }
         createdAt
+        updatedAt
       }
       nextToken
     }
@@ -62,32 +56,124 @@ export const getMatch = /* GraphQL */ `
     getMatch(id: $id) {
       id
       users {
+        items {
+          id
+          createdAt
+          liked
+          updatedAt
+        }
+        nextToken
+      }
+      encoding
+      mixedImage
+      matched
+      messages {
+        items {
+          id
+          content
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listMatchs = /* GraphQL */ `
+  query ListMatchs(
+    $filter: ModelMatchFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listMatchs(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        users {
+          nextToken
+        }
+        encoding
+        mixedImage
+        matched
+        messages {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getMatchUser = /* GraphQL */ `
+  query GetMatchUser($id: ID!) {
+    getMatchUser(id: $id) {
+      id
+      matcher {
         id
         email
         name
         rawImage
         alignedImage
         encoding
+        matches {
+          nextToken
+        }
         createdAt
+        updatedAt
       }
-      encoding
-      mixedImage
-      matched
+      matchee {
+        id
+        email
+        name
+        rawImage
+        alignedImage
+        encoding
+        matches {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      liked
+      updatedAt
     }
   }
 `;
-export const listMatches = /* GraphQL */ `
-  query ListMatches(
-    $filter: TableMatchFilterInput
+export const listMatchUsers = /* GraphQL */ `
+  query ListMatchUsers(
+    $filter: ModelMatchUserFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listMatches(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listMatchUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        encoding
-        mixedImage
-        matched
+        matcher {
+          id
+          email
+          name
+          rawImage
+          alignedImage
+          encoding
+          createdAt
+          updatedAt
+        }
+        matchee {
+          id
+          email
+          name
+          rawImage
+          alignedImage
+          encoding
+          createdAt
+          updatedAt
+        }
+        createdAt
+        liked
+        updatedAt
       }
       nextToken
     }
@@ -99,9 +185,17 @@ export const getMessage = /* GraphQL */ `
       id
       match {
         id
+        users {
+          nextToken
+        }
         encoding
         mixedImage
         matched
+        messages {
+          nextToken
+        }
+        createdAt
+        updatedAt
       }
       content
       author {
@@ -111,7 +205,11 @@ export const getMessage = /* GraphQL */ `
         rawImage
         alignedImage
         encoding
+        matches {
+          nextToken
+        }
         createdAt
+        updatedAt
       }
       recepient {
         id
@@ -120,23 +218,57 @@ export const getMessage = /* GraphQL */ `
         rawImage
         alignedImage
         encoding
+        matches {
+          nextToken
+        }
         createdAt
+        updatedAt
       }
       createdAt
+      updatedAt
     }
   }
 `;
 export const listMessages = /* GraphQL */ `
   query ListMessages(
-    $filter: TableMessageFilterInput
+    $filter: ModelMessageFilterInput
     $limit: Int
     $nextToken: String
   ) {
     listMessages(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
+        match {
+          id
+          encoding
+          mixedImage
+          matched
+          createdAt
+          updatedAt
+        }
         content
+        author {
+          id
+          email
+          name
+          rawImage
+          alignedImage
+          encoding
+          createdAt
+          updatedAt
+        }
+        recepient {
+          id
+          email
+          name
+          rawImage
+          alignedImage
+          encoding
+          createdAt
+          updatedAt
+        }
         createdAt
+        updatedAt
       }
       nextToken
     }

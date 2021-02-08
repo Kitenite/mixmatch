@@ -2,40 +2,9 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const subscribeToNewUsers = /* GraphQL */ `
-  subscription SubscribeToNewUsers {
-    subscribeToNewUsers {
-      id
-      email
-      name
-      rawImage
-      alignedImage
-      encoding
-      matches {
-        id
-        encoding
-        mixedImage
-        matched
-      }
-      createdAt
-    }
-  }
-`;
 export const onCreateUser = /* GraphQL */ `
-  subscription OnCreateUser(
-    $id: ID
-    $email: AWSEmail
-    $name: String
-    $rawImage: String
-    $alignedImage: String
-  ) {
-    onCreateUser(
-      id: $id
-      email: $email
-      name: $name
-      rawImage: $rawImage
-      alignedImage: $alignedImage
-    ) {
+  subscription OnCreateUser {
+    onCreateUser {
       id
       email
       name
@@ -43,30 +12,24 @@ export const onCreateUser = /* GraphQL */ `
       alignedImage
       encoding
       matches {
-        id
-        encoding
-        mixedImage
-        matched
+        items {
+          id
+          encoding
+          mixedImage
+          matched
+          createdAt
+          updatedAt
+        }
+        nextToken
       }
       createdAt
+      updatedAt
     }
   }
 `;
 export const onUpdateUser = /* GraphQL */ `
-  subscription OnUpdateUser(
-    $id: ID
-    $email: AWSEmail
-    $name: String
-    $rawImage: String
-    $alignedImage: String
-  ) {
-    onUpdateUser(
-      id: $id
-      email: $email
-      name: $name
-      rawImage: $rawImage
-      alignedImage: $alignedImage
-    ) {
+  subscription OnUpdateUser {
+    onUpdateUser {
       id
       email
       name
@@ -74,30 +37,24 @@ export const onUpdateUser = /* GraphQL */ `
       alignedImage
       encoding
       matches {
-        id
-        encoding
-        mixedImage
-        matched
+        items {
+          id
+          encoding
+          mixedImage
+          matched
+          createdAt
+          updatedAt
+        }
+        nextToken
       }
       createdAt
+      updatedAt
     }
   }
 `;
 export const onDeleteUser = /* GraphQL */ `
-  subscription OnDeleteUser(
-    $id: ID
-    $email: AWSEmail
-    $name: String
-    $rawImage: String
-    $alignedImage: String
-  ) {
-    onDeleteUser(
-      id: $id
-      email: $email
-      name: $name
-      rawImage: $rawImage
-      alignedImage: $alignedImage
-    ) {
+  subscription OnDeleteUser {
+    onDeleteUser {
       id
       email
       name
@@ -105,115 +62,236 @@ export const onDeleteUser = /* GraphQL */ `
       alignedImage
       encoding
       matches {
-        id
-        encoding
-        mixedImage
-        matched
+        items {
+          id
+          encoding
+          mixedImage
+          matched
+          createdAt
+          updatedAt
+        }
+        nextToken
       }
       createdAt
+      updatedAt
     }
   }
 `;
 export const onCreateMatch = /* GraphQL */ `
-  subscription OnCreateMatch(
-    $id: ID
-    $encoding: String
-    $mixedImage: String
-    $matched: Boolean
-  ) {
-    onCreateMatch(
-      id: $id
-      encoding: $encoding
-      mixedImage: $mixedImage
-      matched: $matched
-    ) {
+  subscription OnCreateMatch {
+    onCreateMatch {
       id
       users {
-        id
-        email
-        name
-        rawImage
-        alignedImage
-        encoding
-        createdAt
+        items {
+          id
+          createdAt
+          liked
+          updatedAt
+        }
+        nextToken
       }
       encoding
       mixedImage
       matched
+      messages {
+        items {
+          id
+          content
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
     }
   }
 `;
 export const onUpdateMatch = /* GraphQL */ `
-  subscription OnUpdateMatch(
-    $id: ID
-    $encoding: String
-    $mixedImage: String
-    $matched: Boolean
-  ) {
-    onUpdateMatch(
-      id: $id
-      encoding: $encoding
-      mixedImage: $mixedImage
-      matched: $matched
-    ) {
+  subscription OnUpdateMatch {
+    onUpdateMatch {
       id
       users {
-        id
-        email
-        name
-        rawImage
-        alignedImage
-        encoding
-        createdAt
+        items {
+          id
+          createdAt
+          liked
+          updatedAt
+        }
+        nextToken
       }
       encoding
       mixedImage
       matched
+      messages {
+        items {
+          id
+          content
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
     }
   }
 `;
 export const onDeleteMatch = /* GraphQL */ `
-  subscription OnDeleteMatch(
-    $id: ID
-    $encoding: String
-    $mixedImage: String
-    $matched: Boolean
-  ) {
-    onDeleteMatch(
-      id: $id
-      encoding: $encoding
-      mixedImage: $mixedImage
-      matched: $matched
-    ) {
+  subscription OnDeleteMatch {
+    onDeleteMatch {
       id
       users {
-        id
-        email
-        name
-        rawImage
-        alignedImage
-        encoding
-        createdAt
+        items {
+          id
+          createdAt
+          liked
+          updatedAt
+        }
+        nextToken
       }
       encoding
       mixedImage
       matched
+      messages {
+        items {
+          id
+          content
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateMatchUser = /* GraphQL */ `
+  subscription OnCreateMatchUser {
+    onCreateMatchUser {
+      id
+      matcher {
+        id
+        email
+        name
+        rawImage
+        alignedImage
+        encoding
+        matches {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      matchee {
+        id
+        email
+        name
+        rawImage
+        alignedImage
+        encoding
+        matches {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      liked
+      updatedAt
+    }
+  }
+`;
+export const onUpdateMatchUser = /* GraphQL */ `
+  subscription OnUpdateMatchUser {
+    onUpdateMatchUser {
+      id
+      matcher {
+        id
+        email
+        name
+        rawImage
+        alignedImage
+        encoding
+        matches {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      matchee {
+        id
+        email
+        name
+        rawImage
+        alignedImage
+        encoding
+        matches {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      liked
+      updatedAt
+    }
+  }
+`;
+export const onDeleteMatchUser = /* GraphQL */ `
+  subscription OnDeleteMatchUser {
+    onDeleteMatchUser {
+      id
+      matcher {
+        id
+        email
+        name
+        rawImage
+        alignedImage
+        encoding
+        matches {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      matchee {
+        id
+        email
+        name
+        rawImage
+        alignedImage
+        encoding
+        matches {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      liked
+      updatedAt
     }
   }
 `;
 export const onCreateMessage = /* GraphQL */ `
-  subscription OnCreateMessage(
-    $id: ID
-    $content: String
-    $createdAt: AWSDateTime
-  ) {
-    onCreateMessage(id: $id, content: $content, createdAt: $createdAt) {
+  subscription OnCreateMessage {
+    onCreateMessage {
       id
       match {
         id
+        users {
+          nextToken
+        }
         encoding
         mixedImage
         matched
+        messages {
+          nextToken
+        }
+        createdAt
+        updatedAt
       }
       content
       author {
@@ -223,7 +301,11 @@ export const onCreateMessage = /* GraphQL */ `
         rawImage
         alignedImage
         encoding
+        matches {
+          nextToken
+        }
         createdAt
+        updatedAt
       }
       recepient {
         id
@@ -232,25 +314,34 @@ export const onCreateMessage = /* GraphQL */ `
         rawImage
         alignedImage
         encoding
+        matches {
+          nextToken
+        }
         createdAt
+        updatedAt
       }
       createdAt
+      updatedAt
     }
   }
 `;
 export const onUpdateMessage = /* GraphQL */ `
-  subscription OnUpdateMessage(
-    $id: ID
-    $content: String
-    $createdAt: AWSDateTime
-  ) {
-    onUpdateMessage(id: $id, content: $content, createdAt: $createdAt) {
+  subscription OnUpdateMessage {
+    onUpdateMessage {
       id
       match {
         id
+        users {
+          nextToken
+        }
         encoding
         mixedImage
         matched
+        messages {
+          nextToken
+        }
+        createdAt
+        updatedAt
       }
       content
       author {
@@ -260,7 +351,11 @@ export const onUpdateMessage = /* GraphQL */ `
         rawImage
         alignedImage
         encoding
+        matches {
+          nextToken
+        }
         createdAt
+        updatedAt
       }
       recepient {
         id
@@ -269,25 +364,34 @@ export const onUpdateMessage = /* GraphQL */ `
         rawImage
         alignedImage
         encoding
+        matches {
+          nextToken
+        }
         createdAt
+        updatedAt
       }
       createdAt
+      updatedAt
     }
   }
 `;
 export const onDeleteMessage = /* GraphQL */ `
-  subscription OnDeleteMessage(
-    $id: ID
-    $content: String
-    $createdAt: AWSDateTime
-  ) {
-    onDeleteMessage(id: $id, content: $content, createdAt: $createdAt) {
+  subscription OnDeleteMessage {
+    onDeleteMessage {
       id
       match {
         id
+        users {
+          nextToken
+        }
         encoding
         mixedImage
         matched
+        messages {
+          nextToken
+        }
+        createdAt
+        updatedAt
       }
       content
       author {
@@ -297,7 +401,11 @@ export const onDeleteMessage = /* GraphQL */ `
         rawImage
         alignedImage
         encoding
+        matches {
+          nextToken
+        }
         createdAt
+        updatedAt
       }
       recepient {
         id
@@ -306,9 +414,14 @@ export const onDeleteMessage = /* GraphQL */ `
         rawImage
         alignedImage
         encoding
+        matches {
+          nextToken
+        }
         createdAt
+        updatedAt
       }
       createdAt
+      updatedAt
     }
   }
 `;
