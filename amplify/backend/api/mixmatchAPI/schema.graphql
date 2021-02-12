@@ -2,9 +2,9 @@ type User @model {
 	id: ID!
 	name: String!
 	email: AWSEmail!
-	rawImage: AWSURL
-	alignedImage: AWSURL
-	encoding: AWSURL
+	rawImage: String
+	alignedImage: String
+	encoding: String
 
 	matches: [MatchUser] @connection(keyName: "byUser", fields: ["id"])
 	messages: [Message] @connection(keyName: "bySender", fields: ["id"])
@@ -37,8 +37,8 @@ type MatchUser @model(queries: null)
 type Match @model {
 	id: ID!
 	matched: MatchStatus!
-	encoding: AWSURL
-	mixedImage: AWSURL
+	encoding: String
+	mixedImage: String
 
 	users: [MatchUser]! @connection(keyName: "byMatch", fields: ["id"])
 	messages: [Message] @connection(keyName: "byMatch", fields: ["id"])
