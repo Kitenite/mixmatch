@@ -10,42 +10,38 @@ type User @model {
 	messages: [Message] @connection(keyName: "bySender", fields: ["id"])
 }
 
-"""
-Join table to link User and Match
-"""
+
 
 type MatchUser @model(queries: null)
 @key(name: "byUser", fields: ["sourceUserID", "targetUserID"])
 @key(name: "byMatch", fields: ["matchID"]) { 
 
 	"""
-	Unmatched/Reported tbd.
+	Join model to link User and Match
+	Unmatched/Reported tbd
 	"""
-
 	id: ID!
-	matchStatus: UserMatchStatus
+	matchStatus: UserMatchStatus!
 
 	matchID: ID!
 	match: Match! @connection(fields: ["matchID"])
 
 	sourceUserID: ID!
-	sourceID: User! @connection(fields: ["sourceUserID"])
+	sourceUser: User! @connection(fields: ["sourceUserID"])
 
 	targetUserID: ID!
 	targetUser: User! @connection(fields: ["targetUserID"])
 
-	
 }
 
 type Match @model {
 	id: ID!
-	users: [MatchUser]! @connection(keyName: "byMatch", fields: ["id"])
-
 	matched: MatchStatus!
-	messages: [Message] @connection(keyName: "byMatch", fields: ["id])
-
 	encoding: AWSURL
 	mixedImage: AWSURL
+
+	users: [MatchUser]! @connection(keyName: "byMatch", fields: ["id"])
+	messages: [Message] @connection(keyName: "byMatch", fields: ["id"])
 }
 
 
@@ -57,7 +53,7 @@ type Message @model
 	content: String!
 	
 	senderID: ID!
-	sender: User! @connection(fields: ["userID"])
+	sender: User! @connection(fields: ["senderID"])
 
 	matchID: ID!
 	match: Match! @connection(fields: ["matchID"])

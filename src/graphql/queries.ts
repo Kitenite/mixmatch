@@ -6,17 +6,29 @@ export const getUser = /* GraphQL */ `
   query GetUser($id: ID!) {
     getUser(id: $id) {
       id
-      email
       name
+      email
       rawImage
       alignedImage
       encoding
       matches {
         items {
           id
-          encoding
-          mixedImage
-          matched
+          matchStatus
+          matchID
+          sourceUserID
+          targetUserID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      messages {
+        items {
+          id
+          content
+          senderID
+          matchID
           createdAt
           updatedAt
         }
@@ -36,12 +48,15 @@ export const listUsers = /* GraphQL */ `
     listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        email
         name
+        email
         rawImage
         alignedImage
         encoding
         matches {
+          nextToken
+        }
+        messages {
           nextToken
         }
         createdAt
@@ -55,22 +70,27 @@ export const getMatch = /* GraphQL */ `
   query GetMatch($id: ID!) {
     getMatch(id: $id) {
       id
+      matched
+      encoding
+      mixedImage
       users {
         items {
           id
+          matchStatus
+          matchID
+          sourceUserID
+          targetUserID
           createdAt
-          liked
           updatedAt
         }
         nextToken
       }
-      encoding
-      mixedImage
-      matched
       messages {
         items {
           id
           content
+          senderID
+          matchID
           createdAt
           updatedAt
         }
@@ -90,12 +110,12 @@ export const listMatchs = /* GraphQL */ `
     listMatchs(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
+        matched
+        encoding
+        mixedImage
         users {
           nextToken
         }
-        encoding
-        mixedImage
-        matched
         messages {
           nextToken
         }
@@ -110,42 +130,34 @@ export const getMessage = /* GraphQL */ `
   query GetMessage($id: ID!) {
     getMessage(id: $id) {
       id
-      match {
+      content
+      senderID
+      sender {
         id
-        users {
+        name
+        email
+        rawImage
+        alignedImage
+        encoding
+        matches {
           nextToken
         }
-        encoding
-        mixedImage
-        matched
         messages {
           nextToken
         }
         createdAt
         updatedAt
       }
-      content
-      author {
+      matchID
+      match {
         id
-        email
-        name
-        rawImage
-        alignedImage
+        matched
         encoding
-        matches {
+        mixedImage
+        users {
           nextToken
         }
-        createdAt
-        updatedAt
-      }
-      recepient {
-        id
-        email
-        name
-        rawImage
-        alignedImage
-        encoding
-        matches {
+        messages {
           nextToken
         }
         createdAt
@@ -165,32 +177,24 @@ export const listMessages = /* GraphQL */ `
     listMessages(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
+        content
+        senderID
+        sender {
+          id
+          name
+          email
+          rawImage
+          alignedImage
+          encoding
+          createdAt
+          updatedAt
+        }
+        matchID
         match {
           id
+          matched
           encoding
           mixedImage
-          matched
-          createdAt
-          updatedAt
-        }
-        content
-        author {
-          id
-          email
-          name
-          rawImage
-          alignedImage
-          encoding
-          createdAt
-          updatedAt
-        }
-        recepient {
-          id
-          email
-          name
-          rawImage
-          alignedImage
-          encoding
           createdAt
           updatedAt
         }

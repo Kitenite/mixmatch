@@ -6,17 +6,29 @@ export const onCreateUser = /* GraphQL */ `
   subscription OnCreateUser {
     onCreateUser {
       id
-      email
       name
+      email
       rawImage
       alignedImage
       encoding
       matches {
         items {
           id
-          encoding
-          mixedImage
-          matched
+          matchStatus
+          matchID
+          sourceUserID
+          targetUserID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      messages {
+        items {
+          id
+          content
+          senderID
+          matchID
           createdAt
           updatedAt
         }
@@ -31,17 +43,29 @@ export const onUpdateUser = /* GraphQL */ `
   subscription OnUpdateUser {
     onUpdateUser {
       id
-      email
       name
+      email
       rawImage
       alignedImage
       encoding
       matches {
         items {
           id
-          encoding
-          mixedImage
-          matched
+          matchStatus
+          matchID
+          sourceUserID
+          targetUserID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      messages {
+        items {
+          id
+          content
+          senderID
+          matchID
           createdAt
           updatedAt
         }
@@ -56,17 +80,29 @@ export const onDeleteUser = /* GraphQL */ `
   subscription OnDeleteUser {
     onDeleteUser {
       id
-      email
       name
+      email
       rawImage
       alignedImage
       encoding
       matches {
         items {
           id
-          encoding
-          mixedImage
-          matched
+          matchStatus
+          matchID
+          sourceUserID
+          targetUserID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      messages {
+        items {
+          id
+          content
+          senderID
+          matchID
           createdAt
           updatedAt
         }
@@ -81,34 +117,57 @@ export const onCreateMatchUser = /* GraphQL */ `
   subscription OnCreateMatchUser {
     onCreateMatchUser {
       id
-      matcher {
+      matchStatus
+      matchID
+      match {
         id
-        email
+        matched
+        encoding
+        mixedImage
+        users {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      sourceUserID
+      sourceUser {
+        id
         name
+        email
         rawImage
         alignedImage
         encoding
         matches {
           nextToken
         }
+        messages {
+          nextToken
+        }
         createdAt
         updatedAt
       }
-      matchee {
+      targetUserID
+      targetUser {
         id
-        email
         name
+        email
         rawImage
         alignedImage
         encoding
         matches {
+          nextToken
+        }
+        messages {
           nextToken
         }
         createdAt
         updatedAt
       }
       createdAt
-      liked
       updatedAt
     }
   }
@@ -117,34 +176,57 @@ export const onUpdateMatchUser = /* GraphQL */ `
   subscription OnUpdateMatchUser {
     onUpdateMatchUser {
       id
-      matcher {
+      matchStatus
+      matchID
+      match {
         id
-        email
+        matched
+        encoding
+        mixedImage
+        users {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      sourceUserID
+      sourceUser {
+        id
         name
+        email
         rawImage
         alignedImage
         encoding
         matches {
           nextToken
         }
+        messages {
+          nextToken
+        }
         createdAt
         updatedAt
       }
-      matchee {
+      targetUserID
+      targetUser {
         id
-        email
         name
+        email
         rawImage
         alignedImage
         encoding
         matches {
+          nextToken
+        }
+        messages {
           nextToken
         }
         createdAt
         updatedAt
       }
       createdAt
-      liked
       updatedAt
     }
   }
@@ -153,34 +235,57 @@ export const onDeleteMatchUser = /* GraphQL */ `
   subscription OnDeleteMatchUser {
     onDeleteMatchUser {
       id
-      matcher {
+      matchStatus
+      matchID
+      match {
         id
-        email
+        matched
+        encoding
+        mixedImage
+        users {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      sourceUserID
+      sourceUser {
+        id
         name
+        email
         rawImage
         alignedImage
         encoding
         matches {
           nextToken
         }
+        messages {
+          nextToken
+        }
         createdAt
         updatedAt
       }
-      matchee {
+      targetUserID
+      targetUser {
         id
-        email
         name
+        email
         rawImage
         alignedImage
         encoding
         matches {
+          nextToken
+        }
+        messages {
           nextToken
         }
         createdAt
         updatedAt
       }
       createdAt
-      liked
       updatedAt
     }
   }
@@ -189,22 +294,27 @@ export const onCreateMatch = /* GraphQL */ `
   subscription OnCreateMatch {
     onCreateMatch {
       id
+      matched
+      encoding
+      mixedImage
       users {
         items {
           id
+          matchStatus
+          matchID
+          sourceUserID
+          targetUserID
           createdAt
-          liked
           updatedAt
         }
         nextToken
       }
-      encoding
-      mixedImage
-      matched
       messages {
         items {
           id
           content
+          senderID
+          matchID
           createdAt
           updatedAt
         }
@@ -219,22 +329,27 @@ export const onUpdateMatch = /* GraphQL */ `
   subscription OnUpdateMatch {
     onUpdateMatch {
       id
+      matched
+      encoding
+      mixedImage
       users {
         items {
           id
+          matchStatus
+          matchID
+          sourceUserID
+          targetUserID
           createdAt
-          liked
           updatedAt
         }
         nextToken
       }
-      encoding
-      mixedImage
-      matched
       messages {
         items {
           id
           content
+          senderID
+          matchID
           createdAt
           updatedAt
         }
@@ -249,22 +364,27 @@ export const onDeleteMatch = /* GraphQL */ `
   subscription OnDeleteMatch {
     onDeleteMatch {
       id
+      matched
+      encoding
+      mixedImage
       users {
         items {
           id
+          matchStatus
+          matchID
+          sourceUserID
+          targetUserID
           createdAt
-          liked
           updatedAt
         }
         nextToken
       }
-      encoding
-      mixedImage
-      matched
       messages {
         items {
           id
           content
+          senderID
+          matchID
           createdAt
           updatedAt
         }
@@ -279,42 +399,34 @@ export const onCreateMessage = /* GraphQL */ `
   subscription OnCreateMessage {
     onCreateMessage {
       id
-      match {
+      content
+      senderID
+      sender {
         id
-        users {
+        name
+        email
+        rawImage
+        alignedImage
+        encoding
+        matches {
           nextToken
         }
-        encoding
-        mixedImage
-        matched
         messages {
           nextToken
         }
         createdAt
         updatedAt
       }
-      content
-      author {
+      matchID
+      match {
         id
-        email
-        name
-        rawImage
-        alignedImage
+        matched
         encoding
-        matches {
+        mixedImage
+        users {
           nextToken
         }
-        createdAt
-        updatedAt
-      }
-      recepient {
-        id
-        email
-        name
-        rawImage
-        alignedImage
-        encoding
-        matches {
+        messages {
           nextToken
         }
         createdAt
@@ -329,42 +441,34 @@ export const onUpdateMessage = /* GraphQL */ `
   subscription OnUpdateMessage {
     onUpdateMessage {
       id
-      match {
+      content
+      senderID
+      sender {
         id
-        users {
+        name
+        email
+        rawImage
+        alignedImage
+        encoding
+        matches {
           nextToken
         }
-        encoding
-        mixedImage
-        matched
         messages {
           nextToken
         }
         createdAt
         updatedAt
       }
-      content
-      author {
+      matchID
+      match {
         id
-        email
-        name
-        rawImage
-        alignedImage
+        matched
         encoding
-        matches {
+        mixedImage
+        users {
           nextToken
         }
-        createdAt
-        updatedAt
-      }
-      recepient {
-        id
-        email
-        name
-        rawImage
-        alignedImage
-        encoding
-        matches {
+        messages {
           nextToken
         }
         createdAt
@@ -379,42 +483,34 @@ export const onDeleteMessage = /* GraphQL */ `
   subscription OnDeleteMessage {
     onDeleteMessage {
       id
-      match {
+      content
+      senderID
+      sender {
         id
-        users {
+        name
+        email
+        rawImage
+        alignedImage
+        encoding
+        matches {
           nextToken
         }
-        encoding
-        mixedImage
-        matched
         messages {
           nextToken
         }
         createdAt
         updatedAt
       }
-      content
-      author {
+      matchID
+      match {
         id
-        email
-        name
-        rawImage
-        alignedImage
+        matched
         encoding
-        matches {
+        mixedImage
+        users {
           nextToken
         }
-        createdAt
-        updatedAt
-      }
-      recepient {
-        id
-        email
-        name
-        rawImage
-        alignedImage
-        encoding
-        matches {
+        messages {
           nextToken
         }
         createdAt

@@ -9,17 +9,29 @@ export const createUser = /* GraphQL */ `
   ) {
     createUser(input: $input, condition: $condition) {
       id
-      email
       name
+      email
       rawImage
       alignedImage
       encoding
       matches {
         items {
           id
-          encoding
-          mixedImage
-          matched
+          matchStatus
+          matchID
+          sourceUserID
+          targetUserID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      messages {
+        items {
+          id
+          content
+          senderID
+          matchID
           createdAt
           updatedAt
         }
@@ -37,17 +49,29 @@ export const updateUser = /* GraphQL */ `
   ) {
     updateUser(input: $input, condition: $condition) {
       id
-      email
       name
+      email
       rawImage
       alignedImage
       encoding
       matches {
         items {
           id
-          encoding
-          mixedImage
-          matched
+          matchStatus
+          matchID
+          sourceUserID
+          targetUserID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      messages {
+        items {
+          id
+          content
+          senderID
+          matchID
           createdAt
           updatedAt
         }
@@ -65,17 +89,29 @@ export const deleteUser = /* GraphQL */ `
   ) {
     deleteUser(input: $input, condition: $condition) {
       id
-      email
       name
+      email
       rawImage
       alignedImage
       encoding
       matches {
         items {
           id
-          encoding
-          mixedImage
-          matched
+          matchStatus
+          matchID
+          sourceUserID
+          targetUserID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      messages {
+        items {
+          id
+          content
+          senderID
+          matchID
           createdAt
           updatedAt
         }
@@ -93,34 +129,57 @@ export const createMatchUser = /* GraphQL */ `
   ) {
     createMatchUser(input: $input, condition: $condition) {
       id
-      matcher {
+      matchStatus
+      matchID
+      match {
         id
-        email
+        matched
+        encoding
+        mixedImage
+        users {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      sourceUserID
+      sourceUser {
+        id
         name
+        email
         rawImage
         alignedImage
         encoding
         matches {
           nextToken
         }
+        messages {
+          nextToken
+        }
         createdAt
         updatedAt
       }
-      matchee {
+      targetUserID
+      targetUser {
         id
-        email
         name
+        email
         rawImage
         alignedImage
         encoding
         matches {
+          nextToken
+        }
+        messages {
           nextToken
         }
         createdAt
         updatedAt
       }
       createdAt
-      liked
       updatedAt
     }
   }
@@ -132,34 +191,57 @@ export const updateMatchUser = /* GraphQL */ `
   ) {
     updateMatchUser(input: $input, condition: $condition) {
       id
-      matcher {
+      matchStatus
+      matchID
+      match {
         id
-        email
+        matched
+        encoding
+        mixedImage
+        users {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      sourceUserID
+      sourceUser {
+        id
         name
+        email
         rawImage
         alignedImage
         encoding
         matches {
           nextToken
         }
+        messages {
+          nextToken
+        }
         createdAt
         updatedAt
       }
-      matchee {
+      targetUserID
+      targetUser {
         id
-        email
         name
+        email
         rawImage
         alignedImage
         encoding
         matches {
+          nextToken
+        }
+        messages {
           nextToken
         }
         createdAt
         updatedAt
       }
       createdAt
-      liked
       updatedAt
     }
   }
@@ -171,34 +253,57 @@ export const deleteMatchUser = /* GraphQL */ `
   ) {
     deleteMatchUser(input: $input, condition: $condition) {
       id
-      matcher {
+      matchStatus
+      matchID
+      match {
         id
-        email
+        matched
+        encoding
+        mixedImage
+        users {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      sourceUserID
+      sourceUser {
+        id
         name
+        email
         rawImage
         alignedImage
         encoding
         matches {
           nextToken
         }
+        messages {
+          nextToken
+        }
         createdAt
         updatedAt
       }
-      matchee {
+      targetUserID
+      targetUser {
         id
-        email
         name
+        email
         rawImage
         alignedImage
         encoding
         matches {
+          nextToken
+        }
+        messages {
           nextToken
         }
         createdAt
         updatedAt
       }
       createdAt
-      liked
       updatedAt
     }
   }
@@ -210,22 +315,27 @@ export const createMatch = /* GraphQL */ `
   ) {
     createMatch(input: $input, condition: $condition) {
       id
+      matched
+      encoding
+      mixedImage
       users {
         items {
           id
+          matchStatus
+          matchID
+          sourceUserID
+          targetUserID
           createdAt
-          liked
           updatedAt
         }
         nextToken
       }
-      encoding
-      mixedImage
-      matched
       messages {
         items {
           id
           content
+          senderID
+          matchID
           createdAt
           updatedAt
         }
@@ -243,22 +353,27 @@ export const updateMatch = /* GraphQL */ `
   ) {
     updateMatch(input: $input, condition: $condition) {
       id
+      matched
+      encoding
+      mixedImage
       users {
         items {
           id
+          matchStatus
+          matchID
+          sourceUserID
+          targetUserID
           createdAt
-          liked
           updatedAt
         }
         nextToken
       }
-      encoding
-      mixedImage
-      matched
       messages {
         items {
           id
           content
+          senderID
+          matchID
           createdAt
           updatedAt
         }
@@ -276,22 +391,27 @@ export const deleteMatch = /* GraphQL */ `
   ) {
     deleteMatch(input: $input, condition: $condition) {
       id
+      matched
+      encoding
+      mixedImage
       users {
         items {
           id
+          matchStatus
+          matchID
+          sourceUserID
+          targetUserID
           createdAt
-          liked
           updatedAt
         }
         nextToken
       }
-      encoding
-      mixedImage
-      matched
       messages {
         items {
           id
           content
+          senderID
+          matchID
           createdAt
           updatedAt
         }
@@ -309,42 +429,34 @@ export const createMessage = /* GraphQL */ `
   ) {
     createMessage(input: $input, condition: $condition) {
       id
-      match {
+      content
+      senderID
+      sender {
         id
-        users {
+        name
+        email
+        rawImage
+        alignedImage
+        encoding
+        matches {
           nextToken
         }
-        encoding
-        mixedImage
-        matched
         messages {
           nextToken
         }
         createdAt
         updatedAt
       }
-      content
-      author {
+      matchID
+      match {
         id
-        email
-        name
-        rawImage
-        alignedImage
+        matched
         encoding
-        matches {
+        mixedImage
+        users {
           nextToken
         }
-        createdAt
-        updatedAt
-      }
-      recepient {
-        id
-        email
-        name
-        rawImage
-        alignedImage
-        encoding
-        matches {
+        messages {
           nextToken
         }
         createdAt
@@ -362,42 +474,34 @@ export const updateMessage = /* GraphQL */ `
   ) {
     updateMessage(input: $input, condition: $condition) {
       id
-      match {
+      content
+      senderID
+      sender {
         id
-        users {
+        name
+        email
+        rawImage
+        alignedImage
+        encoding
+        matches {
           nextToken
         }
-        encoding
-        mixedImage
-        matched
         messages {
           nextToken
         }
         createdAt
         updatedAt
       }
-      content
-      author {
+      matchID
+      match {
         id
-        email
-        name
-        rawImage
-        alignedImage
+        matched
         encoding
-        matches {
+        mixedImage
+        users {
           nextToken
         }
-        createdAt
-        updatedAt
-      }
-      recepient {
-        id
-        email
-        name
-        rawImage
-        alignedImage
-        encoding
-        matches {
+        messages {
           nextToken
         }
         createdAt
@@ -415,42 +519,34 @@ export const deleteMessage = /* GraphQL */ `
   ) {
     deleteMessage(input: $input, condition: $condition) {
       id
-      match {
+      content
+      senderID
+      sender {
         id
-        users {
+        name
+        email
+        rawImage
+        alignedImage
+        encoding
+        matches {
           nextToken
         }
-        encoding
-        mixedImage
-        matched
         messages {
           nextToken
         }
         createdAt
         updatedAt
       }
-      content
-      author {
+      matchID
+      match {
         id
-        email
-        name
-        rawImage
-        alignedImage
+        matched
         encoding
-        matches {
+        mixedImage
+        users {
           nextToken
         }
-        createdAt
-        updatedAt
-      }
-      recepient {
-        id
-        email
-        name
-        rawImage
-        alignedImage
-        encoding
-        matches {
+        messages {
           nextToken
         }
         createdAt
