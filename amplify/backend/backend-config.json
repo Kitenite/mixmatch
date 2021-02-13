@@ -24,16 +24,10 @@
             "authenticationType": "API_KEY",
             "apiKeyConfig": {
               "apiKeyExpirationDays": 365,
-              "description": "mixmatchAPIKey"
+              "description": "mixmatch Appsync API key"
             }
           },
           "additionalAuthenticationProviders": [
-            {
-              "authenticationType": "AMAZON_COGNITO_USER_POOLS",
-              "userPoolConfig": {
-                "userPoolId": "authmixmatchweb124ecd5e"
-              }
-            },
             {
               "authenticationType": "AWS_IAM"
             }

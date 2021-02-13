@@ -1,4 +1,8 @@
-type User @model {
+# @model creates an AppSync-managed entity with some automated fields 
+# @aws_iam is used to give IAM users access (such as Lambda functions)
+
+type User @model 
+@aws_iam {
 	id: ID!
 	name: String!
 	email: AWSEmail!
@@ -11,6 +15,7 @@ type User @model {
 }
 
 type MatchUser @model(queries: null)
+@aws_iam
 @key(name: "byUser", fields: ["sourceUserID", "targetUserID"])
 @key(name: "byMatch", fields: ["matchID"]) { 
 
@@ -32,7 +37,8 @@ type MatchUser @model(queries: null)
 
 }
 
-type Match @model {
+type Match @model 
+@aws_iam {
 	id: ID!
 	matched: MatchStatus!
 	encoding: String
@@ -44,6 +50,7 @@ type Match @model {
 
 
 type Message @model
+@aws_iam
 @key(name: "byMatch", fields: ["matchID"])
 @key(name: "bySender", fields: ["senderID"]) 
 {
