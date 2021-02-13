@@ -19,14 +19,14 @@ const AuthStateApp: React.FunctionComponent = () => {
         onAuthUIStateChange((nextAuthState, authData) => {
             setAuthState(nextAuthState);
             if (authData && 'attributes' in authData){
-              createUser(authData)
+              modelUser(authData)
             } else {
               console.log("No auth data found")
             }
         });
     }, []);
 
-    const createUser = (authData:any) => {
+    const modelUser = (authData:any) => {
         console.log(authData)
         getUserData(authData.attributes.sub)
         .then( (user) => {

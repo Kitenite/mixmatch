@@ -10,8 +10,6 @@ type User @model {
 	messages: [Message] @connection(keyName: "bySender", fields: ["id"])
 }
 
-
-
 type MatchUser @model(queries: null)
 @key(name: "byUser", fields: ["sourceUserID", "targetUserID"])
 @key(name: "byMatch", fields: ["matchID"]) { 

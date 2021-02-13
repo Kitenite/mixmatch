@@ -1,5 +1,11 @@
 {
   "AppSyncApiName": "mixmatchAPI",
   "DynamoDBBillingMode": "PAY_PER_REQUEST",
-  "DynamoDBEnableServerSideEncryption": false
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authmixmatchweb124ecd5e",
+      "Outputs.UserPoolId"
+    ]
+  }
 }
