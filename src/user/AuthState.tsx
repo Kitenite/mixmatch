@@ -6,7 +6,7 @@ import Amplify from 'aws-amplify';
 import { AmplifyAuthenticator, AmplifySignUp, AmplifySignIn, AmplifySignOut } from '@aws-amplify/ui-react';
 import { AuthState, onAuthUIStateChange } from '@aws-amplify/ui-components';
 import awsconfig from '../aws-exports';
-import { getUserData } from './UserAPIs';
+import { getUserData } from './GraphOperations';
 
 Amplify.configure(awsconfig);
 
@@ -36,7 +36,7 @@ const AuthStateApp: React.FunctionComponent = () => {
                 name:user.name,
                 email:user.email,
                 image:user.alignedImage,
-                matches:['']
+                matches:user.matches.items
             }
             setUser(newUser)
         })

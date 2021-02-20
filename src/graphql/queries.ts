@@ -11,6 +11,18 @@ export const getUser = /* GraphQL */ `
       rawImage
       alignedImage
       encoding
+      matchUsers {
+        items {
+          id
+          matchStatus
+          matchID
+          sourceUserID
+          targetUserID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       matches {
         items {
           id
@@ -53,6 +65,9 @@ export const listUsers = /* GraphQL */ `
         rawImage
         alignedImage
         encoding
+        matchUsers {
+          nextToken
+        }
         matches {
           nextToken
         }
@@ -139,6 +154,9 @@ export const getMessage = /* GraphQL */ `
         rawImage
         alignedImage
         encoding
+        matchUsers {
+          nextToken
+        }
         matches {
           nextToken
         }

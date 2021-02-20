@@ -11,6 +11,18 @@ export const onCreateUser = /* GraphQL */ `
       rawImage
       alignedImage
       encoding
+      matchUsers {
+        items {
+          id
+          matchStatus
+          matchID
+          sourceUserID
+          targetUserID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       matches {
         items {
           id
@@ -48,6 +60,18 @@ export const onUpdateUser = /* GraphQL */ `
       rawImage
       alignedImage
       encoding
+      matchUsers {
+        items {
+          id
+          matchStatus
+          matchID
+          sourceUserID
+          targetUserID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       matches {
         items {
           id
@@ -85,6 +109,18 @@ export const onDeleteUser = /* GraphQL */ `
       rawImage
       alignedImage
       encoding
+      matchUsers {
+        items {
+          id
+          matchStatus
+          matchID
+          sourceUserID
+          targetUserID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       matches {
         items {
           id
@@ -141,6 +177,9 @@ export const onCreateMatchUser = /* GraphQL */ `
         rawImage
         alignedImage
         encoding
+        matchUsers {
+          nextToken
+        }
         matches {
           nextToken
         }
@@ -158,6 +197,9 @@ export const onCreateMatchUser = /* GraphQL */ `
         rawImage
         alignedImage
         encoding
+        matchUsers {
+          nextToken
+        }
         matches {
           nextToken
         }
@@ -200,6 +242,9 @@ export const onUpdateMatchUser = /* GraphQL */ `
         rawImage
         alignedImage
         encoding
+        matchUsers {
+          nextToken
+        }
         matches {
           nextToken
         }
@@ -217,6 +262,9 @@ export const onUpdateMatchUser = /* GraphQL */ `
         rawImage
         alignedImage
         encoding
+        matchUsers {
+          nextToken
+        }
         matches {
           nextToken
         }
@@ -259,6 +307,9 @@ export const onDeleteMatchUser = /* GraphQL */ `
         rawImage
         alignedImage
         encoding
+        matchUsers {
+          nextToken
+        }
         matches {
           nextToken
         }
@@ -276,6 +327,9 @@ export const onDeleteMatchUser = /* GraphQL */ `
         rawImage
         alignedImage
         encoding
+        matchUsers {
+          nextToken
+        }
         matches {
           nextToken
         }
@@ -408,6 +462,9 @@ export const onCreateMessage = /* GraphQL */ `
         rawImage
         alignedImage
         encoding
+        matchUsers {
+          nextToken
+        }
         matches {
           nextToken
         }
@@ -450,6 +507,9 @@ export const onUpdateMessage = /* GraphQL */ `
         rawImage
         alignedImage
         encoding
+        matchUsers {
+          nextToken
+        }
         matches {
           nextToken
         }
@@ -492,6 +552,9 @@ export const onDeleteMessage = /* GraphQL */ `
         rawImage
         alignedImage
         encoding
+        matchUsers {
+          nextToken
+        }
         matches {
           nextToken
         }
