@@ -28,21 +28,13 @@ export const getMatchData = async (id) => {
   }
 }
 
-export const updateMatchStatus = async (sourceUserID, targetUserID, matchID, userMatchStatus) => {
+export const updateMatchStatus = async (matchUserID, userMatchStatus) => {
   try {
     const params = {
+      id: matchUserID,
       matchStatus: userMatchStatus,
     }
-    const conditions = {
-      matchID: matchID,
-      sourceUserID: sourceUserID,
-      targetUserID: targetUserID
-    }
-    const variables = {
-      input: params,
-      conditions: conditions
-    }
-    const response = await API.graphql(graphqlOperation(updateMatch, variables));
+    const response = await API.graphql(graphqlOperation(updateMatch, {input: params}));
     return response.data.updateMatch
   } catch (err) {
     console.log('error updating match: ', err)

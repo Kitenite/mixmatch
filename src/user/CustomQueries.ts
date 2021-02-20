@@ -5,11 +5,6 @@ query GetUser($id: ID!) {
     name
     email
     alignedImage
-    matchUsers {
-      id
-      matchID
-      targetUserID
-    }
     matches {
       items {
         id
