@@ -1,11 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import Compose from '../Compose/Compose';
-import Toolbar from '../Toolbar';
-import ToolbarButton from '../ToolbarButton';
 import Message from '../Message/Message';
 import moment from 'moment';
 
 import './MessageList.css';
+import Toolbar from '../Toolbar/Toolbar';
 
 const MY_USER_ID = 'apple';
 
@@ -18,7 +17,7 @@ export default function MessageList(props) {
 
   var tempMessages = [
     {
-      id: '0',
+      targetUserName: 'Person 1',
       messages: [{
         id: 1,
         author: 'apple',
@@ -33,7 +32,7 @@ export default function MessageList(props) {
       }]
     },
     {
-      id: '1',
+      targetUserName: 'Person 2',
       messages: [{
         id: 1,
         author: 'apple',
@@ -117,14 +116,8 @@ export default function MessageList(props) {
     return(
       <div className="message-list">
         <Toolbar
-          title="Conversation Title"
-          rightItems={[
-            <ToolbarButton key="info" icon="ion-ios-information-circle-outline" />,
-            <ToolbarButton key="video" icon="ion-ios-videocam" />,
-            <ToolbarButton key="phone" icon="ion-ios-call" />
-          ]}
+          title={ tempMessages[props.activeConvoID].targetUserName }
         />
-
         <div className="message-list-container">{renderMessages()}</div>
 
         <Compose/>

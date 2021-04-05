@@ -5,7 +5,7 @@
   background: white;
   border-top: 1px solid #eeeef1;
   position: fixed;
-  width: calc(100% - 280px);
+  width: calc(100% - 23rem);
   bottom: 0px;
 }
 
@@ -17,12 +17,16 @@
   }
 }
 
+.compose-form {
+    width: 100%;
+}
 .compose-input {
   flex: 1;
   border: none;
   font-size: 14px;
   height: 40px;
   background: none;
+  width:100%
 }
 
 .compose-input::placeholder {

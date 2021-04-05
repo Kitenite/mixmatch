@@ -12,7 +12,7 @@ export default function ConversationListItem(props) {
 
   return (
     <div className="conversation-list-item" onClick={()=>{props.setActiveConvoID(props.convoID)}}>
-      <p>{props.activeConvoID == props.convoID ? 'Active' : 'Not Active'}</p>
+      <p>{props.activeConvoID == props.convoID ? 'Active' : ''}</p>
       <img className="conversation-photo" src={photo} alt="conversation" />
       <div className="conversation-info">
         <h1 className="conversation-title">{ name }</h1>

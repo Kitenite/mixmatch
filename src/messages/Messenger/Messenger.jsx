@@ -5,24 +5,22 @@ import './Messenger.css';
 
 export default function Messenger(props) {
 
-  const [activeConvoID, setActiveConvoID] = useState(1)
+  const [activeConvoID, setActiveConvoID] = useState(0)
 
   const conversationList = [
     {
       photo: "https://randomuser.me/api/portraits/men/21.jpg", 
-      name: "امیر مرادی", 
+      name: "Bill", 
       text: "Hello world! This is a long message that needs to be truncated.",
       id:0
     },
     {
       photo: "https://randomuser.me/api/portraits/women/95.jpg", 
-      name: "Maria Mills", 
-      text: "I am maria mills, I am bot.",
+      name: "Maria", 
+      text: "I am maria, I am bot.",
       id:1
     }
   ]
-  useEffect(() => {
-  })
   
   return (
     <div className="messenger">
@@ -33,7 +31,6 @@ export default function Messenger(props) {
           activeConvoID={activeConvoID}
         />
       </div>
-
       <div className="scrollable content">
         <MessageList activeConvoID={activeConvoID} />
       </div>
