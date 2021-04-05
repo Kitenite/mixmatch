@@ -2,7 +2,6 @@ import React from 'react';
 import './Compose.css';
 
 export default function Compose(props) {
-  console.log(props.rightItems)
     return (
       <div className="compose">
         <input
@@ -10,10 +9,10 @@ export default function Compose(props) {
           className="compose-input"
           placeholder="Type a message"
         />
-
+{/* 
         {
           props.rightItems
-        }
+        } */}
       </div>
     );
 }

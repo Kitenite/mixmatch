@@ -13,35 +13,13 @@ export default function ConversationList(props) {
     getConversations()
   }, [])
 
-  const conversationList = [
-    {
-      photo: "https://randomuser.me/api/portraits/men/21.jpg", 
-      name: "امیر مرادی", 
-      text: "Hello world! This is a long message that needs to be truncated."
-    },
-    {
-      photo: "https://randomuser.me/api/portraits/women/95.jpg", 
-      name: "Maria Mills", 
-      text: "I am maria mills, I am bot."
-    }
-  ]
+ 
 
  const getConversations = () => {
-    // axios.get('https://randomuser.me/api/?results=20').then(response => {
-    //     let newConversations = response.data.results.map(result => {
-    //       return {
-    //         photo: result.picture.large,
-    //         name: `${result.name.first} ${result.name.last}`,
-    //         text: 'Hello world! This is a long message that needs to be truncated.'
-    //       };
-    //     });
-    //     console.log(String(newConversations[0]))
-    //     setConversations([...conversations, ...newConversations])
+    // setConversations([...conversations, ...newConversations])
 
-    // });
-    setConversations(conversationList)
+    setConversations(props.conversationList)
   }
-
     return (
       <div className="conversation-list">
         <Toolbar
@@ -56,10 +34,13 @@ export default function ConversationList(props) {
         <ConversationSearch />
         {
           conversations.map(conversation =>
-            <ConversationListItem
-              key={conversation.name}
-              data={conversation}
-            />
+              <ConversationListItem
+                key={conversation.name}
+                data={conversation}
+                convoID={conversation.id}
+                activeConvoID={props.activeConvoID}
+                setActiveConvoID={props.setActiveConvoID}
+              />
           )
         }
       </div>
