@@ -6,7 +6,7 @@ import './ConversationListItem.css';
 
 export default function ConversationListItem(props) {
 
-  const { photo, name, text } = props.data;
+  const { photo, name, messages } = props.data;
 
   const [image, setImage] = useState(photo)
 
@@ -21,13 +21,14 @@ export default function ConversationListItem(props) {
     })
   }
 
+
   return (
     <div className="conversation-list-item" onClick={()=>{props.setActiveConvoID(props.convoID)}}>
       <p>{props.activeConvoID == props.convoID ? 'Active' : ''}</p>
       <img className="conversation-photo" src={image} alt="conversation" />
       <div className="conversation-info">
         <h1 className="conversation-title">{ name }</h1>
-        <p className="conversation-snippet">{ text }</p>
+        <p className="conversation-snippet">{ messages[0].content }</p>
       </div>
     </div>
   );

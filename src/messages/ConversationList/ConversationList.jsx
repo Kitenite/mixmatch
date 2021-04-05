@@ -13,9 +13,8 @@ export default function ConversationList(props) {
     getConversations()
   },[props.convoList])
 
- const getConversations = () => {
-  console.log(props.convoList)
-  setConversations(props.convoList)
+  const getConversations = () => {
+    setConversations(props.convoList)
   }
 
   return (
