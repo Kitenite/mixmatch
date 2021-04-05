@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import resolveImage from '../../helpers/resolveImage';
 import { getMatchesFromUser } from '../../user/GraphOperations';
 import ConversationList from '../ConversationList/ConversationList';
 import MessageList from '../MessageList/MessageList';
@@ -16,8 +15,7 @@ export default function Messenger(props) {
 
   const getConvoList =  async() => {
     const userID = 'c8e6ba55-fd86-4f17-b1a0-7aaaa1936a93' //props.userID
-    getMatchesFromUser(userID).then( (matches) => {
-      console.log(matches.matches.items[0])
+    getMatchesFromUser(userID).then( async (matches) => {
       const newConvoList = matches.matches.items.map( (match) => {
         const newMatch = {
           photo:match.targetUser.alignedImage,
@@ -25,11 +23,6 @@ export default function Messenger(props) {
           id:match.targetUser.id,
           messages:match.targetUser.messages,
           text:'Hello'
-        }
-        if (newMatch.photo){
-          resolveImage(newMatch.photo).then(url => {
-            newMatch.photo = url
-          })
         }
         return newMatch
       })
@@ -56,15 +49,15 @@ export default function Messenger(props) {
       <div className="scrollable sidebar">
         <ConversationList 
           setActiveConvoID={setActiveConvoID} 
-          conversationList={convoList} 
+          convoList={convoList} 
           activeConvoID={activeConvoID}
         />
       </div>
       <div className="scrollable content">
-        {/* <MessageList 
+        <MessageList 
           activeConvoID={activeConvoID} 
-          activeConvoName={convoList[activeConvoID].name}
-        /> */}
+          convoList={convoList}
+        />
       </div>
     </div>
   );

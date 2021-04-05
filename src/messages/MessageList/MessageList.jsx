@@ -12,44 +12,44 @@ export default function MessageList(props) {
   const [messages, setMessages] = useState([])
 
   useEffect(() => {
-    getMessages();
+    getActiveMessages();
   },[props.activeConvoID])
 
-  var tempMessages = [
-    {
-      messages: [{
-        id: 1,
-        author: 'apple',
-        message: 'We have the best conversation, am I right?',
-        timestamp: new Date().getTime()
-      },
-      {
-        id: 2,
-        author: 'orange',
-        message: 'We sure do. In fact, this long text message is even wrapped because it is so long that it needs to be done. I literally cannot think of any way to send this message in a shorter format',
-        timestamp: new Date().getTime()
-      }]
-    },
-    {
-      messages: [{
-        id: 1,
-        author: 'apple',
-        message: 'This is a different conversation',
-        timestamp: new Date().getTime()
-      },
-      {
-        id: 2,
-        author: 'orange',
-        message: 'It sure is',
-        timestamp: new Date().getTime()
-      }]
-    }
+  // var tempMessages = [
+  //   {
+  //     messages: [{
+  //       id: 1,
+  //       author: 'apple',
+  //       message: 'We have the best conversation, am I right?',
+  //       timestamp: new Date().getTime()
+  //     },
+  //     {
+  //       id: 2,
+  //       author: 'orange',
+  //       message: 'We sure do. In fact, this long text message is even wrapped because it is so long that it needs to be done. I literally cannot think of any way to send this message in a shorter format',
+  //       timestamp: new Date().getTime()
+  //     }]
+  //   },
+  //   {
+  //     messages: [{
+  //       id: 1,
+  //       author: 'apple',
+  //       message: 'This is a different conversation',
+  //       timestamp: new Date().getTime()
+  //     },
+  //     {
+  //       id: 2,
+  //       author: 'orange',
+  //       message: 'It sure is',
+  //       timestamp: new Date().getTime()
+  //     }]
+  //   }
 
-  ]
+  // ]
   
-  const getMessages = () => {
-    const fetchedMessage = tempMessages[props.activeConvoID].messages
-    setMessages(fetchedMessage)
+  const getActiveMessages = () => {
+    const activeConvo = props.convoList.find(convo => convo.id === props.activeConvoID);
+    setMessages(activeConvo.messages.items)
   }
 
   const addMessage = (message) => {

@@ -11,12 +11,13 @@ export default function ConversationList(props) {
   const [conversations, setConversations] = useState([]);
   useEffect(() => {
     getConversations()
-  }, [])
+  },[props.convoList])
 
  const getConversations = () => {
-    setConversations(props.conversationList)
+  console.log(props.convoList)
+  setConversations(props.convoList)
   }
-  
+
   return (
     <div className="conversation-list">
       <ConversationSearch />
