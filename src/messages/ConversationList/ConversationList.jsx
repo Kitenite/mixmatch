@@ -14,24 +14,23 @@ export default function ConversationList(props) {
   }, [])
 
  const getConversations = () => {
-    // setConversations([...conversations, ...newConversations])
-
     setConversations(props.conversationList)
   }
-    return (
-      <div className="conversation-list">
-        <ConversationSearch />
-        {
-          conversations.map(conversation =>
-              <ConversationListItem
-                key={conversation.name}
-                data={conversation}
-                convoID={conversation.id}
-                activeConvoID={props.activeConvoID}
-                setActiveConvoID={props.setActiveConvoID}
-              />
-          )
-        }
-      </div>
-    );
+  
+  return (
+    <div className="conversation-list">
+      <ConversationSearch />
+      {
+        conversations.map(conversation =>
+            <ConversationListItem
+              key={conversation.name}
+              data={conversation}
+              convoID={conversation.id}
+              activeConvoID={props.activeConvoID}
+              setActiveConvoID={props.setActiveConvoID}
+            />
+        )
+      }
+    </div>
+  );
 }

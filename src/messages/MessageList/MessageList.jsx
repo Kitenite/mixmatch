@@ -17,7 +17,6 @@ export default function MessageList(props) {
 
   var tempMessages = [
     {
-      targetUserName: 'Person 1',
       messages: [{
         id: 1,
         author: 'apple',
@@ -32,7 +31,6 @@ export default function MessageList(props) {
       }]
     },
     {
-      targetUserName: 'Person 2',
       messages: [{
         id: 1,
         author: 'apple',
@@ -126,7 +124,7 @@ export default function MessageList(props) {
     return(
       <div className="message-list">
         <Toolbar
-          title={ tempMessages[props.activeConvoID].targetUserName }
+          title={ props.activeConvoName }
         />
         <div className="message-list-container">{renderMessages()}</div>
         <Compose addMessage={addMessage}/>

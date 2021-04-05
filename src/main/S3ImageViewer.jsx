@@ -1,5 +1,5 @@
-import { Storage } from 'aws-amplify'
 import { useState, useEffect } from 'react';
+import resolveImage from '../helpers/resolveImage';
 
 function S3ImageViewer(props){
     const imageKey = props.imageKey
@@ -14,25 +14,11 @@ function S3ImageViewer(props){
     useEffect(() => {
         // Update the document title using the browser API
         if (imageKey){
-            getImage()
+            resolveImage(imageKey).then(url => {
+                setImageFile(url)
+            })
         } 
     });
-
-    const getImage = async () => {
-        // Remove prefix
-        const truncatedImage = imageKey.replace(/^(public\/)/,"");
-        Storage.get(truncatedImage)
-        .then(url => {
-            var myRequest = new Request(url);
-            fetch(myRequest).then(function(response) {
-            if (response.status === 200) {
-                console.log(url)
-                setImageFile(url);
-            }
-            });
-      })
-      .catch(err => console.log(err));
-    }
 
     return (
         <div>

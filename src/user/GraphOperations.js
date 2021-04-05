@@ -3,12 +3,10 @@ import { getUser, getMatch } from "../graphql/queries";
 
 export const getUserData = async (id) => {
   try {
-    console.log(id)
     const params = {
         id: id
     }
     const response = await await API.graphql(graphqlOperation(getUser, params));
-    console.log(response)
     return response.data.getUser
   } catch (err) {
     console.log('error getting user: ', err)
@@ -26,3 +24,55 @@ export const getMatchData = async (id) => {
     console.log('error getting match: ', err)
   }
 }
+
+export const getMatchesFromUser = async (id) => {
+  try {
+    const params = {
+        id: id
+    }
+    const response = await await API.graphql(graphqlOperation(getMatchesFromUserQuery, params));
+    return response.data.getUser
+  } catch (err) {
+    console.log('error getting user: ', err)
+  }
+}
+
+
+const getMatchesFromUserQuery = /* GraphQL */ `
+  query GetUser($id: ID!) {
+    getUser(id: $id) {
+      matches {
+      items {
+        matchStatus
+        targetUser {
+          name
+          alignedImage
+          messages {
+            items {
+              content
+              createdAt
+              id
+              senderID
+            }
+          }
+          id
+        }
+        matchID
+        sourceUser {
+          name
+          alignedImage
+          messages {
+            items {
+              createdAt
+              content
+              id
+              senderID
+            }
+          }
+          id
+        }
+      }
+    }
+    } 
+  }
+`;
