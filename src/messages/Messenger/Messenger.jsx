@@ -16,7 +16,6 @@ export default function Messenger(props) {
   const getConvoList =  async() => {
     const userID = 'c8e6ba55-fd86-4f17-b1a0-7aaaa1936a93' //props.userID
     getMatchesFromUser(userID).then( async (matches) => {
-      console.log(matches)
       const newConvoList = matches.matches.items.map( (match) => {
         const messageList = [...match.targetUser.messages.items, ...match.sourceUser.messages.items].sort((a, b) => {
           return new Date(a.createdAt) - new Date(b.createdAt);
@@ -27,7 +26,6 @@ export default function Messenger(props) {
           id:match.targetUser.id,
           messages:messageList,
         }
-        console.log(newMatch)
         return newMatch
       })
       setConvoList(newConvoList)

@@ -28,7 +28,7 @@ export default function ConversationListItem(props) {
       <img className="conversation-photo" src={image} alt="conversation" />
       <div className="conversation-info">
         <h1 className="conversation-title">{ name }</h1>
-        <p className="conversation-snippet">{ messages[0].content }</p>
+        <p className="conversation-snippet">{ messages[messages.length-1].content }</p>
       </div>
     </div>
   );

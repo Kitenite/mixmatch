@@ -1,10 +1,12 @@
 import React, {useState} from 'react';
+import { createMessage } from '../../user/GraphOperations';
 import './Compose.css';
 
 export default function Compose(props) {
   const [message, setMessage] = useState('')
 
   const handleSubmit = (event) => {
+    createMessage("f655f338-4c83-41fd-934b-3c76862e0574", "35180c22-1f51-4b69-87eb-035577d691dc", message)
     props.addMessage(message)
     setMessage('')
     event.preventDefault();

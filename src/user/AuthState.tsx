@@ -29,8 +29,7 @@ const AuthStateApp: React.FunctionComponent = () => {
     const modelUser = (authData:any) => {
         console.log(authData)
         getUserData(authData.attributes.sub)
-        .then( (user) => {
-            console.log(user)
+        .then( (user:any) => {
             const newUser:UserInterface = {
                 id:user.id,
                 name:user.name,
@@ -40,7 +39,7 @@ const AuthStateApp: React.FunctionComponent = () => {
             }
             setUser(newUser)
         })
-        .catch( (err) => {
+        .catch( (err:any) => {
             console.log("User data could not be retrieved. Error: ", err)
         })
         

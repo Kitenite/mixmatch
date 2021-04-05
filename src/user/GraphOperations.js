@@ -1,40 +1,43 @@
 import { API, graphqlOperation } from 'aws-amplify';
 import { getUser, getMatch } from "../graphql/queries";
 
-export const getUserData = async (id) => {
+const executeOperation = async (operation, params) => {
   try {
-    const params = {
-        id: id
-    }
-    const response = await await API.graphql(graphqlOperation(getUser, params));
-    return response.data.getUser
+     const response = await API.graphql(graphqlOperation(operation, params));
+     return response.data
   } catch (err) {
-    console.log('error getting user: ', err)
+    console.log('Error executing operation: ', err)
   }
+}
+
+export const getUserData = async (id) => {
+  const params = {
+      id: id
+  }
+  return (await executeOperation(getUser, params)).getUser
 }
 
 export const getMatchData = async (id) => {
-  try {
-    const params = {
-      id: id
-    }
-    const response = await API.graphql(graphqlOperation(getMatch, params));
-    return response.data.getUser
-  } catch (err) {
-    console.log('error getting match: ', err)
+  const params = {
+    id: id
   }
+  return (await executeOperation(getMatch, params)).getMatch
 }
 
 export const getMatchesFromUser = async (id) => {
-  try {
-    const params = {
-        id: id
-    }
-    const response = await await API.graphql(graphqlOperation(getMatchesFromUserQuery, params));
-    return response.data.getUser
-  } catch (err) {
-    console.log('error getting user: ', err)
+  const params = {
+      id: id
   }
+  return (await executeOperation(getMatchesFromUserQuery, params)).getUser
+}
+
+export const createMessage = (matchID, senderID, content) => {
+  const params = {
+    matchID:matchID,
+    senderID:senderID,
+    content:content
+  }
+  return executeOperation(createMessageQuery, params).getUser
 }
 
 
@@ -76,3 +79,17 @@ const getMatchesFromUserQuery = /* GraphQL */ `
     } 
   }
 `;
+
+const createMessageQuery = /* GraphQL */ `
+  mutation CreateMessage($matchID:ID!, $senderID:ID!, $content:String!) {
+    createMessage(input: {
+        content: $content, 
+        senderID: $senderID
+        matchID: $matchID, 
+      }) {
+      id
+      content
+      createdAt
+    }
+  }
+`
