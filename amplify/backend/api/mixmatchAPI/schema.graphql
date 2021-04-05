@@ -2,6 +2,7 @@
 # @aws_iam is used to give IAM users access (such as Lambda functions)
 
 type User @model 
+@aws_api_key
 @aws_iam {
 	id: ID!
 	name: String!
@@ -16,6 +17,7 @@ type User @model
 
 type MatchUser @model(queries: null)
 @aws_iam
+@aws_api_key
 @key(name: "byUser", fields: ["sourceUserID", "targetUserID"])
 @key(name: "byMatch", fields: ["matchID"]) { 
 
@@ -38,6 +40,7 @@ type MatchUser @model(queries: null)
 }
 
 type Match @model 
+@aws_api_key
 @aws_iam {
 	id: ID!
 	matched: MatchStatus!
@@ -51,6 +54,7 @@ type Match @model
 
 type Message @model
 @aws_iam
+@aws_api_key
 @key(name: "byMatch", fields: ["matchID"])
 @key(name: "bySender", fields: ["senderID"]) 
 {

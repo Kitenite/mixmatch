@@ -1,10 +1,12 @@
-import MessageFeed from './MessageFeed'
+import Messenger from "./Messenger/Messenger"
+
+// import MessageFeed from './MessageFeed'
 function MessagesPage(){
     return (
         <div>
-            <h1>Messages</h1>
-            <MessageFeed/>
+            <Messenger/>
         </div>
     )
 }
+
 export default MessagesPage
