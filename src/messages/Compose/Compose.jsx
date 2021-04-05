@@ -1,18 +1,17 @@
 import React, {useState} from 'react';
 import './Compose.css';
 
-
-
 export default function Compose(props) {
   const [message, setMessage] = useState('')
 
-  const handleChange = (event) => {
-    setMessage(event.target.value)
+  const handleSubmit = (event) => {
+    props.addMessage(message)
+    setMessage('')
+    event.preventDefault();
   }
 
-  const handleSubmit = (event) => {
-    alert(message);
-    event.preventDefault();
+  const handleChange = (event) => {
+    setMessage(event.target.value)
   }
 
   return (
@@ -21,6 +20,7 @@ export default function Compose(props) {
         onSubmit={handleSubmit} 
         className="compose-form">
         <input
+          value={message}
           onChange={handleChange}
           type="text"
           className="compose-input"

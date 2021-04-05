@@ -13,8 +13,6 @@ export default function ConversationList(props) {
     getConversations()
   }, [])
 
- 
-
  const getConversations = () => {
     // setConversations([...conversations, ...newConversations])
 

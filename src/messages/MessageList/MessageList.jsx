@@ -54,6 +54,16 @@ export default function MessageList(props) {
     setMessages(fetchedMessage)
   }
 
+  const addMessage = (message) => {
+    const newMessage = {
+      id: 1,
+      author: 'apple',
+      message: message,
+      timestamp: new Date().getTime()
+    }
+    setMessages([...messages, newMessage])
+  }
+
   const renderMessages = () => {
     let i = 0;
     let messageCount = messages.length;
@@ -119,8 +129,7 @@ export default function MessageList(props) {
           title={ tempMessages[props.activeConvoID].targetUserName }
         />
         <div className="message-list-container">{renderMessages()}</div>
-
-        <Compose/>
+        <Compose addMessage={addMessage}/>
       </div>
     );
 }
