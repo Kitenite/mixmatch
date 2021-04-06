@@ -1,19 +1,37 @@
-import React, {useEffect, useState} from 'react';
+import React, {createRef, useEffect, useRef, useState} from 'react';
 import Compose from '../Compose/Compose';
 import Message from '../Message/Message';
 import moment from 'moment';
 
 import './MessageList.css';
 import Toolbar from '../Toolbar/Toolbar';
+import { subscribeToCreateMessage } from '../../user/GraphOperations';
 
-const MY_USER_ID = '35180c22-1f51-4b69-87eb-035577d691dc';
+const MY_USER_ID = 'c8e6ba55-fd86-4f17-b1a0-7aaaa1936a93';
 
 export default function MessageList(props) {
   const [messages, setMessages] = useState([])
+  const messagesEndRef = createRef()
 
   useEffect(() => {
-    getActiveMessages();
+    const activeConvo = props.convoList.find(convo => convo.id === props.activeConvoID);
+    if (activeConvo){
+      getActiveMessages(activeConvo)
+    }
   },[props.activeConvoID])
+
+
+  useEffect(() => {
+    const activeConvo = props.convoList.find(convo => convo.id === props.activeConvoID);
+    if (activeConvo){
+      subscribeToNewMessages(activeConvo)
+    }
+    scrollToBottom()
+  },[messages])
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+  }
 
   // var tempMessages = [
   //   {
@@ -32,21 +50,20 @@ export default function MessageList(props) {
   //   }
   // ]
   
-  const getActiveMessages = () => {
-    const activeConvo = props.convoList.find(convo => convo.id === props.activeConvoID);
-    if (activeConvo &&  activeConvo.messages)
+  const getActiveMessages = (activeConvo) => {
     setMessages(activeConvo.messages)
+  }
+  
+  const subscribeToNewMessages = (activeConvo) => {
+    console.log(activeConvo.matchID)
+    subscribeToCreateMessage(activeConvo.matchID).subscribe((next) => {
+      console.log(messages)
+      setMessages([...messages, next.value.data.onMessageCreatedByMatch])
+    })
   }
 
   const addMessage = (message) => {
-    const newMessage = {
-      id: 1,
-      author: MY_USER_ID,
-      senderID: MY_USER_ID,
-      content: message,
-      timestamp: new Date().getTime()
-    }
-    setMessages([...messages, newMessage])
+    setMessages([...messages, message])
   }
 
   const renderMessages = () => {
@@ -104,7 +121,7 @@ export default function MessageList(props) {
       // Proceed to the next message.
       i += 1;
     }
-
+    tempMessages.push(<div ref={messagesEndRef}></div>)
     return tempMessages;
   }
 
@@ -113,7 +130,10 @@ export default function MessageList(props) {
       <Toolbar
         title={ props.activeConvoName }
       />
-      <div className="message-list-container">{renderMessages()}</div>
+      <div className="message-list-container">
+        {renderMessages()}
+      </div>
+      
       <Compose addMessage={addMessage}/>
     </div>
   );

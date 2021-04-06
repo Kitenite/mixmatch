@@ -1124,6 +1124,58 @@ export type ListMessagesQuery = {
   } | null,
 };
 
+export type OnMessageCreatedByMatchSubscriptionVariables = {
+  matchID: string,
+};
+
+export type OnMessageCreatedByMatchSubscription = {
+  onMessageCreatedByMatch:  {
+    __typename: "Message",
+    id: string,
+    content: string,
+    senderID: string,
+    sender:  {
+      __typename: "User",
+      id: string,
+      name: string,
+      email: string,
+      rawImage: string | null,
+      alignedImage: string | null,
+      encoding: string | null,
+      matches:  {
+        __typename: "ModelMatchUserConnection",
+        nextToken: string | null,
+      } | null,
+      messages:  {
+        __typename: "ModelMessageConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    matchID: string,
+    match:  {
+      __typename: "Match",
+      id: string,
+      matched: MatchStatus,
+      encoding: string | null,
+      mixedImage: string | null,
+      users:  {
+        __typename: "ModelMatchUserConnection",
+        nextToken: string | null,
+      } | null,
+      messages:  {
+        __typename: "ModelMessageConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
 export type OnCreateUserSubscription = {
   onCreateUser:  {
     __typename: "User",

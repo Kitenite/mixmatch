@@ -68,6 +68,11 @@ type Message @model
 	match: Match! @connection(fields: ["matchID"])
 }
 
+type Subscription {
+    onMessageCreatedByMatch(matchID:ID!): Message
+    @aws_subscribe(mutations: ["createMessage"])
+}
+
 enum MatchStatus {
 	Unresolved
 	Matched 

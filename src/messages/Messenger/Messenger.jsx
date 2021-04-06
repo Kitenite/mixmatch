@@ -25,6 +25,7 @@ export default function Messenger(props) {
           name:match.targetUser.name,
           id:match.targetUser.id,
           messages:messageList,
+          matchID:match.matchID
         }
         return newMatch
       })

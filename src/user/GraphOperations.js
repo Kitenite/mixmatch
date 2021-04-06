@@ -33,11 +33,18 @@ export const getMatchesFromUser = async (id) => {
 
 export const createMessage = (matchID, senderID, content) => {
   const params = {
+    content:content,
     matchID:matchID,
     senderID:senderID,
-    content:content
   }
-  return executeOperation(createMessageQuery, params).getUser
+  return executeOperation(createMessageMutation, params).getUser
+}
+
+export const subscribeToCreateMessage = (matchID) => {
+  const params = {
+    matchID:matchID
+  }
+  return API.graphql(graphqlOperation(createMessageSubscription, params))
 }
 
 
@@ -80,7 +87,7 @@ const getMatchesFromUserQuery = /* GraphQL */ `
   }
 `;
 
-const createMessageQuery = /* GraphQL */ `
+const createMessageMutation = /* GraphQL */ `
   mutation CreateMessage($matchID:ID!, $senderID:ID!, $content:String!) {
     createMessage(input: {
         content: $content, 
@@ -90,6 +97,30 @@ const createMessageQuery = /* GraphQL */ `
       id
       content
       createdAt
+    }
+  }
+`
+
+const createTest = /* GraphQL */ `
+  subscription OnCreateMessage {
+    onCreateMessage {
+      content
+      createdAt
+      id
+      matchID
+      senderID
+      updatedAt
+    }
+  }
+`
+
+const createMessageSubscription = /* GraphQL */ `
+  subscription CreateMessageSubscription($matchID:ID!) {
+    onMessageCreatedByMatch(matchID: $matchID) {
+      content
+      createdAt
+      id
+      senderID
     }
   }
 `

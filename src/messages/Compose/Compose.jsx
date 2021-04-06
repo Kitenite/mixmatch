@@ -6,8 +6,14 @@ export default function Compose(props) {
   const [message, setMessage] = useState('')
 
   const handleSubmit = (event) => {
-    createMessage("f655f338-4c83-41fd-934b-3c76862e0574", "35180c22-1f51-4b69-87eb-035577d691dc", message)
-    props.addMessage(message)
+    createMessage("f655f338-4c83-41fd-934b-3c76862e0574", "c8e6ba55-fd86-4f17-b1a0-7aaaa1936a93", message)
+    const newMessage = {
+      id: 0,
+      senderID: "c8e6ba55-fd86-4f17-b1a0-7aaaa1936a93",
+      content: message,
+      createdAt: new Date().toISOString()
+    }
+    props.addMessage(newMessage)
     setMessage('')
     event.preventDefault();
   }
