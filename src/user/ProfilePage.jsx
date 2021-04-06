@@ -1,3 +1,4 @@
+import CameraViewer from '../main/CameraViewer'
 import ImageUpload from '../main/ImageUpload'
 import S3ImageViewer from '../main/S3ImageViewer'
 
@@ -6,6 +7,7 @@ function ProfilePage(props){
 
     return (
         <div>
+            <CameraViewer></CameraViewer>
             <h1>Hello {user.name}</h1>
             <h1>Email: {user.email}</h1>
             <S3ImageViewer imageKey={user.image}/>
