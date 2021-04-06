@@ -8,8 +8,9 @@ import {
 } from "react-router-dom";
 
 import SwipePage from './SwipePage'
-import MessagesPage from '../messages/MessagesPage'
+import MessagesPage from '../messages/Messenger/Messenger'
 import ProfilePage from '../user/ProfilePage'
+import { UserContext } from '../user/UserContext';
 
 function MainRouter(props) {
   return (
@@ -28,23 +29,24 @@ function MainRouter(props) {
             </li>
           </ul>
         </nav>
-        <Switch>
-            <Route exact path="/">
-                <Redirect to="/swipe" />
-            </Route>
-            <Route path="/swipe">
-                <SwipePage user={props.user}/>
-            </Route>
-            <Route path="/messages">
-                <MessagesPage/>
-            </Route>
-            <Route path="/profile">
-                <ProfilePage user={props.user}>
-                  {props.children}
-                </ProfilePage>
-                
-            </Route>
-        </Switch>
+        <UserContext.Consumer>
+            {value => (
+              <Switch>
+                <Route exact path="/">
+                    <Redirect to="/swipe" />
+                </Route>
+                <Route path="/swipe">
+                    <SwipePage user={value.user}/>
+                </Route>
+                <Route path="/messages">
+                    <MessagesPage user={value.user}/>
+                </Route>
+                <Route path="/profile">
+                    <ProfilePage user={value.user}> {props.children} </ProfilePage>
+                </Route>
+              </Switch>
+            )}
+          </UserContext.Consumer>
       </div>
       
     </Router>

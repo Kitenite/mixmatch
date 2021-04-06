@@ -4,16 +4,9 @@ import './Compose.css';
 
 export default function Compose(props) {
   const [message, setMessage] = useState('')
-
+ 
   const handleSubmit = (event) => {
-    createMessage("f655f338-4c83-41fd-934b-3c76862e0574", "c8e6ba55-fd86-4f17-b1a0-7aaaa1936a93", message)
-    const newMessage = {
-      id: 0,
-      senderID: "c8e6ba55-fd86-4f17-b1a0-7aaaa1936a93",
-      content: message,
-      createdAt: new Date().toISOString()
-    }
-    props.addMessage(newMessage)
+    createMessage(props.activeConvo.matchID, props.user.id, message)
     setMessage('')
     event.preventDefault();
   }

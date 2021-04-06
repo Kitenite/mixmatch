@@ -7,12 +7,14 @@ import { AmplifyAuthenticator, AmplifySignUp, AmplifySignIn, AmplifySignOut } fr
 import { AuthState, onAuthUIStateChange } from '@aws-amplify/ui-components';
 import awsconfig from '../aws-exports';
 import { getUserData } from './GraphOperations';
+import { UserContext } from './UserContext';
 
 Amplify.configure(awsconfig);
 
 const AuthStateApp: React.FunctionComponent = () => {
     const [authState, setAuthState] = React.useState<AuthState>();
     const [user, setUser] = React.useState<object | undefined>();
+    const value = { user, setUser };
     // const [cognitoUser, setCognitoUser] = React.useState<object | undefined>();
 
     React.useEffect(() => {
@@ -46,9 +48,11 @@ const AuthStateApp: React.FunctionComponent = () => {
     }
 
   return authState === AuthState.SignedIn && user ? (
-      <MainRouter user={user} >
-          <AmplifySignOut />
-      </MainRouter>
+    <UserContext.Provider value={value}>
+        <MainRouter >
+            <AmplifySignOut />
+        </MainRouter>
+    </UserContext.Provider>
   ) : (
 
     <AmplifyAuthenticator usernameAlias="email">

@@ -88,30 +88,19 @@ const getMatchesFromUserQuery = /* GraphQL */ `
 `;
 
 const createMessageMutation = /* GraphQL */ `
-  mutation CreateMessage($matchID:ID!, $senderID:ID!, $content:String!) {
-    createMessage(input: {
-        content: $content, 
-        senderID: $senderID
-        matchID: $matchID, 
-      }) {
-      id
-      content
-      createdAt
-    }
-  }
-`
-
-const createTest = /* GraphQL */ `
-  subscription OnCreateMessage {
-    onCreateMessage {
+  mutation CreateMessage($content:String!, $matchID:ID!, $senderID:ID!) {
+  createMessage(input: {
+    content: $content, 
+    matchID: $matchID, 
+    senderID: $senderID
+    }) {
       content
       createdAt
       id
       matchID
       senderID
-      updatedAt
-    }
   }
+}
 `
 
 const createMessageSubscription = /* GraphQL */ `

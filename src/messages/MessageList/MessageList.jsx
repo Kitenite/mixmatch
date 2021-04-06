@@ -7,24 +7,24 @@ import './MessageList.css';
 import Toolbar from '../Toolbar/Toolbar';
 import { subscribeToCreateMessage } from '../../user/GraphOperations';
 
-const MY_USER_ID = 'c8e6ba55-fd86-4f17-b1a0-7aaaa1936a93';
-
 export default function MessageList(props) {
   const [messages, setMessages] = useState([])
+  const [activeConvo, setActiveConvo] = useState()
   const messagesEndRef = createRef()
 
   useEffect(() => {
-    const activeConvo = props.convoList.find(convo => convo.id === props.activeConvoID);
-    if (activeConvo){
-      getActiveMessages(activeConvo)
+    const newActiveConvo = props.convoList.find(convo => convo.id === props.activeConvoID);
+    if (newActiveConvo){
+      setActiveConvo(newActiveConvo)
+      getActiveMessages(newActiveConvo)
     }
   },[props.activeConvoID])
 
 
   useEffect(() => {
-    const activeConvo = props.convoList.find(convo => convo.id === props.activeConvoID);
-    if (activeConvo){
-      subscribeToNewMessages(activeConvo)
+    const newActiveConvo = props.convoList.find(convo => convo.id === props.activeConvoID);
+    if (newActiveConvo){
+      subscribeToNewMessages(newActiveConvo)
     }
     scrollToBottom()
   },[messages])
@@ -55,10 +55,9 @@ export default function MessageList(props) {
   }
   
   const subscribeToNewMessages = (activeConvo) => {
-    console.log(activeConvo.matchID)
     subscribeToCreateMessage(activeConvo.matchID).subscribe((next) => {
-      console.log(messages)
-      setMessages([...messages, next.value.data.onMessageCreatedByMatch])
+      console.log("This should've")
+      addMessage(next.value.data.onMessageCreatedByMatch)
     })
   }
 
@@ -75,7 +74,7 @@ export default function MessageList(props) {
       let previous = messages[i - 1];
       let current = messages[i];
       let next = messages[i + 1];
-      let isMine = current.senderID === MY_USER_ID;
+      let isMine = current.senderID === props.user.id;
       let currentMoment = moment(current.createdAt);
       let prevBySameAuthor = false;
       let nextBySameAuthor = false;
@@ -121,7 +120,7 @@ export default function MessageList(props) {
       // Proceed to the next message.
       i += 1;
     }
-    tempMessages.push(<div ref={messagesEndRef}></div>)
+    tempMessages.push(<div key={i} ref={messagesEndRef}></div>)
     return tempMessages;
   }
 
@@ -133,8 +132,8 @@ export default function MessageList(props) {
       <div className="message-list-container">
         {renderMessages()}
       </div>
+      { activeConvo && <Compose activeConvo={activeConvo} user={props.user} /> }
       
-      <Compose addMessage={addMessage}/>
     </div>
   );
 }
