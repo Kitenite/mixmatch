@@ -1,35 +1,35 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import { Storage } from 'aws-amplify';
 import Camera from 'react-html5-camera-photo';
 import 'react-html5-camera-photo/build/css/index.css';
 import S3ImageViewer from './S3ImageViewer';
 
-
-class ImageUpload extends React.Component {
+const ImageUpload = (props) => {
   
-  constructor(props){
-    super(props)
-    this.state = {
-      fileURL: null,
-      file:null,
-      user:props.user
-    }
-    console.log(this.state.user)
-    this.handleChange = this.handleChange.bind(this)
-    this.uploadRawImage = this.uploadRawImage.bind(this)
-  }
-  handleChange(event) {
-    const uploadedFile =  event.target.files[0]
-    this.setState({
-      fileURL: URL.createObjectURL(uploadedFile),
-      file: uploadedFile
-    })
+  const [fileURL, setFileURL] = useState()
+
+  useEffect(() => {
+}, [fileURL]);
+
+  const styles = {
+    width:500, 
+    height:500,
+    objectFit:"scale-down"
   }
 
-  uploadRawImage(){
+  const  dataURLtoFile = (dataurl, filename) => {
+    var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+        bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+        while(n--){
+            u8arr[n] = bstr.charCodeAt(n);
+        }
+        return new File([u8arr], filename, {type:mime});
+    }
+
+  const uploadRawImage = () => {
     console.log(`Uploading image to S3`)
-    console.log(this.state.file)
-    Storage.put(`${this.state.user.id}/rawImage/rawImage.png`, this.state.file, {
+    var uploadFile = dataURLtoFile(fileURL, 'uploadImage.png');
+    Storage.put(`${props.user.id}/rawImage/rawImage.png`, uploadFile, {
         level: 'public',
         contentType: 'image/png'
     })
@@ -37,27 +37,27 @@ class ImageUpload extends React.Component {
     .catch(err => console.log(err));
   }
 
-  handleTakePhoto (dataUri) {
-    console.log(dataUri);
-    this.setState({
-      fileURL: dataUri
-    })
+  const handleTakePhoto = (dataURI) => {
+    setFileURL(dataURI)
+  }
+  const resetImage = () => {
+    setFileURL()
   }
 
-  render() {
-    const styles = {
-      width:500, 
-      height:500,
-      objectFit:"scale-down"
-    }
-    return (
-      <div>
-        <Camera onTakePhoto = { (dataUri) => { this.handleTakePhoto(dataUri); } } />
-        <input type="file" accept="image/png" onChange={this.handleChange} capture/>
-        {this.state.file ? <button onClick={this.uploadRawImage}>Upload Image</button> : ''}
-        <img src={this.state.fileURL} style={styles} />
+  const imageHandler = <div>
+      <img src={fileURL} style={styles} alt={"preview URL"} />
+      <button onClick={uploadRawImage}>Upload Image</button>
+      <button onClick={resetImage}>Take Another Photo</button>
+  </div>
+  
+  return (
+    <div>
+      <div style={{ display: fileURL ? 'none' : null }} >
+        <Camera onTakePhoto={ (dataUri) => { handleTakePhoto(dataUri); } } />
       </div>
-    );
-  }
+      {fileURL ? imageHandler : null}
+      {/* <S3ImageViewer imageKey={props.user.image}/> */}
+    </div>
+  );
 }
 export default ImageUpload
