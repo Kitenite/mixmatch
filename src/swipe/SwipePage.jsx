@@ -1,4 +1,4 @@
-import Swiper from './Swiper/Swiper'
+import Swiper from './Swiper'
 
 function SwipePage(props){
     const matches = props.user.matches

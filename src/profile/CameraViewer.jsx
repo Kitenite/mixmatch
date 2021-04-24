@@ -3,7 +3,6 @@ import 'react-html5-camera-photo/build/css/index.css';
 
 function CameraViewer (props) {
     function handleTakePhoto (dataUri) {
-      // Do stuff with the photo...
       console.log(dataUri);
     }
    

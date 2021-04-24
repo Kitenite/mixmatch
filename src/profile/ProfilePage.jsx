@@ -1,16 +1,12 @@
-import CameraViewer from '../main/CameraViewer'
-import ImageUpload from '../main/ImageUpload'
-import S3ImageViewer from '../main/S3ImageViewer'
+import ImageUpload from './ImageUpload'
 
 function ProfilePage(props){
     const user = props.user
 
     return (
         <div>
-            <CameraViewer></CameraViewer>
             <h1>Hello {user.name}</h1>
             <h1>Email: {user.email}</h1>
-            <S3ImageViewer imageKey={user.image}/>
             <ImageUpload user={user}/>
             <div>{props.children}</div>
         </div>

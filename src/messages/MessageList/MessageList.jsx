@@ -32,23 +32,6 @@ export default function MessageList(props) {
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }
-
-  // var tempMessages = [
-  //   {
-  //     messages: [{
-  //       id: 1,
-  //       author: 'apple',
-  //       message: 'We have the best conversation, am I right?',
-  //       timestamp: new Date().getTime()
-  //     },
-  //     {
-  //       id: 2,
-  //       author: 'orange',
-  //       message: 'We sure do. In fact, this long text message is even wrapped because it is so long that it needs to be done. I literally cannot think of any way to send this message in a shorter format',
-  //       timestamp: new Date().getTime()
-  //     }]
-  //   }
-  // ]
   
   const getActiveMessages = (activeConvo) => {
     setMessages(activeConvo.messages)
@@ -56,7 +39,6 @@ export default function MessageList(props) {
   
   const subscribeToNewMessages = (activeConvo) => {
     subscribeToCreateMessage(activeConvo.matchID).subscribe((next) => {
-      console.log("This should've")
       addMessage(next.value.data.onMessageCreatedByMatch)
     })
   }

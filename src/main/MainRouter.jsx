@@ -7,9 +7,9 @@ import {
   Redirect
 } from "react-router-dom";
 
-import SwipePage from './SwipePage'
+import SwipePage from '../swipe/SwipePage'
 import MessagesPage from '../messages/Messenger/Messenger'
-import ProfilePage from '../user/ProfilePage'
+import ProfilePage from '../profile/ProfilePage'
 import { UserContext } from '../user/UserContext';
 
 function MainRouter(props) {

@@ -1,5 +1,10 @@
 import React from 'react';
 import { Storage } from 'aws-amplify';
+import Camera from 'react-html5-camera-photo';
+import 'react-html5-camera-photo/build/css/index.css';
+import S3ImageViewer from './S3ImageViewer';
+
+
 class ImageUpload extends React.Component {
   
   constructor(props){
@@ -31,6 +36,14 @@ class ImageUpload extends React.Component {
     .then (result => console.log(result))
     .catch(err => console.log(err));
   }
+
+  handleTakePhoto (dataUri) {
+    console.log(dataUri);
+    this.setState({
+      fileURL: dataUri
+    })
+  }
+
   render() {
     const styles = {
       width:500, 
@@ -39,6 +52,7 @@ class ImageUpload extends React.Component {
     }
     return (
       <div>
+        <Camera onTakePhoto = { (dataUri) => { this.handleTakePhoto(dataUri); } } />
         <input type="file" accept="image/png" onChange={this.handleChange} capture/>
         {this.state.file ? <button onClick={this.uploadRawImage}>Upload Image</button> : ''}
         <img src={this.state.fileURL} style={styles} />
