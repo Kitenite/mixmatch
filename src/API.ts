@@ -62,12 +62,84 @@ export type ModelSizeInput = {
   between?: Array< number | null > | null,
 };
 
+export type User = {
+  __typename: "User",
+  id: string,
+  name: string,
+  email: string,
+  rawImage?: string | null,
+  alignedImage?: string | null,
+  encoding?: string | null,
+  matches?: ModelMatchUserConnection | null,
+  messages?: ModelMessageConnection | null,
+  createdAt: string,
+  updatedAt: string,
+};
+
+export type ModelMatchUserConnection = {
+  __typename: "ModelMatchUserConnection",
+  items:  Array<MatchUser | null >,
+  nextToken?: string | null,
+};
+
+export type MatchUser = {
+  __typename: "MatchUser",
+  id: string,
+  matchStatus: UserMatchStatus,
+  matchID: string,
+  match: Match,
+  sourceUserID: string,
+  sourceUser: User,
+  targetUserID: string,
+  targetUser: User,
+  createdAt: string,
+  updatedAt: string,
+};
+
 export enum UserMatchStatus {
   NotSeen = "NotSeen",
   Liked = "Liked",
   Disliked = "Disliked",
 }
 
+
+export type Match = {
+  __typename: "Match",
+  id: string,
+  matched: MatchStatus,
+  encoding?: string | null,
+  mixedImage?: string | null,
+  users?: ModelMatchUserConnection | null,
+  messages?: ModelMessageConnection | null,
+  createdAt: string,
+  updatedAt: string,
+};
+
+export enum MatchStatus {
+  Unresolved = "Unresolved",
+  Matched = "Matched",
+  Rejected = "Rejected",
+  Unmatched = "Unmatched",
+}
+
+
+export type ModelMessageConnection = {
+  __typename: "ModelMessageConnection",
+  items:  Array<Message | null >,
+  nextToken?: string | null,
+};
+
+export type Message = {
+  __typename: "Message",
+  id: string,
+  content: string,
+  senderID: string,
+  sender: User,
+  matchID: string,
+  match: Match,
+  createdAt: string,
+  updatedAt: string,
+};
 
 export type UpdateUserInput = {
   id: string,
@@ -79,7 +151,7 @@ export type UpdateUserInput = {
 };
 
 export type DeleteUserInput = {
-  id?: string | null,
+  id: string,
 };
 
 export type CreateMatchUserInput = {
@@ -121,14 +193,6 @@ export type ModelIDInput = {
   size?: ModelSizeInput | null,
 };
 
-export enum MatchStatus {
-  Unresolved = "Unresolved",
-  Matched = "Matched",
-  Rejected = "Rejected",
-  Unmatched = "Unmatched",
-}
-
-
 export type UpdateMatchUserInput = {
   id: string,
   matchStatus?: UserMatchStatus | null,
@@ -138,7 +202,7 @@ export type UpdateMatchUserInput = {
 };
 
 export type DeleteMatchUserInput = {
-  id?: string | null,
+  id: string,
 };
 
 export type CreateMatchInput = {
@@ -170,7 +234,7 @@ export type UpdateMatchInput = {
 };
 
 export type DeleteMatchInput = {
-  id?: string | null,
+  id: string,
 };
 
 export type CreateMessageInput = {
@@ -197,7 +261,7 @@ export type UpdateMessageInput = {
 };
 
 export type DeleteMessageInput = {
-  id?: string | null,
+  id: string,
 };
 
 export type ModelUserFilterInput = {
@@ -212,6 +276,12 @@ export type ModelUserFilterInput = {
   not?: ModelUserFilterInput | null,
 };
 
+export type ModelUserConnection = {
+  __typename: "ModelUserConnection",
+  items:  Array<User | null >,
+  nextToken?: string | null,
+};
+
 export type ModelMatchFilterInput = {
   id?: ModelIDInput | null,
   matched?: ModelMatchStatusInput | null,
@@ -220,6 +290,12 @@ export type ModelMatchFilterInput = {
   and?: Array< ModelMatchFilterInput | null > | null,
   or?: Array< ModelMatchFilterInput | null > | null,
   not?: ModelMatchFilterInput | null,
+};
+
+export type ModelMatchConnection = {
+  __typename: "ModelMatchConnection",
+  items:  Array<Match | null >,
+  nextToken?: string | null,
 };
 
 export type ModelMessageFilterInput = {
@@ -238,15 +314,15 @@ export type CreateUserMutationVariables = {
 };
 
 export type CreateUserMutation = {
-  createUser:  {
+  createUser?:  {
     __typename: "User",
     id: string,
     name: string,
     email: string,
-    rawImage: string | null,
-    alignedImage: string | null,
-    encoding: string | null,
-    matches:  {
+    rawImage?: string | null,
+    alignedImage?: string | null,
+    encoding?: string | null,
+    matches?:  {
       __typename: "ModelMatchUserConnection",
       items:  Array< {
         __typename: "MatchUser",
@@ -257,10 +333,10 @@ export type CreateUserMutation = {
         targetUserID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
-      nextToken: string | null,
+      } | null >,
+      nextToken?: string | null,
     } | null,
-    messages:  {
+    messages?:  {
       __typename: "ModelMessageConnection",
       items:  Array< {
         __typename: "Message",
@@ -270,8 +346,8 @@ export type CreateUserMutation = {
         matchID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
-      nextToken: string | null,
+      } | null >,
+      nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -284,15 +360,15 @@ export type UpdateUserMutationVariables = {
 };
 
 export type UpdateUserMutation = {
-  updateUser:  {
+  updateUser?:  {
     __typename: "User",
     id: string,
     name: string,
     email: string,
-    rawImage: string | null,
-    alignedImage: string | null,
-    encoding: string | null,
-    matches:  {
+    rawImage?: string | null,
+    alignedImage?: string | null,
+    encoding?: string | null,
+    matches?:  {
       __typename: "ModelMatchUserConnection",
       items:  Array< {
         __typename: "MatchUser",
@@ -303,10 +379,10 @@ export type UpdateUserMutation = {
         targetUserID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
-      nextToken: string | null,
+      } | null >,
+      nextToken?: string | null,
     } | null,
-    messages:  {
+    messages?:  {
       __typename: "ModelMessageConnection",
       items:  Array< {
         __typename: "Message",
@@ -316,8 +392,8 @@ export type UpdateUserMutation = {
         matchID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
-      nextToken: string | null,
+      } | null >,
+      nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -330,15 +406,15 @@ export type DeleteUserMutationVariables = {
 };
 
 export type DeleteUserMutation = {
-  deleteUser:  {
+  deleteUser?:  {
     __typename: "User",
     id: string,
     name: string,
     email: string,
-    rawImage: string | null,
-    alignedImage: string | null,
-    encoding: string | null,
-    matches:  {
+    rawImage?: string | null,
+    alignedImage?: string | null,
+    encoding?: string | null,
+    matches?:  {
       __typename: "ModelMatchUserConnection",
       items:  Array< {
         __typename: "MatchUser",
@@ -349,10 +425,10 @@ export type DeleteUserMutation = {
         targetUserID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
-      nextToken: string | null,
+      } | null >,
+      nextToken?: string | null,
     } | null,
-    messages:  {
+    messages?:  {
       __typename: "ModelMessageConnection",
       items:  Array< {
         __typename: "Message",
@@ -362,8 +438,8 @@ export type DeleteUserMutation = {
         matchID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
-      nextToken: string | null,
+      } | null >,
+      nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -376,7 +452,7 @@ export type CreateMatchUserMutationVariables = {
 };
 
 export type CreateMatchUserMutation = {
-  createMatchUser:  {
+  createMatchUser?:  {
     __typename: "MatchUser",
     id: string,
     matchStatus: UserMatchStatus,
@@ -385,15 +461,15 @@ export type CreateMatchUserMutation = {
       __typename: "Match",
       id: string,
       matched: MatchStatus,
-      encoding: string | null,
-      mixedImage: string | null,
-      users:  {
+      encoding?: string | null,
+      mixedImage?: string | null,
+      users?:  {
         __typename: "ModelMatchUserConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
-      messages:  {
+      messages?:  {
         __typename: "ModelMessageConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
@@ -404,16 +480,16 @@ export type CreateMatchUserMutation = {
       id: string,
       name: string,
       email: string,
-      rawImage: string | null,
-      alignedImage: string | null,
-      encoding: string | null,
-      matches:  {
+      rawImage?: string | null,
+      alignedImage?: string | null,
+      encoding?: string | null,
+      matches?:  {
         __typename: "ModelMatchUserConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
-      messages:  {
+      messages?:  {
         __typename: "ModelMessageConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
@@ -424,16 +500,16 @@ export type CreateMatchUserMutation = {
       id: string,
       name: string,
       email: string,
-      rawImage: string | null,
-      alignedImage: string | null,
-      encoding: string | null,
-      matches:  {
+      rawImage?: string | null,
+      alignedImage?: string | null,
+      encoding?: string | null,
+      matches?:  {
         __typename: "ModelMatchUserConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
-      messages:  {
+      messages?:  {
         __typename: "ModelMessageConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
@@ -449,7 +525,7 @@ export type UpdateMatchUserMutationVariables = {
 };
 
 export type UpdateMatchUserMutation = {
-  updateMatchUser:  {
+  updateMatchUser?:  {
     __typename: "MatchUser",
     id: string,
     matchStatus: UserMatchStatus,
@@ -458,15 +534,15 @@ export type UpdateMatchUserMutation = {
       __typename: "Match",
       id: string,
       matched: MatchStatus,
-      encoding: string | null,
-      mixedImage: string | null,
-      users:  {
+      encoding?: string | null,
+      mixedImage?: string | null,
+      users?:  {
         __typename: "ModelMatchUserConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
-      messages:  {
+      messages?:  {
         __typename: "ModelMessageConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
@@ -477,16 +553,16 @@ export type UpdateMatchUserMutation = {
       id: string,
       name: string,
       email: string,
-      rawImage: string | null,
-      alignedImage: string | null,
-      encoding: string | null,
-      matches:  {
+      rawImage?: string | null,
+      alignedImage?: string | null,
+      encoding?: string | null,
+      matches?:  {
         __typename: "ModelMatchUserConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
-      messages:  {
+      messages?:  {
         __typename: "ModelMessageConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
@@ -497,16 +573,16 @@ export type UpdateMatchUserMutation = {
       id: string,
       name: string,
       email: string,
-      rawImage: string | null,
-      alignedImage: string | null,
-      encoding: string | null,
-      matches:  {
+      rawImage?: string | null,
+      alignedImage?: string | null,
+      encoding?: string | null,
+      matches?:  {
         __typename: "ModelMatchUserConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
-      messages:  {
+      messages?:  {
         __typename: "ModelMessageConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
@@ -522,7 +598,7 @@ export type DeleteMatchUserMutationVariables = {
 };
 
 export type DeleteMatchUserMutation = {
-  deleteMatchUser:  {
+  deleteMatchUser?:  {
     __typename: "MatchUser",
     id: string,
     matchStatus: UserMatchStatus,
@@ -531,15 +607,15 @@ export type DeleteMatchUserMutation = {
       __typename: "Match",
       id: string,
       matched: MatchStatus,
-      encoding: string | null,
-      mixedImage: string | null,
-      users:  {
+      encoding?: string | null,
+      mixedImage?: string | null,
+      users?:  {
         __typename: "ModelMatchUserConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
-      messages:  {
+      messages?:  {
         __typename: "ModelMessageConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
@@ -550,16 +626,16 @@ export type DeleteMatchUserMutation = {
       id: string,
       name: string,
       email: string,
-      rawImage: string | null,
-      alignedImage: string | null,
-      encoding: string | null,
-      matches:  {
+      rawImage?: string | null,
+      alignedImage?: string | null,
+      encoding?: string | null,
+      matches?:  {
         __typename: "ModelMatchUserConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
-      messages:  {
+      messages?:  {
         __typename: "ModelMessageConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
@@ -570,16 +646,16 @@ export type DeleteMatchUserMutation = {
       id: string,
       name: string,
       email: string,
-      rawImage: string | null,
-      alignedImage: string | null,
-      encoding: string | null,
-      matches:  {
+      rawImage?: string | null,
+      alignedImage?: string | null,
+      encoding?: string | null,
+      matches?:  {
         __typename: "ModelMatchUserConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
-      messages:  {
+      messages?:  {
         __typename: "ModelMessageConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
@@ -595,13 +671,13 @@ export type CreateMatchMutationVariables = {
 };
 
 export type CreateMatchMutation = {
-  createMatch:  {
+  createMatch?:  {
     __typename: "Match",
     id: string,
     matched: MatchStatus,
-    encoding: string | null,
-    mixedImage: string | null,
-    users:  {
+    encoding?: string | null,
+    mixedImage?: string | null,
+    users?:  {
       __typename: "ModelMatchUserConnection",
       items:  Array< {
         __typename: "MatchUser",
@@ -612,10 +688,10 @@ export type CreateMatchMutation = {
         targetUserID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
-      nextToken: string | null,
+      } | null >,
+      nextToken?: string | null,
     } | null,
-    messages:  {
+    messages?:  {
       __typename: "ModelMessageConnection",
       items:  Array< {
         __typename: "Message",
@@ -625,8 +701,8 @@ export type CreateMatchMutation = {
         matchID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
-      nextToken: string | null,
+      } | null >,
+      nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -639,13 +715,13 @@ export type UpdateMatchMutationVariables = {
 };
 
 export type UpdateMatchMutation = {
-  updateMatch:  {
+  updateMatch?:  {
     __typename: "Match",
     id: string,
     matched: MatchStatus,
-    encoding: string | null,
-    mixedImage: string | null,
-    users:  {
+    encoding?: string | null,
+    mixedImage?: string | null,
+    users?:  {
       __typename: "ModelMatchUserConnection",
       items:  Array< {
         __typename: "MatchUser",
@@ -656,10 +732,10 @@ export type UpdateMatchMutation = {
         targetUserID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
-      nextToken: string | null,
+      } | null >,
+      nextToken?: string | null,
     } | null,
-    messages:  {
+    messages?:  {
       __typename: "ModelMessageConnection",
       items:  Array< {
         __typename: "Message",
@@ -669,8 +745,8 @@ export type UpdateMatchMutation = {
         matchID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
-      nextToken: string | null,
+      } | null >,
+      nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -683,13 +759,13 @@ export type DeleteMatchMutationVariables = {
 };
 
 export type DeleteMatchMutation = {
-  deleteMatch:  {
+  deleteMatch?:  {
     __typename: "Match",
     id: string,
     matched: MatchStatus,
-    encoding: string | null,
-    mixedImage: string | null,
-    users:  {
+    encoding?: string | null,
+    mixedImage?: string | null,
+    users?:  {
       __typename: "ModelMatchUserConnection",
       items:  Array< {
         __typename: "MatchUser",
@@ -700,10 +776,10 @@ export type DeleteMatchMutation = {
         targetUserID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
-      nextToken: string | null,
+      } | null >,
+      nextToken?: string | null,
     } | null,
-    messages:  {
+    messages?:  {
       __typename: "ModelMessageConnection",
       items:  Array< {
         __typename: "Message",
@@ -713,8 +789,8 @@ export type DeleteMatchMutation = {
         matchID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
-      nextToken: string | null,
+      } | null >,
+      nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -727,7 +803,7 @@ export type CreateMessageMutationVariables = {
 };
 
 export type CreateMessageMutation = {
-  createMessage:  {
+  createMessage?:  {
     __typename: "Message",
     id: string,
     content: string,
@@ -737,16 +813,16 @@ export type CreateMessageMutation = {
       id: string,
       name: string,
       email: string,
-      rawImage: string | null,
-      alignedImage: string | null,
-      encoding: string | null,
-      matches:  {
+      rawImage?: string | null,
+      alignedImage?: string | null,
+      encoding?: string | null,
+      matches?:  {
         __typename: "ModelMatchUserConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
-      messages:  {
+      messages?:  {
         __typename: "ModelMessageConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
@@ -756,15 +832,15 @@ export type CreateMessageMutation = {
       __typename: "Match",
       id: string,
       matched: MatchStatus,
-      encoding: string | null,
-      mixedImage: string | null,
-      users:  {
+      encoding?: string | null,
+      mixedImage?: string | null,
+      users?:  {
         __typename: "ModelMatchUserConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
-      messages:  {
+      messages?:  {
         __typename: "ModelMessageConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
@@ -780,7 +856,7 @@ export type UpdateMessageMutationVariables = {
 };
 
 export type UpdateMessageMutation = {
-  updateMessage:  {
+  updateMessage?:  {
     __typename: "Message",
     id: string,
     content: string,
@@ -790,16 +866,16 @@ export type UpdateMessageMutation = {
       id: string,
       name: string,
       email: string,
-      rawImage: string | null,
-      alignedImage: string | null,
-      encoding: string | null,
-      matches:  {
+      rawImage?: string | null,
+      alignedImage?: string | null,
+      encoding?: string | null,
+      matches?:  {
         __typename: "ModelMatchUserConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
-      messages:  {
+      messages?:  {
         __typename: "ModelMessageConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
@@ -809,15 +885,15 @@ export type UpdateMessageMutation = {
       __typename: "Match",
       id: string,
       matched: MatchStatus,
-      encoding: string | null,
-      mixedImage: string | null,
-      users:  {
+      encoding?: string | null,
+      mixedImage?: string | null,
+      users?:  {
         __typename: "ModelMatchUserConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
-      messages:  {
+      messages?:  {
         __typename: "ModelMessageConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
@@ -833,7 +909,7 @@ export type DeleteMessageMutationVariables = {
 };
 
 export type DeleteMessageMutation = {
-  deleteMessage:  {
+  deleteMessage?:  {
     __typename: "Message",
     id: string,
     content: string,
@@ -843,16 +919,16 @@ export type DeleteMessageMutation = {
       id: string,
       name: string,
       email: string,
-      rawImage: string | null,
-      alignedImage: string | null,
-      encoding: string | null,
-      matches:  {
+      rawImage?: string | null,
+      alignedImage?: string | null,
+      encoding?: string | null,
+      matches?:  {
         __typename: "ModelMatchUserConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
-      messages:  {
+      messages?:  {
         __typename: "ModelMessageConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
@@ -862,15 +938,15 @@ export type DeleteMessageMutation = {
       __typename: "Match",
       id: string,
       matched: MatchStatus,
-      encoding: string | null,
-      mixedImage: string | null,
-      users:  {
+      encoding?: string | null,
+      mixedImage?: string | null,
+      users?:  {
         __typename: "ModelMatchUserConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
-      messages:  {
+      messages?:  {
         __typename: "ModelMessageConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
@@ -885,15 +961,15 @@ export type GetUserQueryVariables = {
 };
 
 export type GetUserQuery = {
-  getUser:  {
+  getUser?:  {
     __typename: "User",
     id: string,
     name: string,
     email: string,
-    rawImage: string | null,
-    alignedImage: string | null,
-    encoding: string | null,
-    matches:  {
+    rawImage?: string | null,
+    alignedImage?: string | null,
+    encoding?: string | null,
+    matches?:  {
       __typename: "ModelMatchUserConnection",
       items:  Array< {
         __typename: "MatchUser",
@@ -904,10 +980,10 @@ export type GetUserQuery = {
         targetUserID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
-      nextToken: string | null,
+      } | null >,
+      nextToken?: string | null,
     } | null,
-    messages:  {
+    messages?:  {
       __typename: "ModelMessageConnection",
       items:  Array< {
         __typename: "Message",
@@ -917,8 +993,8 @@ export type GetUserQuery = {
         matchID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
-      nextToken: string | null,
+      } | null >,
+      nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -932,28 +1008,28 @@ export type ListUsersQueryVariables = {
 };
 
 export type ListUsersQuery = {
-  listUsers:  {
+  listUsers?:  {
     __typename: "ModelUserConnection",
     items:  Array< {
       __typename: "User",
       id: string,
       name: string,
       email: string,
-      rawImage: string | null,
-      alignedImage: string | null,
-      encoding: string | null,
-      matches:  {
+      rawImage?: string | null,
+      alignedImage?: string | null,
+      encoding?: string | null,
+      matches?:  {
         __typename: "ModelMatchUserConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
-      messages:  {
+      messages?:  {
         __typename: "ModelMessageConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
-    } | null > | null,
-    nextToken: string | null,
+    } | null >,
+    nextToken?: string | null,
   } | null,
 };
 
@@ -962,13 +1038,13 @@ export type GetMatchQueryVariables = {
 };
 
 export type GetMatchQuery = {
-  getMatch:  {
+  getMatch?:  {
     __typename: "Match",
     id: string,
     matched: MatchStatus,
-    encoding: string | null,
-    mixedImage: string | null,
-    users:  {
+    encoding?: string | null,
+    mixedImage?: string | null,
+    users?:  {
       __typename: "ModelMatchUserConnection",
       items:  Array< {
         __typename: "MatchUser",
@@ -979,10 +1055,10 @@ export type GetMatchQuery = {
         targetUserID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
-      nextToken: string | null,
+      } | null >,
+      nextToken?: string | null,
     } | null,
-    messages:  {
+    messages?:  {
       __typename: "ModelMessageConnection",
       items:  Array< {
         __typename: "Message",
@@ -992,8 +1068,8 @@ export type GetMatchQuery = {
         matchID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
-      nextToken: string | null,
+      } | null >,
+      nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -1007,26 +1083,26 @@ export type ListMatchsQueryVariables = {
 };
 
 export type ListMatchsQuery = {
-  listMatchs:  {
+  listMatchs?:  {
     __typename: "ModelMatchConnection",
     items:  Array< {
       __typename: "Match",
       id: string,
       matched: MatchStatus,
-      encoding: string | null,
-      mixedImage: string | null,
-      users:  {
+      encoding?: string | null,
+      mixedImage?: string | null,
+      users?:  {
         __typename: "ModelMatchUserConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
-      messages:  {
+      messages?:  {
         __typename: "ModelMessageConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
-    } | null > | null,
-    nextToken: string | null,
+    } | null >,
+    nextToken?: string | null,
   } | null,
 };
 
@@ -1035,7 +1111,7 @@ export type GetMessageQueryVariables = {
 };
 
 export type GetMessageQuery = {
-  getMessage:  {
+  getMessage?:  {
     __typename: "Message",
     id: string,
     content: string,
@@ -1045,16 +1121,16 @@ export type GetMessageQuery = {
       id: string,
       name: string,
       email: string,
-      rawImage: string | null,
-      alignedImage: string | null,
-      encoding: string | null,
-      matches:  {
+      rawImage?: string | null,
+      alignedImage?: string | null,
+      encoding?: string | null,
+      matches?:  {
         __typename: "ModelMatchUserConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
-      messages:  {
+      messages?:  {
         __typename: "ModelMessageConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
@@ -1064,15 +1140,15 @@ export type GetMessageQuery = {
       __typename: "Match",
       id: string,
       matched: MatchStatus,
-      encoding: string | null,
-      mixedImage: string | null,
-      users:  {
+      encoding?: string | null,
+      mixedImage?: string | null,
+      users?:  {
         __typename: "ModelMatchUserConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
-      messages:  {
+      messages?:  {
         __typename: "ModelMessageConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
@@ -1089,7 +1165,7 @@ export type ListMessagesQueryVariables = {
 };
 
 export type ListMessagesQuery = {
-  listMessages:  {
+  listMessages?:  {
     __typename: "ModelMessageConnection",
     items:  Array< {
       __typename: "Message",
@@ -1101,9 +1177,9 @@ export type ListMessagesQuery = {
         id: string,
         name: string,
         email: string,
-        rawImage: string | null,
-        alignedImage: string | null,
-        encoding: string | null,
+        rawImage?: string | null,
+        alignedImage?: string | null,
+        encoding?: string | null,
         createdAt: string,
         updatedAt: string,
       },
@@ -1112,15 +1188,15 @@ export type ListMessagesQuery = {
         __typename: "Match",
         id: string,
         matched: MatchStatus,
-        encoding: string | null,
-        mixedImage: string | null,
+        encoding?: string | null,
+        mixedImage?: string | null,
         createdAt: string,
         updatedAt: string,
       },
       createdAt: string,
       updatedAt: string,
-    } | null > | null,
-    nextToken: string | null,
+    } | null >,
+    nextToken?: string | null,
   } | null,
 };
 
@@ -1129,7 +1205,7 @@ export type OnMessageCreatedByMatchSubscriptionVariables = {
 };
 
 export type OnMessageCreatedByMatchSubscription = {
-  onMessageCreatedByMatch:  {
+  onMessageCreatedByMatch?:  {
     __typename: "Message",
     id: string,
     content: string,
@@ -1139,16 +1215,16 @@ export type OnMessageCreatedByMatchSubscription = {
       id: string,
       name: string,
       email: string,
-      rawImage: string | null,
-      alignedImage: string | null,
-      encoding: string | null,
-      matches:  {
+      rawImage?: string | null,
+      alignedImage?: string | null,
+      encoding?: string | null,
+      matches?:  {
         __typename: "ModelMatchUserConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
-      messages:  {
+      messages?:  {
         __typename: "ModelMessageConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
@@ -1158,15 +1234,15 @@ export type OnMessageCreatedByMatchSubscription = {
       __typename: "Match",
       id: string,
       matched: MatchStatus,
-      encoding: string | null,
-      mixedImage: string | null,
-      users:  {
+      encoding?: string | null,
+      mixedImage?: string | null,
+      users?:  {
         __typename: "ModelMatchUserConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
-      messages:  {
+      messages?:  {
         __typename: "ModelMessageConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
@@ -1177,15 +1253,15 @@ export type OnMessageCreatedByMatchSubscription = {
 };
 
 export type OnCreateUserSubscription = {
-  onCreateUser:  {
+  onCreateUser?:  {
     __typename: "User",
     id: string,
     name: string,
     email: string,
-    rawImage: string | null,
-    alignedImage: string | null,
-    encoding: string | null,
-    matches:  {
+    rawImage?: string | null,
+    alignedImage?: string | null,
+    encoding?: string | null,
+    matches?:  {
       __typename: "ModelMatchUserConnection",
       items:  Array< {
         __typename: "MatchUser",
@@ -1196,10 +1272,10 @@ export type OnCreateUserSubscription = {
         targetUserID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
-      nextToken: string | null,
+      } | null >,
+      nextToken?: string | null,
     } | null,
-    messages:  {
+    messages?:  {
       __typename: "ModelMessageConnection",
       items:  Array< {
         __typename: "Message",
@@ -1209,8 +1285,8 @@ export type OnCreateUserSubscription = {
         matchID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
-      nextToken: string | null,
+      } | null >,
+      nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -1218,15 +1294,15 @@ export type OnCreateUserSubscription = {
 };
 
 export type OnUpdateUserSubscription = {
-  onUpdateUser:  {
+  onUpdateUser?:  {
     __typename: "User",
     id: string,
     name: string,
     email: string,
-    rawImage: string | null,
-    alignedImage: string | null,
-    encoding: string | null,
-    matches:  {
+    rawImage?: string | null,
+    alignedImage?: string | null,
+    encoding?: string | null,
+    matches?:  {
       __typename: "ModelMatchUserConnection",
       items:  Array< {
         __typename: "MatchUser",
@@ -1237,10 +1313,10 @@ export type OnUpdateUserSubscription = {
         targetUserID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
-      nextToken: string | null,
+      } | null >,
+      nextToken?: string | null,
     } | null,
-    messages:  {
+    messages?:  {
       __typename: "ModelMessageConnection",
       items:  Array< {
         __typename: "Message",
@@ -1250,8 +1326,8 @@ export type OnUpdateUserSubscription = {
         matchID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
-      nextToken: string | null,
+      } | null >,
+      nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -1259,15 +1335,15 @@ export type OnUpdateUserSubscription = {
 };
 
 export type OnDeleteUserSubscription = {
-  onDeleteUser:  {
+  onDeleteUser?:  {
     __typename: "User",
     id: string,
     name: string,
     email: string,
-    rawImage: string | null,
-    alignedImage: string | null,
-    encoding: string | null,
-    matches:  {
+    rawImage?: string | null,
+    alignedImage?: string | null,
+    encoding?: string | null,
+    matches?:  {
       __typename: "ModelMatchUserConnection",
       items:  Array< {
         __typename: "MatchUser",
@@ -1278,10 +1354,10 @@ export type OnDeleteUserSubscription = {
         targetUserID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
-      nextToken: string | null,
+      } | null >,
+      nextToken?: string | null,
     } | null,
-    messages:  {
+    messages?:  {
       __typename: "ModelMessageConnection",
       items:  Array< {
         __typename: "Message",
@@ -1291,8 +1367,8 @@ export type OnDeleteUserSubscription = {
         matchID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
-      nextToken: string | null,
+      } | null >,
+      nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -1300,7 +1376,7 @@ export type OnDeleteUserSubscription = {
 };
 
 export type OnCreateMatchUserSubscription = {
-  onCreateMatchUser:  {
+  onCreateMatchUser?:  {
     __typename: "MatchUser",
     id: string,
     matchStatus: UserMatchStatus,
@@ -1309,15 +1385,15 @@ export type OnCreateMatchUserSubscription = {
       __typename: "Match",
       id: string,
       matched: MatchStatus,
-      encoding: string | null,
-      mixedImage: string | null,
-      users:  {
+      encoding?: string | null,
+      mixedImage?: string | null,
+      users?:  {
         __typename: "ModelMatchUserConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
-      messages:  {
+      messages?:  {
         __typename: "ModelMessageConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
@@ -1328,16 +1404,16 @@ export type OnCreateMatchUserSubscription = {
       id: string,
       name: string,
       email: string,
-      rawImage: string | null,
-      alignedImage: string | null,
-      encoding: string | null,
-      matches:  {
+      rawImage?: string | null,
+      alignedImage?: string | null,
+      encoding?: string | null,
+      matches?:  {
         __typename: "ModelMatchUserConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
-      messages:  {
+      messages?:  {
         __typename: "ModelMessageConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
@@ -1348,16 +1424,16 @@ export type OnCreateMatchUserSubscription = {
       id: string,
       name: string,
       email: string,
-      rawImage: string | null,
-      alignedImage: string | null,
-      encoding: string | null,
-      matches:  {
+      rawImage?: string | null,
+      alignedImage?: string | null,
+      encoding?: string | null,
+      matches?:  {
         __typename: "ModelMatchUserConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
-      messages:  {
+      messages?:  {
         __typename: "ModelMessageConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
@@ -1368,7 +1444,7 @@ export type OnCreateMatchUserSubscription = {
 };
 
 export type OnUpdateMatchUserSubscription = {
-  onUpdateMatchUser:  {
+  onUpdateMatchUser?:  {
     __typename: "MatchUser",
     id: string,
     matchStatus: UserMatchStatus,
@@ -1377,15 +1453,15 @@ export type OnUpdateMatchUserSubscription = {
       __typename: "Match",
       id: string,
       matched: MatchStatus,
-      encoding: string | null,
-      mixedImage: string | null,
-      users:  {
+      encoding?: string | null,
+      mixedImage?: string | null,
+      users?:  {
         __typename: "ModelMatchUserConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
-      messages:  {
+      messages?:  {
         __typename: "ModelMessageConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
@@ -1396,16 +1472,16 @@ export type OnUpdateMatchUserSubscription = {
       id: string,
       name: string,
       email: string,
-      rawImage: string | null,
-      alignedImage: string | null,
-      encoding: string | null,
-      matches:  {
+      rawImage?: string | null,
+      alignedImage?: string | null,
+      encoding?: string | null,
+      matches?:  {
         __typename: "ModelMatchUserConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
-      messages:  {
+      messages?:  {
         __typename: "ModelMessageConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
@@ -1416,16 +1492,16 @@ export type OnUpdateMatchUserSubscription = {
       id: string,
       name: string,
       email: string,
-      rawImage: string | null,
-      alignedImage: string | null,
-      encoding: string | null,
-      matches:  {
+      rawImage?: string | null,
+      alignedImage?: string | null,
+      encoding?: string | null,
+      matches?:  {
         __typename: "ModelMatchUserConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
-      messages:  {
+      messages?:  {
         __typename: "ModelMessageConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
@@ -1436,7 +1512,7 @@ export type OnUpdateMatchUserSubscription = {
 };
 
 export type OnDeleteMatchUserSubscription = {
-  onDeleteMatchUser:  {
+  onDeleteMatchUser?:  {
     __typename: "MatchUser",
     id: string,
     matchStatus: UserMatchStatus,
@@ -1445,15 +1521,15 @@ export type OnDeleteMatchUserSubscription = {
       __typename: "Match",
       id: string,
       matched: MatchStatus,
-      encoding: string | null,
-      mixedImage: string | null,
-      users:  {
+      encoding?: string | null,
+      mixedImage?: string | null,
+      users?:  {
         __typename: "ModelMatchUserConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
-      messages:  {
+      messages?:  {
         __typename: "ModelMessageConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
@@ -1464,16 +1540,16 @@ export type OnDeleteMatchUserSubscription = {
       id: string,
       name: string,
       email: string,
-      rawImage: string | null,
-      alignedImage: string | null,
-      encoding: string | null,
-      matches:  {
+      rawImage?: string | null,
+      alignedImage?: string | null,
+      encoding?: string | null,
+      matches?:  {
         __typename: "ModelMatchUserConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
-      messages:  {
+      messages?:  {
         __typename: "ModelMessageConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
@@ -1484,16 +1560,16 @@ export type OnDeleteMatchUserSubscription = {
       id: string,
       name: string,
       email: string,
-      rawImage: string | null,
-      alignedImage: string | null,
-      encoding: string | null,
-      matches:  {
+      rawImage?: string | null,
+      alignedImage?: string | null,
+      encoding?: string | null,
+      matches?:  {
         __typename: "ModelMatchUserConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
-      messages:  {
+      messages?:  {
         __typename: "ModelMessageConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
@@ -1504,13 +1580,13 @@ export type OnDeleteMatchUserSubscription = {
 };
 
 export type OnCreateMatchSubscription = {
-  onCreateMatch:  {
+  onCreateMatch?:  {
     __typename: "Match",
     id: string,
     matched: MatchStatus,
-    encoding: string | null,
-    mixedImage: string | null,
-    users:  {
+    encoding?: string | null,
+    mixedImage?: string | null,
+    users?:  {
       __typename: "ModelMatchUserConnection",
       items:  Array< {
         __typename: "MatchUser",
@@ -1521,10 +1597,10 @@ export type OnCreateMatchSubscription = {
         targetUserID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
-      nextToken: string | null,
+      } | null >,
+      nextToken?: string | null,
     } | null,
-    messages:  {
+    messages?:  {
       __typename: "ModelMessageConnection",
       items:  Array< {
         __typename: "Message",
@@ -1534,8 +1610,8 @@ export type OnCreateMatchSubscription = {
         matchID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
-      nextToken: string | null,
+      } | null >,
+      nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -1543,13 +1619,13 @@ export type OnCreateMatchSubscription = {
 };
 
 export type OnUpdateMatchSubscription = {
-  onUpdateMatch:  {
+  onUpdateMatch?:  {
     __typename: "Match",
     id: string,
     matched: MatchStatus,
-    encoding: string | null,
-    mixedImage: string | null,
-    users:  {
+    encoding?: string | null,
+    mixedImage?: string | null,
+    users?:  {
       __typename: "ModelMatchUserConnection",
       items:  Array< {
         __typename: "MatchUser",
@@ -1560,10 +1636,10 @@ export type OnUpdateMatchSubscription = {
         targetUserID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
-      nextToken: string | null,
+      } | null >,
+      nextToken?: string | null,
     } | null,
-    messages:  {
+    messages?:  {
       __typename: "ModelMessageConnection",
       items:  Array< {
         __typename: "Message",
@@ -1573,8 +1649,8 @@ export type OnUpdateMatchSubscription = {
         matchID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
-      nextToken: string | null,
+      } | null >,
+      nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -1582,13 +1658,13 @@ export type OnUpdateMatchSubscription = {
 };
 
 export type OnDeleteMatchSubscription = {
-  onDeleteMatch:  {
+  onDeleteMatch?:  {
     __typename: "Match",
     id: string,
     matched: MatchStatus,
-    encoding: string | null,
-    mixedImage: string | null,
-    users:  {
+    encoding?: string | null,
+    mixedImage?: string | null,
+    users?:  {
       __typename: "ModelMatchUserConnection",
       items:  Array< {
         __typename: "MatchUser",
@@ -1599,10 +1675,10 @@ export type OnDeleteMatchSubscription = {
         targetUserID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
-      nextToken: string | null,
+      } | null >,
+      nextToken?: string | null,
     } | null,
-    messages:  {
+    messages?:  {
       __typename: "ModelMessageConnection",
       items:  Array< {
         __typename: "Message",
@@ -1612,8 +1688,8 @@ export type OnDeleteMatchSubscription = {
         matchID: string,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
-      nextToken: string | null,
+      } | null >,
+      nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -1621,7 +1697,7 @@ export type OnDeleteMatchSubscription = {
 };
 
 export type OnCreateMessageSubscription = {
-  onCreateMessage:  {
+  onCreateMessage?:  {
     __typename: "Message",
     id: string,
     content: string,
@@ -1631,16 +1707,16 @@ export type OnCreateMessageSubscription = {
       id: string,
       name: string,
       email: string,
-      rawImage: string | null,
-      alignedImage: string | null,
-      encoding: string | null,
-      matches:  {
+      rawImage?: string | null,
+      alignedImage?: string | null,
+      encoding?: string | null,
+      matches?:  {
         __typename: "ModelMatchUserConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
-      messages:  {
+      messages?:  {
         __typename: "ModelMessageConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
@@ -1650,15 +1726,15 @@ export type OnCreateMessageSubscription = {
       __typename: "Match",
       id: string,
       matched: MatchStatus,
-      encoding: string | null,
-      mixedImage: string | null,
-      users:  {
+      encoding?: string | null,
+      mixedImage?: string | null,
+      users?:  {
         __typename: "ModelMatchUserConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
-      messages:  {
+      messages?:  {
         __typename: "ModelMessageConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
@@ -1669,7 +1745,7 @@ export type OnCreateMessageSubscription = {
 };
 
 export type OnUpdateMessageSubscription = {
-  onUpdateMessage:  {
+  onUpdateMessage?:  {
     __typename: "Message",
     id: string,
     content: string,
@@ -1679,16 +1755,16 @@ export type OnUpdateMessageSubscription = {
       id: string,
       name: string,
       email: string,
-      rawImage: string | null,
-      alignedImage: string | null,
-      encoding: string | null,
-      matches:  {
+      rawImage?: string | null,
+      alignedImage?: string | null,
+      encoding?: string | null,
+      matches?:  {
         __typename: "ModelMatchUserConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
-      messages:  {
+      messages?:  {
         __typename: "ModelMessageConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
@@ -1698,15 +1774,15 @@ export type OnUpdateMessageSubscription = {
       __typename: "Match",
       id: string,
       matched: MatchStatus,
-      encoding: string | null,
-      mixedImage: string | null,
-      users:  {
+      encoding?: string | null,
+      mixedImage?: string | null,
+      users?:  {
         __typename: "ModelMatchUserConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
-      messages:  {
+      messages?:  {
         __typename: "ModelMessageConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
@@ -1717,7 +1793,7 @@ export type OnUpdateMessageSubscription = {
 };
 
 export type OnDeleteMessageSubscription = {
-  onDeleteMessage:  {
+  onDeleteMessage?:  {
     __typename: "Message",
     id: string,
     content: string,
@@ -1727,16 +1803,16 @@ export type OnDeleteMessageSubscription = {
       id: string,
       name: string,
       email: string,
-      rawImage: string | null,
-      alignedImage: string | null,
-      encoding: string | null,
-      matches:  {
+      rawImage?: string | null,
+      alignedImage?: string | null,
+      encoding?: string | null,
+      matches?:  {
         __typename: "ModelMatchUserConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
-      messages:  {
+      messages?:  {
         __typename: "ModelMessageConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
@@ -1746,15 +1822,15 @@ export type OnDeleteMessageSubscription = {
       __typename: "Match",
       id: string,
       matched: MatchStatus,
-      encoding: string | null,
-      mixedImage: string | null,
-      users:  {
+      encoding?: string | null,
+      mixedImage?: string | null,
+      users?:  {
         __typename: "ModelMatchUserConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
-      messages:  {
+      messages?:  {
         __typename: "ModelMessageConnection",
-        nextToken: string | null,
+        nextToken?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,

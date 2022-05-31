@@ -16,5 +16,23 @@
         "mixmatchweb124ecd5e": {}
       }
     }
+  },
+  "test": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-mixmatchweb-test-195144-authRole",
+      "UnauthRoleArn": "arn:aws:iam::158391967973:role/amplify-mixmatchweb-test-195144-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::158391967973:role/amplify-mixmatchweb-test-195144-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-mixmatchweb-test-195144-deployment",
+      "UnauthRoleName": "amplify-mixmatchweb-test-195144-unauthRole",
+      "StackName": "amplify-mixmatchweb-test-195144",
+      "StackId": "arn:aws:cloudformation:us-east-1:158391967973:stack/amplify-mixmatchweb-test-195144/d86cf020-e07b-11ec-b6ec-0a22a8cbcebb",
+      "AmplifyAppId": "d14okftrr9yw4r"
+    },
+    "categories": {
+      "auth": {
+        "mixmatchweb124ecd5e": {}
+      }
+    }
   }
 }
