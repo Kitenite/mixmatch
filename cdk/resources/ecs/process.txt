@@ -1,0 +1,7 @@
+get_latent_from_image.py
+    Create latent representation from image
+
+mix_latents.py
+    Load 2 latent representations 
+    Linear interpolate 2 latent representations
+    Generate result from them

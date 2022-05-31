@@ -1,0 +1,17 @@
+{
+  "name": "mixmatch_raw_image_added",
+  "version": "1.0.0",
+  "description": "mixmatch lambda to handle s3 uploads",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aws-appsync": "^1.8.1",
+    "aws-sdk": "^2.817.0",
+    "cross-fetch": "^3.0.4",
+    "graphql-tag": "^2.10.1"
+  }
+}

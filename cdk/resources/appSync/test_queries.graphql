@@ -1,0 +1,52 @@
+query GetUsersAndMatches {
+  listUsers {
+    items {
+      email
+      id
+      matches {
+        items {
+          id
+          matchStatus
+          sourceUser {
+            name
+          }
+          targetUser {
+            name
+          }
+        }
+      }
+    }
+  }
+  listMatchs {
+    items {
+      id
+    }
+  }
+}
+
+mutation CreateUser {
+  u1: createUser(input: {email: "codyperakslis@gmail.com", name: "Cody"}) {
+    id
+    name
+    email
+  }
+  u2: createUser(input: {email: "hoakiet98@gmail.com", name: "Kiet"}) {
+    id
+    name
+    email
+  }
+  createMatch(input: {matched: Unresolved}) {
+    id
+    matched
+  }
+}
+
+mutation CreateLink {
+  m1: createMatchUser(input: {matchID: "d18d8851-5093-4f23-b390-f1001807c100", matchStatus: NotSeen, sourceUserID: "103c33c1-dce1-4819-95ed-107dd5b0adb2", targetUserID: "118d4a2f-f3ff-4a6f-9d7b-713f3ffeb033"}) {
+    id
+  }
+  m2: createMatchUser(input: {matchID: "d18d8851-5093-4f23-b390-f1001807c100", matchStatus: NotSeen, sourceUserID: "118d4a2f-f3ff-4a6f-9d7b-713f3ffeb033", targetUserID: "103c33c1-dce1-4819-95ed-107dd5b0adb2"}) {
+    id
+  }
+}
+

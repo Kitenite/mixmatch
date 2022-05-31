@@ -1,0 +1,8 @@
+{
+    "queue": "https://sqs.us-east-1.amazonaws.com/158391967973/mixmatch-queue",
+    "task": "mixmatchECSTask",
+    "s3_key_suffix_whitelist": [".png"],
+    "cluster": "mixmatchCluster",
+    "tableName": "UserTable",
+    "region": "us-east-1"
+}
