@@ -1,0 +1,112 @@
+{
+  "version": "18.0.0",
+  "artifacts": {
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    },
+    "MixmatchSupportStack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "MixmatchSupportStack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "MixmatchSupportStack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/unknown-region",
+      "properties": {
+        "templateFile": "MixmatchSupportStack.template.json",
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c78dd0bf3ed97646f98a0cf075828859e217633f70ccde73d6206fc6c8b92a6b.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "MixmatchSupportStack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-${AWS::Region}",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "MixmatchSupportStack.assets"
+      ],
+      "metadata": {
+        "/MixmatchSupportStack/NewUserAddedFunction/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "NewUserAddedFunctionServiceRole9E009008"
+          }
+        ],
+        "/MixmatchSupportStack/NewUserAddedFunction/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "NewUserAddedFunctionED355922"
+          }
+        ],
+        "/MixmatchSupportStack/NewUserAddedFunction/InvokePostAuthenticationFunctionPermission": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "NewUserAddedFunctionInvokePostAuthenticationFunctionPermission8C94A3ED"
+          }
+        ],
+        "/MixmatchSupportStack/UpdateUserPool/CustomResourcePolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "UpdateUserPoolCustomResourcePolicyB249976C"
+          }
+        ],
+        "/MixmatchSupportStack/UpdateUserPool/Resource/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "UpdateUserPool3C9483D3"
+          }
+        ],
+        "/MixmatchSupportStack/AWS679f53fac002430cb0da5b7982bd2287/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AWS679f53fac002430cb0da5b7982bd2287ServiceRoleC1EA0FF2"
+          }
+        ],
+        "/MixmatchSupportStack/AWS679f53fac002430cb0da5b7982bd2287/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AWS679f53fac002430cb0da5b7982bd22872D164C4C"
+          }
+        ],
+        "/MixmatchSupportStack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/MixmatchSupportStack/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/MixmatchSupportStack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/MixmatchSupportStack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "MixmatchSupportStack"
+    }
+  }
+}

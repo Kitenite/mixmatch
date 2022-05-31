@@ -1,0 +1,9 @@
+#!/usr/bin/env node
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+require("source-map-support/register");
+const cdk = require("aws-cdk-lib");
+const app = new cdk.App();
+const support_stack_1 = require("../lib/support-stack");
+new support_stack_1.SupportStack(app, "MixmatchSupportStack", {});
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoic3R5bGVnYW4tbWl4LmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsic3R5bGVnYW4tbWl4LnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7OztBQUNBLHVDQUFxQztBQUNyQyxtQ0FBbUM7QUFDbkMsTUFBTSxHQUFHLEdBQUcsSUFBSSxHQUFHLENBQUMsR0FBRyxFQUFFLENBQUM7QUFFMUIsd0RBQW9EO0FBRXBELElBQUksNEJBQVksQ0FBQyxHQUFHLEVBQUUsc0JBQXNCLEVBQUUsRUFDN0MsQ0FBQyxDQUFDIiwic291cmNlc0NvbnRlbnQiOlsiIyEvdXNyL2Jpbi9lbnYgbm9kZVxuaW1wb3J0ICdzb3VyY2UtbWFwLXN1cHBvcnQvcmVnaXN0ZXInO1xuaW1wb3J0ICogYXMgY2RrIGZyb20gJ2F3cy1jZGstbGliJztcbmNvbnN0IGFwcCA9IG5ldyBjZGsuQXBwKCk7XG5cbmltcG9ydCB7IFN1cHBvcnRTdGFjayB9IGZyb20gJy4uL2xpYi9zdXBwb3J0LXN0YWNrJztcblxubmV3IFN1cHBvcnRTdGFjayhhcHAsIFwiTWl4bWF0Y2hTdXBwb3J0U3RhY2tcIiwge1xufSk7XG4iXX0=
